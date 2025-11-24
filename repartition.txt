@@ -1,10 +1,9 @@
-A: menu et création de parties 
-Menu et création de partie
+Menu et création de partie - Abdullah
 • (niv 1) Écran titre : Le jeu doit disposer d’un écran titre.
 • (niv 1) Menu principal : Le jeu doit inclure un menu principal permettant de créer une
 nouvelle partie ou de quitter le jeu. Le joueur doit pouvoir retourner à ce menu depuis n’importe
 quel écran du jeu.
-2- S1.01 - Implémentation d’un besoin client
+
 Gestion des emplacements
 • (niv 1) Chacun sa place : Une zone de Mars doit comporter un nombre fini d’emplacements
 destinés à la construction de bâtiments. Un seul bâtiment peut être construit par emplacement.
@@ -14,6 +13,7 @@ minerai. Au moins deux types de minerais différents doivent être présents.
 Tant qu’un emplacement reste non découvert, aucun bâtiment ne peut y être construit et la pré-
 sence éventuelle d’un gisement ne doit pas être visible. Une action d’exploration doit permettre
 de les révéler.
+
 Gestion des constructions
 • (niv 1) Le jour, on creuse ! : Il doit être possible de construire une mine dans un emplace-
 ment contenant un gisement. La mine récolte chaque jour une quantité définie de minerai. La
@@ -27,13 +27,15 @@ consommer des ressources.
 par une usine.
 • (niv 3) Time to upgrade ! : Les mines et usines doivent pouvoir être améliorées afin d’aug-
 menter leur production. Chaque bâtiment doit disposer d’au moins deux niveaux d’amélioration.
+
 Temps et connaissance
-• (niv 1) Time is money : La date complète (jour, numéro, mois, année) doit être aﬀichée dans
+A: • (niv 1) Time is money : La date complète (jour, numéro, mois, année) doit être aﬀichée dans
 le jeu et progresser à chaque changement de journée.
-• (niv 2) Wiki : Un ensemble d’écrans doit présenter les informations relatives aux bâtiments
+A: • (niv 2) Wiki : Un ensemble d’écrans doit présenter les informations relatives aux bâtiments
 (nom, coût de construction, etc.) ainsi que les recettes de production.
-• (niv 3) Faire le bilan : Un écran récapitulatif de la production quotidienne doit être aﬀiché à
+A: • (niv 3) Faire le bilan : Un écran récapitulatif de la production quotidienne doit être aﬀiché à
 la fin de chaque journée.
+
 Gestion des zones
 • (niv 1) Gestion des stocks : Une zone doit disposer d’un inventaire de ressources visible dans
 un des écrans du jeu.
@@ -43,6 +45,7 @@ de ses propres emplacements de construction.
 doivent être générés de façon aléatoire.
 • (niv 3) Pas de convoyeur : Chaque zone doit posséder son propre inventaire de ressources.
 Les ressources ne doivent pas être partagées automatiquement entre zones.
+
 Électricité et maintenance
 • (niv 2) Vous avez du jus ? : Les mines et usines nécessitent de l’électricité pour fonctionner.
 Il doit être possible de construire des centrales électriques. Si la production d’électricité est
@@ -50,6 +53,7 @@ insuﬀisante, les bâtiments doivent cesser temporairement de fonctionner.
 • (niv 2) Le coup de la panne : De manière aléatoire, une mine ou une usine peut tomber en
 panne. Le bâtiment ne produira alors plus rien tant qu’il n’aura pas été réparé.
 3- S1.01 - Implémentation d’un besoin client
+
 Mission
 • (niv 2) Pour aller plus haut : Un bâtiment appelé Ascenseur orbital doit pouvoir être
 construit en un unique exemplaire. Une fois construit, des missions de ravitaillement doivent
