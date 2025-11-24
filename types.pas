@@ -1,43 +1,112 @@
 type
-  //Simples
-  Niveau = 1 .. 3;
-  Jour = 1 .. 31;
-  Mois = 1 .. 12;
-  Annee = 1000 .. 2025;
+  {types Simples}
+  //Date
+  _Jour = 1 .. 31;
+  _Mois = 1 .. 12;
+  _Annee = 1000 .. 2025;
 
-  //Types Enumerés
-  TypeRessources = (
-    mineraiDeCuivre,
-    mineraiDeFer,
-    calcaire,
-    charbon,
-    lingotDeCuivre,
-    lingotDeFer,
-    cablesDeCuivre,
-    plaquesDeFer,
-    tuyauEnFer,
-    sacDeBeton,
-    acier,
-    plaquesRenforces,
-    poutresIndustrielles,
-    fondations
+  //Niveau de gisement
+  _Purete = 1 .. 3;
+
+  //Niveau de batiment
+  _Niveau = 1 .. 3;
+
+  {Types énumérés}
+  _TypeRessources = (
+    resMineraiCuivre,
+    resMineraiFer,
+    resCalcaire,
+    resCharbon,
+    resLingotCuivre,
+    resLingotFer,
+    resCableCuivre,
+    resPlaqueFer,
+    resTuyauFer,
+    resBeton,
+    resAcier,
+    resPlaqueRenforcee,
+    resPoutreIndustrielle,
+    resFondation
   );
 
-  //Records
-  TypeDate = record
-    jour:Jour,
-    mois:Mois,
-    annee:Annee
+  _TypeGisement = (
+    gisementCuivre,
+    gisementFer,
+    gisementCalcaire,
+    gisementCharbon
+  );
+
+    { Convertir les gisements en ressources : function RessourceDuGisement(g : _TypeGisement) : _TypeRessources;
+    begin
+      case g of
+        gisementCuivre:   Result := resMineraiCuivre;
+        gisementFer:      Result := resMineraiFer;
+        gisementCalcaire: Result := resCalcaire;
+        gisementCharbon:  Result := resCharbon;
+      end;
+    end;}
+
+  _TypeZone = (
+    base,
+    rocheux,
+    foretNordique,
+  );
+
+  _TypeBatiment = (
+    hub,
+    mine,
+    constructeur,
+    centrale,
+    ascenseurOrbital
+  );
+
+  _TypeEmplacement = (
+    vide,
+    gisement,
+    batiment
+  );
+
+
+  {Types Records}
+  _Date = record
+    jour : Jour,
+    mois : Mois,
+    annee : Annee,
     end;
 
-  emplacement = record                                     //Une carte à jouer
+  _Gisement = record
+    typeGisement : _TypeGisement
+    end;
+
+  _Recette = record
+    quantites : array[_TypeRessources] of Integer;
+    end;
+    { Exemple de definition recette:
+      var
+        recetteConst : _Recette;
+      begin
+        recetteConst.quantites[CablesDeCuivre] := 10;
+        recetteConst.quantites[PlaquesDeFer] := 10;
+      end;}
+
+  _Emplacement = record
     estDecouvert : Boolean;
-    typeGisement : Gisement;
-    typeBatiment : Batiement;
+    batiement : typeBatiment;
+    gisement : Gisement;
     end;
 
-  Batiment = record                                    //Une carte à jouer
-    typeProduction : enumBatiment;
-    niveau : Niveau;
-    batiment : Batiement;
+  _Batiment = record
+    batiment : _TypeBatiment;
+    niveau : _Niveau;
+    ressourceProduite : _TypeRessources;
+    mineraiPurete : _Purete,              // SI MINERAI
+    recette1 : _recette;  //Recette du batiment ex: 20 plaques de cuivres
+    recette2 : _recette;
+    recette3 : _recette;
+    coutEnegrie : Integer;
     end;
+
+  _Zone = record
+    nom : String;
+    emplacements: Array of _Emplacement;
+  end;
