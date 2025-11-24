@@ -29,7 +29,7 @@ par une usine.
 menter leur production. Chaque bâtiment doit disposer d’au moins deux niveaux d’amélioration.
 
 Temps et connaissance
-A: • (niv 1) Time is money : La date complète (jour, numéro, mois, année) doit être aﬀichée dans
+Abdullah : • (niv 1) Time is money : La date complète (jour, numéro, mois, année) doit être aﬀichée dans
 le jeu et progresser à chaque changement de journée.
 A: • (niv 2) Wiki : Un ensemble d’écrans doit présenter les informations relatives aux bâtiments
 (nom, coût de construction, etc.) ainsi que les recettes de production.
