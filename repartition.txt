@@ -25,12 +25,12 @@ par une usine.
 • (niv 3) Time to upgrade ! : Les mines et usines doivent pouvoir être améliorées afin d’aug-
 menter leur production. Chaque bâtiment doit disposer d’au moins deux niveaux d’amélioration.
 
-Temps et connaissance
-Abdullah : • (niv 1) Time is money : La date complète (jour, numéro, mois, année) doit être aﬀichée dans
+Temps et connaissance - Abdullah
+• (niv 1) Time is money : La date complète (jour, numéro, mois, année) doit être aﬀichée dans
 le jeu et progresser à chaque changement de journée.
-A: • (niv 2) Wiki : Un ensemble d’écrans doit présenter les informations relatives aux bâtiments
+• (niv 2) Wiki : Un ensemble d’écrans doit présenter les informations relatives aux bâtiments
 (nom, coût de construction, etc.) ainsi que les recettes de production.
-A: • (niv 3) Faire le bilan : Un écran récapitulatif de la production quotidienne doit être aﬀiché à
+• (niv 3) Faire le bilan : Un écran récapitulatif de la production quotidienne doit être aﬀiché à
 la fin de chaque journée.
 
 Gestion des zones

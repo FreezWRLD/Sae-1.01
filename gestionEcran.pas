@@ -62,7 +62,8 @@ interface
 	procedure couleurs(ct, cf : byte);
 
 	// Change la couleur de la zone
-    procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
+  procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
+  
 
     const
       // Codes des couleurs
@@ -304,6 +305,8 @@ implementation
       TextAttr := (LastMode and $0F) or ((couleur shl 4) and $F0);
       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), TextAttr);
     end;
+
+
 end.
 
 
