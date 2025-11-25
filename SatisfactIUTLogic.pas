@@ -1,52 +1,7 @@
 unit SatisfactIUTLogic;
 {$codepage utf8} 
 interface
-
-  
-implementation
 type
-  {Types Records}
-  _Recettes = record
-    RessourcesEntree : array[_TypeRessources] of Integer;
-    RessourcesSortie : array[_TypeRessources] of Integer;
-    quantiteProduite : Integer;
-    end;
-
-  _Date = record
-    jour : Jour;
-    mois : Mois;
-    annee : Annee;
-    end;
-
-  _Inventaire = record
-    quantites : array[_TypeRessources] of Integer;
-    end;
-
-  _Emplacement = record
-    estDecouvert : Boolean;
-    batiment : _TypeBatiment;
-    gisement : _Gisement;
-    end;
-
-  _Gisement = record
-    existe : Boolean;
-    typeGisement : _TypeGisement;
-    mineraiPurete : _Purete;
-    end;
-
-  _Batiment = record
-    batiment : _TypeBatiment;
-    niveau : _Niveau;
-    ressourceProduite : _TypeRessources;
-    recette : _Recette; 
-    coutEnegrie : Integer;
-    end;
-
-  _Zone = record
-    typeZone : _TypeZone;
-    emplacements: Array of _Emplacement;
-    inventaire : _Inventaire;
-  end;
 
   {types Simples}
   //Date
@@ -62,21 +17,21 @@ type
 
   {Types énumérés}
   _TypeRessources = (
-    resMineraiCuivre,
-    resMineraiFer,
-    resCalcaire,
-    resCharbon,
-    resLingotCuivre,
-    resLingotFer,
-    resCableCuivre,
-    resPlaqueFer,
-    resTuyauFer,
-    resBeton,
-    resAcier,
-    resPlaqueRenforcee,
-    resPoutreIndustrielle,
-    resFondation,
-    resEnergie
+    MineraiCuivre,
+    MineraiFer,
+    Calcaire,
+    Charbon,
+    LingotCuivre,
+    LingotFer,
+    CableCuivre,
+    PlaqueFer,
+    TuyauFer,
+    Beton,
+    Acier,
+    PlaqueRenforcee,
+    PoutreIndustrielle,
+    Fondation,
+    Energie
   );
 
   _TypeGisement = (
@@ -108,6 +63,56 @@ type
     gisement,
     batiment
   );
+
+  {Types Records}
+  _Date = record
+    jour : Jour;
+    mois : Mois;
+    annee : Annee;
+    end;
+
+  _Inventaire = record
+    quantites : array[_TypeRessources] of Integer;
+    end;
+
+  _Emplacement = record
+    estDecouvert : Boolean;
+    batiment : _TypeBatiment;
+    gisement : _Gisement;
+    end;
+
+  _Gisement = record
+    existe : Boolean;
+    typeGisement : _TypeGisement;
+    mineraiPurete : _Purete;
+    end;
+
+  _Recettes = record
+    RessourcesEntree : array[_TypeRessources] of Integer;
+    RessourcesSortie : array[_TypeRessources] of Integer;
+    quantiteProduite : Integer;
+    end;
+
+  _Batiment = record
+    batiment : _TypeBatiment;
+    niveau : _Niveau;
+    ressourceProduite : _TypeRessources;
+    recette : _Recette; 
+    coutEnegrie : Integer;
+    end;
+
+  _Zone = record
+    typeZone : _TypeZone;
+    emplacements: Array of _Emplacement;
+    inventaire : _Inventaire;
+  end;
+
+
+
+
+  
+implementation
+
   
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
@@ -196,7 +201,15 @@ type
   begin
     InitDate.jour:=_Jour(Random(1,31));
     InitDate.mois:=_Mois(Random(1,12));
-    InitDate.annee:=_Annee(Random(2020,2025));
+    InitDate.annee:=_Annee(Random(2020,2023));
   end;
+
+  function InitRecette: _Recette;
+var
+  i: _TypeRessources;
+begin
+  for i := Low(_TypeRessources) to High(_TypeRessources) do
+    InitRecette.quantites[i] := 0;
+end;
 
 end.
