@@ -1,7 +1,7 @@
 program test; //Utiliser ce fichier pour tester vos programmes
 
 uses
-  classes,sysutils,types,gestionEcran,ihm;
+ sysutils,types,gestionEcran,ihm;
 begin 
-   ecranAccueil();
+   ecranDemarrage();
 end.

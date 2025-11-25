@@ -3,14 +3,16 @@ unit ihm;
 {$mode objfpc}{$H+}
 
 interface
-  procedure ecranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
 uses
-  SysUtils, Classes, gestionEcran;
+  SysUtils, gestionEcran;
+
+  procedure ecranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
+  procedure ecranJeu(); //Procédure qui affichera l'écran du menu principal
   
 implementation
-  procedure ecranAccueil();
+  procedure ecranDemarrage();
   var
-    choix:integer; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
+    choix:integer=0; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
   begin
     writeln(' _________________________________________________________________________________________________________________________________________________________');
     writeln('|\________________________________________________________________________________________________________________________________________________________\');
@@ -25,7 +27,7 @@ implementation
     writeln('                    \ \  \ \  \ \  \   \ \  \ \ \  \    \ \  \ \  \   \ \  \ \  \ \  \_____  \ \  \                       \ \  \ \       \   \ \  \');
     writeln('                 ____\_\  \ \__\ \__\   \ \__\ \ \__\____\_\  \ \__\   \ \__\ \__\ \_______\  \ \__\                       \ \__\ \_______\   \ \__\');
     writeln('                |\_________\|__|\|__|    \|__|  \|__|\_________\|__|    \|__|\|__|\|_______|   \|__|                        \|__|\|_______|    \|__|');
-    writeln('                \|_________|                        \|_________|')
+    writeln('                \|_________|                        \|_________|');
     writeln();
     writeln();
     writeln('       _________________________________________________________________________________________________________________________________________________________');
@@ -80,13 +82,21 @@ implementation
           writeln();
           writeln('                                                             < Appuyez sur une touche pour continuer >');
         readln();
-        menuPrincipal();
+        ecranJeu();
         end;
-        2: readln();
-    until (choix=1 OR choix=2);
-    end;
+        2: 
+        begin
+          readln();
+        end; 
+      end;
+    until (choix=1) OR (choix=2);
   end;
+ 
 
+  procedure ecranJeu();
+  begin
+    
+  end;
 
  
   
