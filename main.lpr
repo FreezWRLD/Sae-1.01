@@ -2,7 +2,7 @@ program main;
 {$mode objfpc}{$H+}
 {$codepage utf8} 
 uses
-  sysutils, types, gestionEcran, ihm, objets, SatisfactIUTLogic;
+  sysutils, types, gestionEcran, ihm, objets, SatisfactIUTLogic, constantes, logic;
 
 begin
   effacerEtColorierEcran(Black);
@@ -10,7 +10,11 @@ begin
   // LES FONCTIONS A APPERLER POUR LES TESTER :
   afficherBatiment( (120 - 70) div 2, 5,hub);
   effacerEcran();
-  afficherEcranDemarrage();
+  //menuDeJeu();
+  //afficherEcranDemarrage();
+  //afficherInventaire();
+  //afficherEcranJeu();
+  lancementDeJeu();
 
   // ----------------------------------------
   readln;

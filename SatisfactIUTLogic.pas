@@ -7,6 +7,7 @@ uses
 
 {function InitZones():_EnsembleDeZones;}
 function InitDate():_Date; //Initialise la date de début du jeu
+procedure explorationEmplacement(var zone : _Zone);
 
 
   

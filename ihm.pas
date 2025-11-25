@@ -4,25 +4,53 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, types, SatisfactIUTLogic;
+  SysUtils, gestionEcran, types, SatisfactIUTLogic, constantes;
 
   procedure afficherTitre();
   procedure afficherHistoire();
   procedure afficherEcranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
-  //procedure ecranJeu(); //Procédure qui affichera l'écran du jeu
-  //procedure menu();//Procédure qui affichera le menu
   procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
+  procedure afficheLigneParLigne(x, y: integer; message: _Message);
+  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer);
+  procedure menuDeJeu();
+  procedure afficherInventaire();
+  procedure afficherEcranJeu();
+  procedure quitterIHM();
+  procedure afficherMenuDemarrage();
   
 implementation
   //Affichage d'un message de fin
   procedure quitterIHM();
-  begin
-    effacerEcran();
-    dessinerCadreXY(31,13,88,15, double, white, black);
-    deplacerCurseurXY(56,14);
-    writeln('AU REVOIR');
-    readln;
-  end;
+    begin
+      effacerEcran();
+      dessinerCadreXY(31,13,88,15, double, white, black);
+      deplacerCurseurXY(56,14);
+      writeln('AU REVOIR');
+      readln;
+    end;
+
+  procedure afficheLigneParLigne(x, y: integer; message: _Message);
+    var
+      i: integer;
+    begin
+      for i := 0 to High(message) do
+      begin
+        deplacerCurseurXY(x, y+i);
+        writeln(message[i]);
+      end;
+    end;
+
+  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer);
+    var
+      i: integer;
+      lignesVides: _Message;
+    begin
+      SetLength(lignesVides, hauteur);
+      for i := 0 to hauteur - 1 do
+        lignesVides[i] := StringOfChar(' ', largeur);
+      
+      afficheLigneParLigne(x, y, lignesVides);
+    end;
 
   procedure afficherTitre();
     begin
@@ -89,205 +117,173 @@ implementation
       affichageCentre('Maintenant, il est temps de vous mettre au travail. L''IUT a besoin de vous !',24);
       affichageCentre('< Appuyez sur une touche pour continuer >',32);
       readln();
-      //ecranJeu();
+      effacerEcran();
     end;
 
-  procedure logicMenuDemarrage();
-    var
-      choix:string; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
-    begin
-      repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
-        readln(choix);
-        if (choix = '1') then afficherHistoire() else quitterIHM();
-      until (choix='1') OR (choix='2');
-    end;
+
 
   procedure afficherEcranDemarrage();
     begin
       afficherTitre();
       afficherMenuDemarrage();
-      logicMenuDemarrage();
     end;
 
-{
-  procedure menu();
-  var
-    choix1,choix2,choix3,choix4:Integer;
-  begin
-  writeln('Que voulez-vous faire ?'); // Position à mettre (déplacercurseurXY)
-  writeln('1/ Construire un bâtiment');
-  writeln('2/ Changer la production');
-  writeln('3/ Améliorer un bâtiment');
-  writeln('4/ Explorer la zone');
-  writeln('5/ Changer de zone');
-  writeln('6/ Transférer des ressources');
-  writeln('7/ Passer la journée');
-  writeln('8/ Missions');
-  writeln('9/ Wiki');
-  writeln('0/ Quitter la partie');
-    repeat
-    readln(choix1);
-      case choix1 of
-        0:
-        begin
-          //ecranJoueur();
-        end;
-        1:
-        begin
-          //selectionEmplacement();
-          writeln('Quel bâtiment voulez-vous construire ?');
-          writeln('1/ Construire une mine');
-          writeln('2/ Construire un constructeur');
-          writeln('3/ Construire une centrale');
-          writeln('4/ Construire l''ascenseur orbital');
-          readln(choix2);
-          case choix2 of
-            1:
-            begin
-              
-            end;
-            2:
-            begin
-              
-            end;
-            3:
-            begin
-              
-            end;
-            4:
-            begin
-              
-            end;
-          end;
-        end;
-        2:
-        begin
-          writeln('Que doit produire le constructeur ?');
-          writeln('1/ Lingots de cuivre');
-          writeln('2/ Lingots de fer');
-          writeln('3/ Cables de cuivre');
-          writeln('4/ Plaques de fer');
-          writeln('5/ Tuyaux en fer');
-          writeln('6/ Autres');
-          readln(choix3);
-          case choix3 of
-            1:
-            begin
-              
-            end;
-            2:
-            begin
-              
-            end;
-            3:
-            begin
-              
-            end;
-            4:
-            begin
-              
-            end;
-            5:
-            begin
-              
-            end;
-            6:
-            begin
-              writeln('1/ Sacs de Béton');
-              writeln('2/ Acier');
-              writeln('3/ Plaques renforcées');
-              writeln('4/ Poutres industrielles');
-              writeln('5/ Fondations');
-              writeln('6/ Quiter');
-              readln(choix4);
-              case choix4 of
-                1:
-                begin
-                  
-                end;
-                2:
-                begin
-                  
-                end;
-                3:
-                begin
-                  
-                end;
-                4:
-                begin
-                  
-                end;
-                5:
-                begin
-                  
-                end;
-                6:
-                begin
-                  //ecranJeu();
-                end;
 
-              end;
-            end;
-          end;
-        end;
-        3:
-        begin
-          
-        end;
-        4:
-        begin
-          
-        end;
-        5:
-        begin
-          
-        end;
-        6:
-        begin
-          
-        end;
-        7:
-        begin
-          
-        end;
-        8:
-        begin
-          
-        end;
-        9:
-        begin
-          
-        end;
+  procedure afficherMenuPrincipale();
+    begin
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Que voulez-vous faire ?',
+        '1/ Construire un bâtiment',
+        '2/ Changer la production',
+        '3/ Améliorer un bâtiment',
+        '4/ Explorer la zone',
+        '5/ Changer de zone',
+        '6/ Transférer des ressources',
+        '7/ Passer la journée',
+        '8/ Missions',
+        '9/ Wiki',
+        '0/ Quitter la partie'
+      ]);
+    end;
+
+  procedure menuRessourcesPage1();
+    begin
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        '1/ Lingots de fer',
+        '2/ Câbles de cuivre',
+        '3/ Plaques de fer',
+        '4/ Tuyaux en fer',
+        '5/ Sacs de Béton',
+        '6/ Autres'
+      ]);
+    end;
+
+  procedure menuRessourcesPage2();
+    begin
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        '1/ Acier ',
+        '2/ Plaques renforcecées',
+        '3/ Poutres industrielles',
+        '4/ Fondations',
+        '5/ Autres'
+      ]);
+    end;
+
+
+  procedure menuConstruction();
+    var
+      choix:integer;
+    begin
+    repeat
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Quel bâtiment voulez-vous construire ?',
+        '1/ Construire une mine',
+        '2/ Construire un constructeur',
+        '3/ Construire une centrale',
+        '4/ Construire l''ascenseur orbital'
+      ]);
+      readln(choix);
+    until choix in [1..4];
+    end;
+
+  procedure menuProductionConstructeur();
+  begin
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Que doit produire le constructeur ?',
+      '1/ Lingots de cuivre',
+      '2/ Lingots de fer',
+      '3/ Cables de cuivre',
+      '4/ Plaques de fer',
+      '5/ Tuyaux en fer',
+      '6/ Autres'
+    ]);
+  end;
+
+  procedure afficherInventaire();
+  begin
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, 10, L_MENU, H_MENU);
+    afficheLigneParLigne(X_MENU_PRINCIPALE, 10, [
+      'Minerai de cuivre',
+      'Minerai de fer',
+      'Calcaire',
+      'Charbon',
+      'Lingots de cuivre',
+      'Lingots de fer',
+      'Cables de cuivre',
+      'Plaques de fer',
+      'Tuyaux en fer',
+      'Sac de bétons',
+      'Acier ',
+      'Plaques renforcecées',
+      'Poutres industrielles',
+      'Fondations'
+    ]);
+    deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
+  end;
+
+  procedure menuDeJeu();
+  var
+    choix: integer;
+  begin
+    repeat
+      afficherMenuPrincipale();
+      readln(choix);
+      case choix of
+      // 1/ Construire un bâtiment
+      1: menuConstruction();
+      // 2/ Changer la production
+      2: menuProductionConstructeur();
+      // 3/ Améliorer un bâtiment
+      // 4/ Explorer la zone
+      // 4 : explorationEmplacement();
+      // 5/ Changer de zone
+      // 6/ Transférer des ressources
+      // 7/ Passer la journée 
+      // 8/ Missions
+      // 9/ Wiki
+      // 0/ Quitter la partie
+      0: quitterIHM();
       end;
-    until (choix1>=0) AND (choix1=<9);
-    
-  end;}
+    until choix in [1..10];
+    end;
+
+  procedure afficherEcranJeu();
+  begin
+    afficherHistoire();
+    dessinerCadreXY(0,0,L_MENU+X_MENU_PRINCIPALE,39,simple,white,black);
+    afficherInventaire();
+    menuDeJeu();
+  end;
 
   // Fonction pour afficher un bâtiment dans un cadre formaté
 // x, y : position du coin supérieur gauche du cadre
 procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
-var
-  largeurCadre: integer;
-  pos: coordonnees;
-begin
-  largeurCadre := 70; // Largeur du cadre
-  
-  // Dessin du cadre
-  dessinerCadreXY(x, y, x + largeurCadre, y + 10, double, White, Black);
+  var
+    largeurCadre: integer;
+  begin
+    largeurCadre := 70; // Largeur du cadre
+    
+    // Dessin du cadre
+    dessinerCadreXY(x, y, x + largeurCadre, y + 10, double, White, Black);
 
-  deplacerCurseurXY(x + 2, y + 2);
-  write('BATIMENT   : ', unBatiment.nom);
+    deplacerCurseurXY(x + 2, y + 2);
+    write('BATIMENT   : ', unBatiment.nom);
 
-  deplacerCurseurXY(x + 2, y + 3);
-  write('NIVEAU     : ', unBatiment.niveau);
+    deplacerCurseurXY(x + 2, y + 3);
+    write('NIVEAU     : ', unBatiment.niveau);
 
-  deplacerCurseurXY(x + 2, y + 4);
-  write('RESSOURCE  : ', unBatiment.ressourceProduite);
+    deplacerCurseurXY(x + 2, y + 4);
+    write('RESSOURCE  : ', unBatiment.ressourceProduite);
 
-  deplacerCurseurXY(x + 2, y + 5);
-  write('ENERGIE    : ', unBatiment.coutEnegrie);
+    deplacerCurseurXY(x + 2, y + 5);
+    write('ENERGIE    : ', unBatiment.coutEnegrie);
 
-end;
+  end;
 
  
   

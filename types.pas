@@ -17,6 +17,8 @@ type
   //Niveau de batiment
   _Niveau = 1 .. 3;
 
+  _Message = array of string;
+
   {Types énumérés}
   _TypeRessources = (
     MineraiCuivre,
