@@ -4,11 +4,12 @@ interface
   
 
 type
+
   {types Simples}
   //Date
   _Jour = 1 .. 31;
   _Mois = 1 .. 12;
-  _Annee = 2025 .. 2999;
+  _Annee = 2020 .. 2025;
 
   //Niveau de gisement
   _Purete = 1 .. 3;
@@ -18,21 +19,21 @@ type
 
   {Types énumérés}
   _TypeRessources = (
-    resMineraiCuivre,
-    resMineraiFer,
-    resCalcaire,
-    resCharbon,
-    resLingotCuivre,
-    resLingotFer,
-    resCableCuivre,
-    resPlaqueFer,
-    resTuyauFer,
-    resBeton,
-    resAcier,
-    resPlaqueRenforcee,
-    resPoutreIndustrielle,
-    resFondation,
-    resEnergie
+    MineraiCuivre,
+    MineraiFer,
+    Calcaire,
+    Charbon,
+    LingotCuivre,
+    LingotFer,
+    CableCuivre,
+    PlaqueFer,
+    TuyauFer,
+    Beton,
+    Acier,
+    PlaqueRenforcee,
+    PoutreIndustrielle,
+    Fondation,
+    Energie
   );
 
   _TypeGisement = (
@@ -42,20 +43,12 @@ type
     gisementCharbon
   );
 
-    { Convertir les gisements en ressources : function RessourceDuGisement(g : _TypeGisement) : _TypeRessources;
-    begin
-      case g of
-        gisementCuivre:   Result := resMineraiCuivre;
-        gisementFer:      Result := resMineraiFer;
-        gisementCalcaire: Result := resCalcaire;
-        gisementCharbon:  Result := resCharbon;
-      end;
-    end;}
-
   _TypeZone = (
     base,
     rocheux,
-    foretNordique
+    foretNordique,
+    volcanique,
+    desertique
   );
 
   _TypeBatiment = (
@@ -72,7 +65,6 @@ type
     batiment
   );
 
-
   {Types Records}
   _Date = record
     jour : _Jour;
@@ -80,43 +72,50 @@ type
     annee : _Annee;
     end;
 
+  _Inventaire = record
+    quantites : array[_TypeRessources] of Integer;
+    end;
+
   _Gisement = record
-    typeGisement : _TypeGisement
+    existe : Boolean;
+    typeGisement : _TypeGisement;
+    mineraiPurete : _Purete;
     end;
 
   _Recette = record
-    quantites : array[_TypeRessources] of Integer;
+    RessourcesEntree : array[_TypeRessources] of Integer;
+    RessourcesSortie : array[_TypeRessources] of Integer;
+    quantiteProduite : Integer;
     end;
-    { Exemple de definition recette:
-      var
-        recetteConst : _Recette;
-      begin
-        recetteConst.quantites[CablesDeCuivre] := 10;
-        recetteConst.quantites[PlaquesDeFer] := 10;
-      end;}
-_Batiment = record
-    batiment : _TypeBatiment;
+
+  _Production = record
+    RessourcesSortie : array[_TypeRessources] of Integer;
+    quantiteProduite : Integer;
+    end;
+
+  _Batiment = record
+    nom : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    mineraiPurete : _Purete;              // SI MINERAI
-    recette1 : _recette;  //Recette du batiment ex: 20 plaques de cuivres
-    recette2 : _recette;
-    recette3 : _recette;
+    recette : _Recette; 
     coutEnegrie : Integer;
     end;
 
   _Emplacement = record
     estDecouvert : Boolean;
-    batiement : _typeBatiment;
+    batiment : _Batiment;
     gisement : _Gisement;
     end;
 
-  
+
 
   _Zone = record
-    nom : String;
+    typeZone : _TypeZone;
     emplacements: Array of _Emplacement;
-  end; 
+    inventaire : _Inventaire;
+  end;
+
+  _EnsembleDeZones = array[_TypeZone] of _Zone;
 
 implementation
   

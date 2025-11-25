@@ -12,46 +12,34 @@ uses types;
 const
   // Déclaration des constantes de bâtiments
   hub: _Batiment = (
-    batiment: _TypeBatiment.hub;
+    nom: _TypeBatiment.hub;
     niveau: 1;
-    ressourceProduite: _TypeRessources.resMineraiCuivre;
-    mineraiPurete: 1;
-    recette1: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette2: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette3: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    ressourceProduite: _TypeRessources.MineraiCuivre;
+    recette: (RessourcesEntree: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
     coutEnegrie: 0;
   );
 
   mine: _Batiment = (
-    batiment: _TypeBatiment.mine;
+    nom: _TypeBatiment.mine;
     niveau: 1;
-    ressourceProduite: _TypeRessources.resMineraiCuivre;
-    mineraiPurete: 1;
-    recette1: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette2: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette3: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    ressourceProduite: _TypeRessources.MineraiCuivre;
+    recette: (RessourcesEntree: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
     coutEnegrie: 0;
   );
 
   constructeur: _Batiment = (
-    batiment: _TypeBatiment.constructeur;
+    nom: _TypeBatiment.constructeur;
     niveau: 1;
-    ressourceProduite: _TypeRessources.resLingotCuivre;
-    mineraiPurete: 1;
-    recette1: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette2: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette3: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    ressourceProduite: _TypeRessources.LingotCuivre;
+    recette: (RessourcesEntree: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
     coutEnegrie: 0;
   );
 
   centrale: _Batiment = (
-    batiment: _TypeBatiment.centrale;
+    nom: _TypeBatiment.centrale;
     niveau: 1;
-    ressourceProduite: _TypeRessources.resAcier;
-    mineraiPurete: 1;
-    recette1: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette2: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-    recette3: (quantites: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+    ressourceProduite: _TypeRessources.Acier;
+    recette: (RessourcesEntree: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
     coutEnegrie: 0;
   );
 
@@ -62,30 +50,30 @@ var
   i: _TypeRessources;
 begin
   for i := Low(_TypeRessources) to High(_TypeRessources) do
-    InitRecette.quantites[i] := 0;
+    InitRecette.RessourcesEntree[i] := 0;
 end;
 
 function CreerRecette(ressource: _TypeRessources; quantite: Integer): _Recette;
 begin
   CreerRecette := InitRecette();
-  CreerRecette.quantites[ressource] := quantite;
+  CreerRecette.RessourcesEntree[ressource] := quantite;
 end;
-
+{
 initialization
   // Initialisation des recettes pour chaque bâtiment
   
   // Hub
-  hub.recette1 := CreerRecette(_TypeRessources.resCableCuivre, 10);
+  hub.recette := CreerRecette(_TypeRessources.resCableCuivre, 10);
   
   // Mine
-  mine.recette1 := CreerRecette(_TypeRessources.resMineraiCuivre, 10);
+  mine.recette := CreerRecette(_TypeRessources.MineraiCuivre, 10);
   
   // Constructeur
-  constructeur.recette1 := CreerRecette(_TypeRessources.resMineraiCuivre, 10);
+  constructeur.recette := CreerRecette(_TypeRessources.MineraiCuivre, 10);
   constructeur.recette2 := CreerRecette(_TypeRessources.resLingotFer, 10);
   
   // Centrale
-  centrale.recette1 := CreerRecette(_TypeRessources.resLingotFer, 10);
+  centrale.recette := CreerRecette(_TypeRessources.resLingotFer, 10);
   centrale.recette2 := CreerRecette(_TypeRessources.resBeton, 10);
-
+}
 end.
