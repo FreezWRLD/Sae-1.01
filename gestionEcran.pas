@@ -65,8 +65,7 @@ interface
 	// Change la couleur de la zone
   procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
 
-  // Met les accents dans le cmd
-  function propre (t:string) : string;
+  procedure affichageCentre(s:string;y:integer); //Affiche dans le centre de l'écran le texte à la ligne souhaitée
   
 
     const
@@ -313,6 +312,12 @@ implementation
   function propre(t:string) : string;
   begin
     propre:=t
+  end;
+
+  procedure affichageCentre(s:string;y:integer);
+  begin
+    deplacerCurseurXY((200-Length(s))div 2,y);
+    writeln(s);
   end;
 
 end.
