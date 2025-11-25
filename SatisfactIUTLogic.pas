@@ -5,7 +5,6 @@ interface
   
 implementation
 type
-
   {Types Records}
   _Recettes = record
     RessourcesEntree : array[_TypeRessources] of Integer;
@@ -46,6 +45,7 @@ type
   _Zone = record
     typeZone : _TypeZone;
     emplacements: Array of _Emplacement;
+    inventaire : _Inventaire;
   end;
 
   {types Simples}
@@ -109,20 +109,6 @@ type
     batiment
   );
   
-  function RandomGisement():_Gisement; //Génère 2 gisements aleatoires pour un emplacement (si gisement existe => random)
-  begin
-    if Random(1) = 1 then
-    begin
-      RandomGisement.existe:=True;
-      RandomGisement.typeGisement:=_TypeGisement(Random(4));
-      RandomGisement.mineraiPurete:=_Purete(Random(3));
-    end
-    else
-    begin
-      RandomGisement.existe:=False;
-    end;
-  end;
-
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
     i:Integer;
@@ -159,19 +145,33 @@ type
         case zones[i].emplacements[j].batiment of
           mine:
           begin
-            inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + ((zones[i].emplacements[j].batiment.recette.production * zones[i].emplacement[j].gisement.mineraiPurete) * zones[i].emplacements[j].batiment.niveau);
+            zone[i].inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + ((zones[i].emplacements[j].batiment.recette.production * zones[i].emplacement[j].gisement.mineraiPurete) * zones[i].emplacements[j].batiment.niveau);
           end;
           constructeur:
           begin
-            inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.recette.production * zones[i].emplacements[j].batiment.niveau);
+            zone[i].inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.recette.production * zones[i].emplacements[j].batiment.niveau);
           end;
           centrale:
           begin
-            inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.recette.production)
+            zone[i].inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.recette.production)
           end;
           
         end;
       end;
+    end;
+  end;
+
+  function RandomGisement():_Gisement; //Génère 2 gisements aleatoires pour un emplacement (si gisement existe => random)
+  begin
+    if Random(1) = 1 then
+    begin
+      RandomGisement.existe:=True;
+      RandomGisement.typeGisement:=_TypeGisement(Random(4));
+      RandomGisement.mineraiPurete:=_Purete(Random(3));
+    end
+    else
+    begin
+      RandomGisement.existe:=False;
     end;
   end;
 
@@ -181,15 +181,14 @@ type
   end;
 
   function InitZones():array[_TypeZone] of _Zone; //Initialise les zones avec leurs emplacements
-  var 
-    zoneDeBase:_Zone;
   begin
     InitZones:=[];
 
     for i in _TypeZone do
     begin     
       InitZones[i].typeZone:=i;
-      InitZones[i].emplacements:=[False,vide,RandomGisement()]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
+      InitZones[i].emplacements:=[False,vide,RandomGisement()]; 
+      InitZones[i].inventaire:=[]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
     end;
   end;
 
