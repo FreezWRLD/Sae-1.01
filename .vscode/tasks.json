@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"label": "debug",
-			"file": "test.lpr",
+			"file": "main.lpr",
 			"type": "fpc",
 			"presentation": {
 				"showReuseMessage": false,
@@ -20,7 +20,7 @@
 		},
 		{
 			"label": "release",
-			"file": "test.lpr",
+			"file": "main.lpr",
 			"type": "fpc",
 			"presentation": {
 				"showReuseMessage": false,
@@ -32,19 +32,6 @@
 				"customOptions": [
 					"-dRELEASE",
 					"-O2"
-				]
-			}
-		},
-		{
-			"label": "debug",
-			"file": "test.lpr",
-			"type": "fpc",
-			"buildOption": {
-				"syntaxMode": "ObjFPC",
-				"unitOutputDir": "./out",
-				"customOptions": [
-					"-dDEBUG",
-					"-gw2"
 				]
 			}
 		}
