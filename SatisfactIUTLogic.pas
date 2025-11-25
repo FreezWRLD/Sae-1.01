@@ -2,48 +2,6 @@ unit SatisfactIUTLogic;
 
 interface
 type
-  {Types Records}
-  _Recettes = record
-    RessourcesEntree : array[_TypeRessources] of Integer;
-    RessourcesSortie : array[_TypeRessources] of Integer;
-    quantiteProduite : Integer;
-    end;
-
-  _Date = record
-    jour : Jour;
-    mois : Mois;
-    annee : Annee;
-    end;
-
-  _Inventaire = record
-    quantites : array[_TypeRessources] of Integer;
-    end;
-
-  _Emplacement = record
-    estDecouvert : Boolean;
-    batiment : _TypeBatiment;
-    gisement : _Gisement;
-    end;
-
-  _Gisement = record
-    existe : Boolean;
-    typeGisement : _TypeGisement;
-    mineraiPurete : _Purete;
-    end;
-
-  _Batiment = record
-    batiment : _TypeBatiment;
-    niveau : _Niveau;
-    ressourceProduite : _TypeRessources;
-    recette : _Recette; 
-    coutEnegrie : Integer;
-    end;
-
-  _Zone = record
-    typeZone : _TypeZone;
-    emplacements: Array of _Emplacement;
-    inventaire : _Inventaire;
-  end;
 
   {types Simples}
   //Date
@@ -105,6 +63,52 @@ type
     gisement,
     batiment
   );
+
+  {Types Records}
+  _Date = record
+    jour : Jour;
+    mois : Mois;
+    annee : Annee;
+    end;
+
+  _Inventaire = record
+    quantites : array[_TypeRessources] of Integer;
+    end;
+
+  _Emplacement = record
+    estDecouvert : Boolean;
+    batiment : _TypeBatiment;
+    gisement : _Gisement;
+    end;
+
+  _Gisement = record
+    existe : Boolean;
+    typeGisement : _TypeGisement;
+    mineraiPurete : _Purete;
+    end;
+
+  _Recettes = record
+    RessourcesEntree : array[_TypeRessources] of Integer;
+    RessourcesSortie : array[_TypeRessources] of Integer;
+    quantiteProduite : Integer;
+    end;
+
+  _Batiment = record
+    batiment : _TypeBatiment;
+    niveau : _Niveau;
+    ressourceProduite : _TypeRessources;
+    recette : _Recette; 
+    coutEnegrie : Integer;
+    end;
+
+  _Zone = record
+    typeZone : _TypeZone;
+    emplacements: Array of _Emplacement;
+    inventaire : _Inventaire;
+  end;
+
+
+
 
   
 implementation
