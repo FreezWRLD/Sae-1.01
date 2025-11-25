@@ -1,9 +1,14 @@
+unit types;
+  
+interface
+  
+
 type
   {types Simples}
   //Date
   _Jour = 1 .. 31;
   _Mois = 1 .. 12;
-  _Annee = 1000 .. 2025;
+  _Annee = 2025 .. 2999;
 
   //Niveau de gisement
   _Purete = 1 .. 3;
@@ -49,7 +54,7 @@ type
   _TypeZone = (
     base,
     rocheux,
-    foretNordique,
+    foretNordique
   );
 
   _TypeBatiment = (
@@ -69,9 +74,9 @@ type
 
   {Types Records}
   _Date = record
-    jour : Jour,
-    mois : Mois,
-    annee : Annee,
+    jour : _Jour;
+    mois : _Mois;
+    annee : _Annee;
     end;
 
   _Gisement = record
@@ -88,25 +93,32 @@ type
         recetteConst.quantites[CablesDeCuivre] := 10;
         recetteConst.quantites[PlaquesDeFer] := 10;
       end;}
-
-  _Emplacement = record
-    estDecouvert : Boolean;
-    batiement : typeBatiment;
-    gisement : Gisement;
-    end;
-
-  _Batiment = record
+_Batiment = record
     batiment : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    mineraiPurete : _Purete,              // SI MINERAI
+    mineraiPurete : _Purete;              // SI MINERAI
     recette1 : _recette;  //Recette du batiment ex: 20 plaques de cuivres
     recette2 : _recette;
     recette3 : _recette;
     coutEnegrie : Integer;
     end;
 
+  _Emplacement = record
+    estDecouvert : Boolean;
+    batiement : _typeBatiment;
+    gisement : _Gisement;
+    end;
+
+  
+
   _Zone = record
     nom : String;
     emplacements: Array of _Emplacement;
-  end;
+  end; 
+
+implementation
+  
+
+  
+end.
