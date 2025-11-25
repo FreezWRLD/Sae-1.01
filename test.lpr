@@ -12,7 +12,6 @@ begin
   ecranDemarrage();
 
 
-
   // ----------------------------------------
   readln;
 end.
