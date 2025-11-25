@@ -1,9 +1,6 @@
 unit SatisfactIUTLogic;
 
 interface
-
-  
-implementation
 type
   {Types Records}
   _Recettes = record
@@ -62,21 +59,21 @@ type
 
   {Types énumérés}
   _TypeRessources = (
-    resMineraiCuivre,
-    resMineraiFer,
-    resCalcaire,
-    resCharbon,
-    resLingotCuivre,
-    resLingotFer,
-    resCableCuivre,
-    resPlaqueFer,
-    resTuyauFer,
-    resBeton,
-    resAcier,
-    resPlaqueRenforcee,
-    resPoutreIndustrielle,
-    resFondation,
-    resEnergie
+    MineraiCuivre,
+    MineraiFer,
+    Calcaire,
+    Charbon,
+    LingotCuivre,
+    LingotFer,
+    CableCuivre,
+    PlaqueFer,
+    TuyauFer,
+    Beton,
+    Acier,
+    PlaqueRenforcee,
+    PoutreIndustrielle,
+    Fondation,
+    Energie
   );
 
   _TypeGisement = (
@@ -108,6 +105,10 @@ type
     gisement,
     batiment
   );
+
+  
+implementation
+
   
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
@@ -196,7 +197,15 @@ type
   begin
     InitDate.jour:=_Jour(Random(1,31));
     InitDate.mois:=_Mois(Random(1,12));
-    InitDate.annee:=_Annee(Random(2020,2025));
+    InitDate.annee:=_Annee(Random(2020,2023));
   end;
+
+  function InitRecette: _Recette;
+var
+  i: _TypeRessources;
+begin
+  for i := Low(_TypeRessources) to High(_TypeRessources) do
+    InitRecette.quantites[i] := 0;
+end;
 
 end.
