@@ -4,7 +4,7 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, types;
+  SysUtils, gestionEcran, types, SatisfactIUTLogic;
 
   procedure ecranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
   procedure ecranJeu(); //Procédure qui affichera l'écran du menu principal
@@ -106,7 +106,7 @@ begin
   dessinerCadreXY(x, y, x + largeurCadre, y + 10, double, White, Black);
 
   deplacerCurseurXY(x + 2, y + 2);
-  write('BATIMENT   : ', unBatiment.batiment);
+  write('BATIMENT   : ', unBatiment.nom);
 
   deplacerCurseurXY(x + 2, y + 3);
   write('NIVEAU     : ', unBatiment.niveau);
@@ -117,11 +117,6 @@ begin
   deplacerCurseurXY(x + 2, y + 5);
   write('ENERGIE    : ', unBatiment.coutEnegrie);
 
-  if unBatiment.mineraiPurete > 0 then
-  begin
-    deplacerCurseurXY(x + 2, y + 6);
-    write('PURETE     : ', unBatiment.mineraiPurete, '/3');
-  end;
 end;
 
  
