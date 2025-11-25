@@ -1,5 +1,5 @@
 unit objets;
-
+{$codepage utf8} 
 interface
 
 uses types;

@@ -1,5 +1,5 @@
 unit ihm;
-
+{$codepage utf8} 
 {$mode objfpc}{$H+}
 
 interface
@@ -60,7 +60,7 @@ implementation
           effacerEcran();
           couleurTexte(15);
           deplacerCurseurXY(77,3);
-          writeln('Dans une réalité. pas si alternative que ça.');
+          writeln(propre('Dans une réalité. pas si alternative que ça.'));
           writeln();
           writeln('                                                           2024 : une année particulièrement compliquée.');
           writeln('                                 Suite à un mouvement de grève encore jamais vu (les Gilets Verts) pas moins de douze gouvernements');

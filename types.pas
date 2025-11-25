@@ -1,5 +1,5 @@
 unit types;
-  
+{$codepage utf8}   
 interface
   
 

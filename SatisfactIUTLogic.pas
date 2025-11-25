@@ -1,5 +1,5 @@
 unit SatisfactIUTLogic;
-
+{$codepage utf8} 
 interface
 
   

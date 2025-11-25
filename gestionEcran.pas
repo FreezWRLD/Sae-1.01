@@ -1,5 +1,6 @@
 unit gestionEcran;
 
+{$codepage utf8}
 {$mode delphi}{$H+}
 
 
@@ -63,6 +64,9 @@ interface
 
 	// Change la couleur de la zone
   procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
+
+  // Met les accents dans le cmd
+  function propre (t:string) : string;
   
 
     const
@@ -306,6 +310,10 @@ implementation
       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), TextAttr);
     end;
 
+  function propre(t:string) : string;
+  begin
+    propre:=t
+  end;
 
 end.
 
