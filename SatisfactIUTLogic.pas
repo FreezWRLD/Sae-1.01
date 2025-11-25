@@ -66,9 +66,9 @@ type
 
   {Types Records}
   _Date = record
-    jour : Jour;
-    mois : Mois;
-    annee : Annee;
+    jour : _Jour;
+    mois : _Mois;
+    annee : _Annee;
     end;
 
   _Inventaire = record
