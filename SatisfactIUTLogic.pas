@@ -6,16 +6,16 @@ interface
 implementation
 type
 
+  {Types Records}
   _Recette = record
     Ressources : array[_TypeRessources] of Integer;
     production : Integer;
     end;
 
-  {Types Records}
   _Date = record
-    jour : Jour,
-    mois : Mois,
-    annee : Annee,
+    jour : Jour;
+    mois : Mois;
+    annee : Annee;
     end;
 
   _Inventaire = record
@@ -38,7 +38,7 @@ type
     batiment : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    recette : _Recette;  //Recette du batiment ex: 20 plaques de cuivres
+    recette : _Recette; 
     coutEnegrie : Integer;
     end;
 
@@ -74,7 +74,8 @@ type
     resAcier,
     resPlaqueRenforcee,
     resPoutreIndustrielle,
-    resFondation
+    resFondation,
+    resEnergie
   );
 
   _TypeGisement = (
@@ -165,7 +166,7 @@ type
           end;
           centrale:
           begin
-            
+            inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.recette.production)
           end;
           
         end;
