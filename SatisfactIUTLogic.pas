@@ -7,9 +7,10 @@ implementation
 type
 
   {Types Records}
-  _Recette = record
-    Ressources : array[_TypeRessources] of Integer;
-    production : Integer;
+  _Recettes = record
+    RessourcesEntree : array[_TypeRessources] of Integer;
+    RessourcesSortie : array[_TypeRessources] of Integer;
+    quantiteProduite : Integer;
     end;
 
   _Date = record
