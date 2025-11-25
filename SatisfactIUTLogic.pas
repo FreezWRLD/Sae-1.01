@@ -154,15 +154,19 @@ type
     begin
       for j:=0 to Length(zones[i].emplacements)-1 do
       begin
-        if zones[i].emplacements[j].batiment = mine then
-        begin
-          inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.production * zones[i].emplacements[j].batiment.niveau); //Ajoute la production de la mine à l'inventaire
-        end;
-
         case zones[i].emplacements[j].batiment of
           mine:
+          begin
+            inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + ((zones[i].emplacements[j].batiment.recette.production * zones[i].emplacement[j].gisement.mineraiPurete) * zones[i].emplacements[j].batiment.niveau);
+          end;
           constructeur:
+          begin
+            inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.recette.production * zones[i].emplacements[j].batiment.niveau);
+          end;
           centrale:
+          begin
+            
+          end;
           
         end;
       end;
