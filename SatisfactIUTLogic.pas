@@ -5,6 +5,12 @@ interface
   
 implementation
 type
+
+  _Recette = record
+    Ressources : array[_TypeRessources] of Integer;
+    production : Integer;
+    end;
+
   {Types Records}
   _Date = record
     jour : Jour,
@@ -32,7 +38,7 @@ type
     batiment : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    production : Integer;  //Recette du batiment ex: 20 plaques de cuivres
+    recette : _Recette;  //Recette du batiment ex: 20 plaques de cuivres
     coutEnegrie : Integer;
     end;
 
@@ -128,7 +134,7 @@ type
     end;
   end;
 
-  procedure jourSuivant(var date : _Date); //Passe au jour suivant
+  procedure jourSuivant(var date : _Date; var inventaire : _Inventaire); //Passe au jour suivant
   begin
     if date.jour < 31 then
       date.jour := date.jour + 1
@@ -141,6 +147,24 @@ type
       begin
         date.mois := 1;
         date.annee := date.annee + 1;
+      end;
+    end;
+
+    for i in _TypeZone do
+    begin
+      for j:=0 to Length(zones[i].emplacements)-1 do
+      begin
+        if zones[i].emplacements[j].batiment = mine then
+        begin
+          inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[zones[i].emplacements[j].batiment.ressourceProduite] + (zones[i].emplacements[j].batiment.production * zones[i].emplacements[j].batiment.niveau); //Ajoute la production de la mine à l'inventaire
+        end;
+
+        case zones[i].emplacements[j].batiment of
+          mine:
+          constructeur:
+          centrale:
+          
+        end;
       end;
     end;
   end;
