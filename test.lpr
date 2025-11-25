@@ -1,7 +1,7 @@
 program test; //Utiliser ce fichier pour tester vos programmes
-
+{$codepage utf8} 
 uses
-  sysutils, types, gestionEcran, ihm, objets;
+  sysutils, types, gestionEcran, ihm, objets, SatisfactIUTLogic;
 
 begin
   effacerEtColorierEcran(Black);
@@ -10,7 +10,6 @@ begin
   afficherBatiment( (120 - 70) div 2, 5,hub);
   effacerEcran();
   ecranDemarrage();
-
 
 
   // ----------------------------------------

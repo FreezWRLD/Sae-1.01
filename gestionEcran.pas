@@ -1,5 +1,6 @@
 unit gestionEcran;
 
+{$codepage utf8}
 {$mode delphi}{$H+}
 
 
@@ -63,6 +64,8 @@ interface
 
 	// Change la couleur de la zone
   procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
+
+  procedure affichageCentre(s:string;y:integer); //Affiche dans le centre de l'écran le texte à la ligne souhaitée
   
 
     const
@@ -306,6 +309,16 @@ implementation
       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), TextAttr);
     end;
 
+  function propre(t:string) : string;
+  begin
+    propre:=t
+  end;
+
+  procedure affichageCentre(s:string;y:integer);
+  begin
+    deplacerCurseurXY((200-Length(UTF8Decode(s)))div 2,y);
+    writeln(s);
+  end;
 
 end.
 
