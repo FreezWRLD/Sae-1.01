@@ -6,8 +6,6 @@ quel écran du jeu.
 
 Gestion des emplacements - Nicolas
 
-• (niv 1) Les richesses de Mars : Certains emplacements doivent contenir des gisements de
-minerai. Au moins deux types de minerais différents doivent être présents.
 • (niv 2) Cartographie partielle : Certains emplacements ne sont pas découverts au départ.
 Tant qu’un emplacement reste non découvert, aucun bâtiment ne peut y être construit et la pré-
 sence éventuelle d’un gisement ne doit pas être visible. Une action d’exploration doit permettre

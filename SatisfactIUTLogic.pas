@@ -103,7 +103,6 @@ type
     batiment
   );
   
-
   function RandomGisement():_Gisement; //Génère 2 gisements aleatoires pour un emplacement (si gisement existe => random)
   begin
     if Random(1) = 1 then
@@ -114,6 +113,19 @@ type
     else
     begin
       RandomGisement.existe:=False;
+    end;
+  end;
+
+  procedure exploration(var zone : _Zone);
+  var 
+    i:Integer;
+  begin
+    i := Random(Length(zone.emplacements));
+    if not zone.emplacements[i].estDecouvert then
+      zone.emplacements[i].estDecouvert := True;
+    else
+    begin
+      exploration(zone);
     end;
   end;
 
@@ -129,7 +141,4 @@ type
       InitZones[i].emplacements:=[False,vide,RandomGisement()]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
     end;
   end;
-
-
-  
 end.
