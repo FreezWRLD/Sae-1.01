@@ -24,7 +24,7 @@ type
 
   _Gisement = record
     existe : Boolean;
-    typeGisement : array [0..1] of _TypeGisement
+    typeGisement : _TypeGisement;
     end;
 
   _Batiment = record
@@ -104,13 +104,12 @@ type
   );
   
 
-  function RandomGisement():_Gisement;
+  function RandomGisement():_Gisement; //Génère 2 gisements aleatoires pour un emplacement (si gisement existe => random)
   begin
     if Random(1) = 1 then
     begin
       RandomGisement.existe:=True;
-      RandomGisement.typeGisement[0]:=_TypeGisement(Random(4));
-      RandomGisement.typeGisement[1]:=_TypeGisement(Random(4));
+      RandomGisement.typeGisement:=_TypeGisement(Random(4));
     end
     else
     begin
@@ -118,7 +117,7 @@ type
     end;
   end;
 
-  function InitZones():array[_TypeZone] of _Zone;
+  function InitZones():array[_TypeZone] of _Zone; //Initialise les zones avec leurs emplacements
   var 
     zoneDeBase:_Zone;
   begin
@@ -127,7 +126,7 @@ type
     for i in _TypeZone do
     begin     
       InitZones[i].typeZone:=i;
-      InitZones[i].emplacements:=[False,vide,RandomGisement()];
+      InitZones[i].emplacements:=[False,vide,RandomGisement()]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
     end;
   end;
 

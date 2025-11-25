@@ -5,8 +5,7 @@ nouvelle partie ou de quitter le jeu. Le joueur doit pouvoir retourner à ce men
 quel écran du jeu.
 
 Gestion des emplacements - Nicolas
-• (niv 1) Chacun sa place : Une zone de Mars doit comporter un nombre fini d’emplacements
-destinés à la construction de bâtiments. Un seul bâtiment peut être construit par emplacement.
+
 • (niv 1) Les richesses de Mars : Certains emplacements doivent contenir des gisements de
 minerai. Au moins deux types de minerais différents doivent être présents.
 • (niv 2) Cartographie partielle : Certains emplacements ne sont pas découverts au départ.
