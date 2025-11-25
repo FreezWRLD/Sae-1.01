@@ -316,7 +316,7 @@ implementation
 
   procedure affichageCentre(s:string;y:integer);
   begin
-    deplacerCurseurXY((200-Length(s))div 2,y);
+    deplacerCurseurXY((200-Length(UTF8Decode(s)))div 2,y);
     writeln(s);
   end;
 

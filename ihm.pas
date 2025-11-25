@@ -15,6 +15,8 @@ implementation
   var
     choix:integer=0; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
   begin
+    
+    ColorierZone(15,15,40,45,1);
     couleurTexte(6);
     deplacerCurseurXY(0,9);
     writeln('                   _________________________________________________________________________________________________________________________________________________________');
