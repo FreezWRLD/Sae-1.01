@@ -11,7 +11,7 @@ Tant qu’un emplacement reste non découvert, aucun bâtiment ne peut y être c
 sence éventuelle d’un gisement ne doit pas être visible. Une action d’exploration doit permettre
 de les révéler.
 
-Gestion des constructions
+Gestion des constructions - Nicolas
 • (niv 1) Le jour, on creuse ! : Il doit être possible de construire une mine dans un emplace-
 ment contenant un gisement. La mine récolte chaque jour une quantité définie de minerai. La
 construction d’un bâtiment doit consommer des ressources.

@@ -12,7 +12,7 @@ type
     annee : Annee,
     end;
 
-  _Recette = record
+  _Inventaire = record
     quantites : array[_TypeRessources] of Integer;
     end;
 
@@ -31,10 +31,8 @@ type
     batiment : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    mineraiPurete : _Purete,              // SI MINERAI
-    recette1 : _recette;  //Recette du batiment ex: 20 plaques de cuivres
-    recette2 : _recette;
-    recette3 : _recette;
+    mineraiPurete : _Purete;              // SI MINERAI
+    production : Integer;  //Recette du batiment ex: 20 plaques de cuivres
     coutEnegrie : Integer;
     end;
 
@@ -116,7 +114,7 @@ type
     end;
   end;
 
-  procedure exploration(var zone : _Zone);
+  procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
     i:Integer;
   begin
@@ -125,7 +123,7 @@ type
       zone.emplacements[i].estDecouvert := True;
     else
     begin
-      exploration(zone);
+      explorationEmplacement(zone); //Relance la fonction si l'emplacement est déjà découvert
     end;
   end;
 
