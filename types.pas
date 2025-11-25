@@ -31,7 +31,8 @@ type
     resAcier,
     resPlaqueRenforcee,
     resPoutreIndustrielle,
-    resFondation
+    resFondation,
+    resEnergie
   );
 
   _TypeGisement = (
