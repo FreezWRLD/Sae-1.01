@@ -77,7 +77,7 @@ type
     gisementCuivre,
     gisementFer,
     gisementCalcaire,
-    gisementCharbon,
+    gisementCharbon
   );
 
   _TypeZone = (
@@ -106,17 +106,28 @@ type
 
   function RandomGisement():_Gisement;
   begin
-    
+    if Random(1) = 1 then
+    begin
+      RandomGisement.existe:=True;
+      RandomGisement.typeGisement[0]:=_TypeGisement(Random(4));
+      RandomGisement.typeGisement[1]:=_TypeGisement(Random(4));
+    end
+    else
+    begin
+      RandomGisement.existe:=False;
+    end;
   end;
 
   function InitZones():array[_TypeZone] of _Zone;
+  var 
+    zoneDeBase:_Zone;
   begin
     InitZones:=[];
 
     for i in _TypeZone do
     begin     
       InitZones[i].typeZone:=i;
-      InitZones[i].emplacements:=[False,vide,];
+      InitZones[i].emplacements:=[False,vide,RandomGisement()];
     end;
   end;
 
