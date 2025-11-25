@@ -8,7 +8,8 @@ begin
   // ----------------------------------------
   // LES FONCTIONS A APPERLER POUR LES TESTER :
   afficherBatiment( (120 - 70) div 2, 5,hub);
-  
+  effacerEcran();
+  ecranDemarrage();
 
 
 

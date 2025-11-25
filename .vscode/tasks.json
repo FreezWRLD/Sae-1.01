@@ -34,6 +34,19 @@
 					"-O2"
 				]
 			}
+		},
+		{
+			"label": "debug",
+			"file": "test.lpr",
+			"type": "fpc",
+			"buildOption": {
+				"syntaxMode": "ObjFPC",
+				"unitOutputDir": "./out",
+				"customOptions": [
+					"-dDEBUG",
+					"-gw2"
+				]
+			}
 		}
 	]
 }

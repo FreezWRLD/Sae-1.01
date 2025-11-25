@@ -7,7 +7,8 @@ uses
   SysUtils, gestionEcran, types;
 
   procedure ecranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
-  procedure ecranJeu(); //Procédure qui affichera l'écran du menu principal
+  procedure ecranJeu(); //Procédure qui affichera l'écran du jeu
+  procedure menu();//Procédure qui affichera le menu
   procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
   
 implementation
@@ -101,6 +102,159 @@ implementation
 
   procedure ecranJeu();
   begin
+    
+  end;
+  
+  procedure menu();
+  var
+    choix1,choix2,choix3,choix4:Integer;
+  begin
+  writeln('Que voulez-vous faire ?'); // Position à mettre (déplacercurseurXY)
+  writeln('1/ Construire un bâtiment');
+  writeln('2/ Changer la production');
+  writeln('3/ Améliorer un bâtiment');
+  writeln('4/ Explorer la zone');
+  writeln('5/ Changer de zone')
+  writeln('6/ Transférer des ressources');
+  writeln('7/ Passer la journée');
+  writeln('8/ Missions');
+  writeln('9/ Wiki');
+  writeln('0/ Quitter la partie');
+    repeat
+    readln(choix1);
+      case choix1 of
+        0:
+        begin
+          ecranJoueur();
+        end;
+        1:
+        begin
+          selectionEmplacement();
+          writeln('Quel bâtiment voulez-vous construire ?');
+          writeln('1/ Construire une mine');
+          writeln('2/ Construire un constructeur');
+          writeln('3/ Construire une centrale');
+          writeln('4/ Construire l''ascenseur orbital');
+          readln(choix2);
+          case choix2 of
+            1:
+            begin
+              
+            end;
+            2:
+            begin
+              
+            end;
+            3:
+            begin
+              
+            end;
+            4:
+            begin
+              
+            end;
+          end;
+        end;
+        2:
+        begin
+          writeln('Que doit produire le constructeur ?');
+          writeln('1/ Lingots de cuivre');
+          writeln('2/ Lingots de fer');
+          writeln('3/ Cables de cuivre');
+          writeln('4/ Plaques de fer');
+          writeln('5/ Tuyaux en fer');
+          writeln('6/ Autres');
+          readln(choix3);
+          case choix3 of
+            1:
+            begin
+              
+            end;
+            2:
+            begin
+              
+            end;
+            3:
+            begin
+              
+            end;
+            4:
+            begin
+              
+            end;
+            5:
+            begin
+              
+            end;
+            6:
+            begin
+              writeln('1/ Sacs de Béton');
+              writeln('2/ Acier');
+              writeln('3/ Plaques renforcées');
+              writeln('4/ Poutres industrielles');
+              writeln('5/ Fondations');
+              writeln('6/ Quiter');
+              readln(choix4);
+              case choix4 of
+                1:
+                begin
+                  
+                end;
+                2:
+                begin
+                  
+                end;
+                3:
+                begin
+                  
+                end;
+                4:
+                begin
+                  
+                end;
+                5:
+                begin
+                  
+                end;
+                6:
+                begin
+                  ecranJeu();
+                end;
+
+              end;
+            end;
+          end;
+        end;
+        3:
+        begin
+          
+        end;
+        4:
+        begin
+          
+        end;
+        5:
+        begin
+          
+        end;
+        6:
+        begin
+          
+        end;
+        7:
+        begin
+          
+        end;
+        8:
+        begin
+          
+        end;
+        9:
+        begin
+          
+        end;
+      end;
+    until (Choix>=0) AND (Choix=<9);
     
   end;
 
