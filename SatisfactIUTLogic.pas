@@ -174,6 +174,11 @@ type
     end;
   end;
 
+  function GetDate(date : _Date):String; //Retourne la date sous forme de chaîne de caractères
+  begin 
+    GetDate := IntToStr(date.jour) + '/' + IntToStr(date.mois) + '/' + IntToStr(date.annee);
+  end;
+
   function InitZones():array[_TypeZone] of _Zone; //Initialise les zones avec leurs emplacements
   var 
     zoneDeBase:_Zone;
