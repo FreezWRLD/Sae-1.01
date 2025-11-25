@@ -5,9 +5,7 @@ interface
 uses
   sysutils, objets, types;
 
-
-
-{function InitZones(): _EnsembleDeZones;}
+{function InitZones():_EnsembleDeZones;}
 function InitDate():_Date; //Initialise la date de début du jeu
 
 
@@ -109,6 +107,16 @@ implementation
     InitDate.jour:=_Jour(Random(31));
     InitDate.mois:=_Mois(Random(12));
     InitDate.annee:=_Annee(Random(2023));
+  end;
+
+  procedure InitInventaires(zone : _Zone);
+  var
+    i:_TypeRessources;
+  begin
+    for i in _TypeRessources do
+    begin
+      zone.inventaire.quantites[i]:=0;
+    end;
   end;
 
   end.

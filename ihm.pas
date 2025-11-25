@@ -90,8 +90,17 @@ implementation
 
 
   procedure ecranJeu();
+  var 
+    Planete : _EnsembleDeZones;
+    DateJeu : _Date;
   begin
-    
+    Planete := InitZones();
+    DateJeu := InitDate();
+    for i in Planete do
+    begin
+      InitInventaires(Planete[i]);
+    end;
+
   end;
   
   procedure menu();
