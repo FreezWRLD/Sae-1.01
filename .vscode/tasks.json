@@ -5,12 +5,33 @@
 			"label": "debug",
 			"file": "test.lpr",
 			"type": "fpc",
+			"presentation": {
+				"showReuseMessage": false,
+				"clear": true,
+				"revealProblems": "onProblem"
+			},
 			"buildOption": {
-				"syntaxMode": "ObjFPC",
 				"unitOutputDir": "./out",
 				"customOptions": [
 					"-dDEBUG",
 					"-gw2"
+				]
+			}
+		},
+		{
+			"label": "release",
+			"file": "test.lpr",
+			"type": "fpc",
+			"presentation": {
+				"showReuseMessage": false,
+				"clear": true,
+				"revealProblems": "onProblem"
+			},
+			"buildOption": {
+				"unitOutputDir": "./out",
+				"customOptions": [
+					"-dRELEASE",
+					"-O2"
 				]
 			}
 		}

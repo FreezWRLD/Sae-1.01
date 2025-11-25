@@ -62,13 +62,13 @@ var
   i: _TypeRessources;
 begin
   for i := Low(_TypeRessources) to High(_TypeRessources) do
-    Result.quantites[i] := 0;
+    InitRecette.quantites[i] := 0;
 end;
 
 function CreerRecette(ressource: _TypeRessources; quantite: Integer): _Recette;
 begin
-  Result := InitRecette();
-  Result.quantites[ressource] := quantite;
+  CreerRecette := InitRecette();
+  CreerRecette.quantites[ressource] := quantite;
 end;
 
 initialization

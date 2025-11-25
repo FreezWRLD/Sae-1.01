@@ -4,10 +4,11 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran;
+  SysUtils, gestionEcran, types;
 
   procedure ecranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
   procedure ecranJeu(); //Procédure qui affichera l'écran du menu principal
+  procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
   
 implementation
   procedure ecranDemarrage();
@@ -103,6 +104,36 @@ implementation
     
   end;
 
+  // Fonction pour afficher un bâtiment dans un cadre formaté
+// x, y : position du coin supérieur gauche du cadre
+procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
+var
+  largeurCadre: integer;
+  pos: coordonnees;
+begin
+  largeurCadre := 70; // Largeur du cadre
+  
+  // Dessin du cadre
+  dessinerCadreXY(x, y, x + largeurCadre, y + 10, double, White, Black);
+
+  deplacerCurseurXY(x + 2, y + 2);
+  write('BATIMENT   : ', unBatiment.batiment);
+
+  deplacerCurseurXY(x + 2, y + 3);
+  write('NIVEAU     : ', unBatiment.niveau);
+
+  deplacerCurseurXY(x + 2, y + 4);
+  write('RESSOURCE  : ', unBatiment.ressourceProduite);
+
+  deplacerCurseurXY(x + 2, y + 5);
+  write('ENERGIE    : ', unBatiment.coutEnegrie);
+
+  if unBatiment.mineraiPurete > 0 then
+  begin
+    deplacerCurseurXY(x + 2, y + 6);
+    write('PURETE     : ', unBatiment.mineraiPurete, '/3');
+  end;
+end;
 
  
   
