@@ -25,13 +25,13 @@ type
   _Gisement = record
     existe : Boolean;
     typeGisement : _TypeGisement;
+    mineraiPurete : _Purete;
     end;
 
   _Batiment = record
     batiment : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    mineraiPurete : _Purete;              // SI MINERAI
     production : Integer;  //Recette du batiment ex: 20 plaques de cuivres
     coutEnegrie : Integer;
     end;
@@ -45,7 +45,7 @@ type
   //Date
   _Jour = 1 .. 31;
   _Mois = 1 .. 12;
-  _Annee = 1000 .. 2025;
+  _Annee = 2020 .. 2025;
 
   //Niveau de gisement
   _Purete = 1 .. 3;
@@ -107,6 +107,7 @@ type
     begin
       RandomGisement.existe:=True;
       RandomGisement.typeGisement:=_TypeGisement(Random(4));
+      RandomGisement.mineraiPurete:=_Purete(Random(3));
     end
     else
     begin
@@ -127,6 +128,23 @@ type
     end;
   end;
 
+  procedure jourSuivant(var date : _Date); //Passe au jour suivant
+  begin
+    if date.jour < 31 then
+      date.jour := date.jour + 1
+    else
+    begin
+      date.jour := 1;
+      if date.mois < 12 then
+        date.mois := date.mois + 1
+      else
+      begin
+        date.mois := 1;
+        date.annee := date.annee + 1;
+      end;
+    end;
+  end;
+
   function InitZones():array[_TypeZone] of _Zone; //Initialise les zones avec leurs emplacements
   var 
     zoneDeBase:_Zone;
@@ -139,4 +157,12 @@ type
       InitZones[i].emplacements:=[False,vide,RandomGisement()]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
     end;
   end;
+
+  function InitDate():_Date; //Initialise la date de début du jeu
+  begin
+    InitDate.jour:=_Jour(Random(1,31));
+    InitDate.mois:=_Mois(Random(1,12));
+    InitDate.annee:=_Annee(Random(2020,2025));
+  end;
+
 end.
