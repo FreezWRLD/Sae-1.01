@@ -12,18 +12,19 @@ type
     annee : Annee,
     end;
 
-  _Gisement = record
-    typeGisement : _TypeGisement
-    end;
-
   _Recette = record
     quantites : array[_TypeRessources] of Integer;
     end;
 
   _Emplacement = record
     estDecouvert : Boolean;
-    batiement : typeBatiment;
-    gisement : Gisement;
+    batiment : _TypeBatiment;
+    gisement : _Gisement;
+    end;
+
+  _Gisement = record
+    existe : Boolean;
+    typeGisement : array [0..1] of _TypeGisement
     end;
 
   _Batiment = record
@@ -38,7 +39,7 @@ type
     end;
 
   _Zone = record
-    nom : String;
+    typeZone : _TypeZone;
     emplacements: Array of _Emplacement;
   end;
 
@@ -76,13 +77,15 @@ type
     gisementCuivre,
     gisementFer,
     gisementCalcaire,
-    gisementCharbon
+    gisementCharbon,
   );
 
   _TypeZone = (
     base,
     rocheux,
     foretNordique,
+    volcanique,
+    desertique
   );
 
   _TypeBatiment = (
@@ -90,7 +93,8 @@ type
     mine,
     constructeur,
     centrale,
-    ascenseurOrbital
+    ascenseurOrbital,
+    vide
   );
 
   _TypeEmplacement = (
@@ -98,7 +102,23 @@ type
     gisement,
     batiment
   );
+  
 
+  function RandomGisement():_Gisement;
+  begin
+    
+  end;
+
+  function InitZones():array[_TypeZone] of _Zone;
+  begin
+    InitZones:=[];
+
+    for i in _TypeZone do
+    begin     
+      InitZones[i].typeZone:=i;
+      InitZones[i].emplacements:=[False,vide,];
+    end;
+  end;
 
 
   
