@@ -124,11 +124,7 @@ implementation
     until (choix=1) OR (choix=2);
   end;
 
-  
-
-//<<<<<<< HEAD
-{
-  procedure menu();
+ { procedure menu();
   var
     choix1,choix2,choix3,choix4:Integer;
   begin
@@ -189,7 +185,6 @@ implementation
           writeln('4/ Plaques de fer');
           writeln('5/ Tuyaux en fer');
           writeln('6/ Autres');
-<<<<<<< HEAD
           repeat
             readln(choix3);
             case choix3 of
@@ -224,57 +219,58 @@ implementation
                 repeat
                   readln(choix4);
                   case choix4 of
-                    1:
+                    1: 
                     begin
                       
                     end;
-                    2:
+                    2: 
                     begin
                       
                     end;
-                    3:
+                    3: 
                     begin
                       
                     end;
-                    4:
+                    4: 
                     begin
                       
                     end;
-                    5:
+                    5: 
                     begin
                       
                     end;
-                    6:
+                    6: 
                     begin
                       ecranJeu();
                     end;
                   end;
-                until (choix4>=1) AND (choix4=<6);  
-          until (choix3>=1) AND (choix3=<6);
-=======
+                until (choix4>=1) AND (choix4<=6); 
+              end;
+            end;
+          until (choix3>=1) AND (choix3<=6);
           readln(choix3);
           case choix3 of
-            1:
+            1: 
             begin
               
             end;
-            2:
+            2: 
             begin
               
             end;
-            3:
+            3: 
             begin
               
             end;
-            4:
+            4: 
             begin
               
             end;
-            5:
+            5: 
             begin
               
             end;
-            6:
+            6: 
             begin
               writeln('1/ Sacs de Béton');
               writeln('2/ Acier');
@@ -284,45 +280,44 @@ implementation
               writeln('6/ Quiter');
               readln(choix4);
               case choix4 of
-                1:
+                1: 
                 begin
                   
                 end;
-                2:
+                2: 
                 begin
                   
                 end;
-                3:
+                3: 
                 begin
                   
                 end;
-                4:
+                4: 
                 begin
                   
                 end;
-                5:
+                5: 
                 begin
                   
                 end;
-                6:
+                6: 
                 begin
                   //ecranJeu();
                 end;
 
->>>>>>> d1fb91e885d2877704212d25cda2cc956e272244
               end;
             end;
           end;
         end;
-        3:
+        3: 
         begin
           estBatiment();
         end;
-        4:
+        4: 
         begin
           exploreZone();
         end;
-        5:
+        5: 
         begin
           writeln('Dans quelle zone voulez-vous aller ?');
           writeln('1/ Zone de départ');
@@ -330,11 +325,11 @@ implementation
           writeln('3/ Zone de la forêt nordique');
           repeat
             case choix5 of
-              1:
+              1: 
               begin
                 zonededepart();
               end;
-              2:
+              2: 
               begin
                 zonedudesertrocheux();
               end;
@@ -343,9 +338,9 @@ implementation
                 zonedelaforetnordique();
               end;
             end;
-          until (choix5>=1) AND (choix5=<3);
+          until (choix5>=1) AND (choix5<=3);
         end;
-        6:
+        6: 
         begin
           writeln('Vers quelle zone ?');
           writeln('1/ Zone de départ');
@@ -353,34 +348,36 @@ implementation
           writeln('3/ Zone de la forêt nordique');
           repeat
             case choix6 of
-              1:
+              1: 
               begin
                 
               end;
-              2:
+              2: 
               begin
                 
               end;
-              3:
+              3: 
               begin
                 
               end;
             end;
-          until (choix6>=1) AND (choix6=<3);
+          until (choix6>=1) AND (choix6<=3);
         end;
-        7:
+        7: 
         begin
           
         end;
-        8:
+        8: 
         begin
           
         end;
-        9:
+        9: 
         begin
           
         end;
-=======
+      end;
+    until (choix1>=0) AND (choix1<=9);
+  end;}
 
   procedure afficherMenuPrincipale();
     begin
@@ -501,14 +498,12 @@ implementation
       // 9/ Wiki
       // 0/ Quitter la partie
       0: quitterIHM();
->>>>>>> 3469f48f3a23be123e1d6d60e73c123a439cdd9c
       end;
     until choix in [1..10];
     end;
 
   procedure afficherEcranJeu();
   begin
-    afficherHistoire();
     dessinerCadreXY(0,0,L_MENU+X_MENU_PRINCIPALE,39,simple,white,black);
     afficherInventaire();
     menuDeJeu();
@@ -539,17 +534,4 @@ procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
 
   end;
 
-  procedure MenuDemarrage();
-  var
-    choix:string; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
-  begin
-    repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
-      readln(choix);
-      if (choix = '1') then afficherHistoire() else if (choix = '2') then quitterIHM();
-    until (choix='1') OR (choix='2');
-  end;
-}
-  
-
-  
 end.

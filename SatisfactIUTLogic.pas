@@ -85,33 +85,7 @@ implementation
     GetDate := intToStr(date.jour) + '/' + intToStr(date.mois) + '/' + intToStr(date.annee);
   end;
 
-  function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
-
-  var
-    i:_TypeZone;
-  begin
-    for i in _TypeZone do
-    begin     
-      InitZones[i].typeZone:=i;
-      SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
-      InitInventaires(InitZones[i]);
-      for var j:=1 to Length(InitZones[i].emplacements)-1 do
-      begin
-        InitZones[i].emplacements[j].estDecouvert := False;
-        InitZones[i].emplacements[j].gisement := RandomGisement();
-      end;
-    end;
-    InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
-    InitZones[base].emplacements[0].batiment := hub; //Le premier emplacement de la zone de base contient toujours le hub
-  end;
-
-  function InitDate():_Date; //Initialise la date de début du jeu
-  begin
-    InitDate.jour:=_Jour(Random(31));
-    InitDate.mois:=_Mois(Random(12));
-    InitDate.annee:=_Annee(Random(2023));
-  end;
-  procedure InitInventaires(var zone : _Zone);
+    procedure InitInventaires(var zone : _Zone);
   var
     i:_TypeRessources;
   begin
@@ -121,4 +95,30 @@ implementation
     end;
   end;
 
+  function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
+  var
+    i:_TypeZone;
+    j :Integer;
+  begin
+    for i in _TypeZone do
+    begin     
+      InitZones[i].typeZone:=i;
+      SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
+      InitInventaires(InitZones[i]);
+      for j:=1 to Length(InitZones[i].emplacements)-1 do
+      begin
+        InitZones[i].emplacements[j].estDecouvert := False;
+        InitZones[i].emplacements[j].gisement := RandomGisement();
+      end;
+    end;
+    InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
+    InitZones[base].emplacements[0].batiment := DEFAULT_HUB; //Le premier emplacement de la zone de base contient toujours le hub
+  end;
+
+  function InitDate():_Date; //Initialise la date de début du jeu
+  begin
+    InitDate.jour:=_Jour(Random(31));
+    InitDate.mois:=_Mois(Random(12));
+    InitDate.annee:=_Annee(Random(2023));
+  end;
   end.
