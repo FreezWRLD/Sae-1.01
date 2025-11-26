@@ -17,12 +17,14 @@ implementation
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
     i:Integer;
+    j:Integer; // Déclaration de la variable j
   begin
     i := Random(Length(zone.emplacements));
     if not zone.emplacements[i].estDecouvert then begin zone.emplacements[i].estDecouvert := True; end
     else
     begin explorationEmplacement(zone); //Relance la fonction si l'emplacement est déjà découvert
     end;
+
   end;
 
   procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant

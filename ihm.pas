@@ -4,9 +4,10 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, declarations, SatisfactIUTLogic;
+  SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
 
   procedure ecranDemarrage();
+  procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
   
 implementation
   //Affichage d'un message de fin
@@ -199,10 +200,11 @@ implementation
       2: menuProductionConstructeur(); // 2/ Changer la production
       // 3/ Améliorer un bâtiment
       // 4/ Explorer la zone
-      // 4 : explorationEmplacement();
+      4 : explorationEmplacement(JZones[ZoneActuelle]);
       // 5/ Changer de zone
       // 6/ Transférer des ressources
       // 7/ Passer la journée 
+      7: jourSuivant(JDate, JInventaire, JZones);
       // 8/ Missions
       // 9/ Wiki
       // 0/ Quitter la partie
@@ -222,19 +224,25 @@ procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
     largeurCadre := 70; // Largeur du cadre
     
     // Dessin du cadre
-    dessinerCadreXY(x, y, x + largeurCadre, y + 10, double, White, Black);
+    dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
 
-    deplacerCurseurXY(x + 2, y + 2);
-    write('BATIMENT   : ', unBatiment.nom);
+    deplacerCurseurXY(x + 6, y + 2);
+    write('BATIMENT   : ', unBatiment.nom); 
 
-    deplacerCurseurXY(x + 2, y + 3);
-    write('NIVEAU     : ', unBatiment.niveau);
+    if unBatiment.nom <> hub then begin
+      deplacerCurseurXY(x + 6, y + 3);
+      write('NIVEAU     : ', unBatiment.niveau);
+    end;
 
-    deplacerCurseurXY(x + 2, y + 4);
-    write('RESSOURCE  : ', unBatiment.ressourceProduite);
+    if unBatiment.nom <> hub then begin
+      deplacerCurseurXY(x + 6, y + 4);
+      write('RESSOURCE  : ', unBatiment.ressourceProduite);
+    end;
 
-    deplacerCurseurXY(x + 2, y + 5);
-    write('ENERGIE    : ', unBatiment.coutEnegrie);
+    if unBatiment.nom <> hub then begin
+      deplacerCurseurXY(x + 6, y + 5);
+      write('ENERGIE    : ', unBatiment.coutEnegrie);
+    end;
 
   end;
 

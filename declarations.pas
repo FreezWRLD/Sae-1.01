@@ -23,6 +23,7 @@ type
   _Niveau = 1 .. 3;
 
   _Message = array of string;
+  
 
   {Types énumérés}
   _TypeRessources = (
@@ -59,11 +60,11 @@ type
   );
 
   _TypeBatiment = (
-    hub,
-    mine,
-    constructeur,
-    centrale,
-    ascenseurOrbital
+    HUB,
+    MINE,
+    CONSTRUCTEUR,
+    CENTRALE,
+    ASCENSEUR_ORBITAL
   );
 
   _TypeEmplacement = (
@@ -123,11 +124,12 @@ type
   end;
 
   _EnsembleDeZones = array[_TypeZone] of _Zone;
+  _ListeDeBatiments = array[0..4] of _Batiment;
 
   const
 
   DEFAULT_HUB : _Batiment = (
-    nom: _TypeBatiment.hub;
+    nom: _TypeBatiment.HUB;
     niveau: 1;
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 200;);
@@ -135,7 +137,7 @@ type
   );
 
   DEFAULT_MINE : _Batiment = (
-    nom: _TypeBatiment.mine;
+    nom: _TypeBatiment.MINE;
     niveau: 1;
     ressourceProduite: _TypeRessources.MineraiCuivre;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.MineraiCuivre; quantiteProduite: 20;);
@@ -143,7 +145,7 @@ type
   );
 
   DEFAULT_CONSTRUCTEUR : _Batiment = (
-    nom: _TypeBatiment.constructeur;
+    nom: _TypeBatiment.CONSTRUCTEUR;
     niveau: 1;
     ressourceProduite: _TypeRessources.LingotCuivre;
     recette: (RessourcesEntree: (20,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.LingotCuivre; quantiteProduite: 10;);
@@ -151,7 +153,7 @@ type
   );
 
   DEFAULT_CENTRALE : _Batiment = (
-    nom: _TypeBatiment.centrale;
+    nom: _TypeBatiment.CENTRALE;
     niveau: 1;
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 100;);
@@ -159,7 +161,7 @@ type
   );
 
   DEFAULT_ASCENSEUR_ORBITAL : _Batiment = (
-    nom: _TypeBatiment.ascenseurOrbital;
+    nom: _TypeBatiment.ASCENSEUR_ORBITAL;
     niveau: 1;
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
