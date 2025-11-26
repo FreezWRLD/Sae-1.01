@@ -44,9 +44,9 @@ implementation
   
  
 
- { procedure menu();
+ procedure menu();
   var
-    choix1,choix2,choix3,choix4:Integer;
+    choix,choix1,choix2,choix3,choix4,choix5,choix6:Integer;
   begin
   writeln('Que voulez-vous faire ?'); // Position à mettre (déplacercurseurXY)
   writeln('1/ Construire un bâtiment');
@@ -161,7 +161,7 @@ implementation
                     end;
                     6: 
                     begin
-                      ecranJeu();
+                      //ecranJeu();
                     end;
                   end;
                 until (choix4>=1) AND (choix4<=6); 
@@ -231,11 +231,11 @@ implementation
         end;
         3: 
         begin
-          estBatiment();
+          //estBatiment();
         end;
         4: 
         begin
-          exploreZone();
+          //exploreZone();
         end;
         5: 
         begin
@@ -247,15 +247,15 @@ implementation
             case choix5 of
               1: 
               begin
-                zonededepart();
+                //zonededepart();
               end;
               2: 
               begin
-                zonedudesertrocheux();
+                // zonedudesertrocheux();
               end;
               3:
               begin
-                zonedelaforetnordique();
+                //zonedelaforetnordique();
               end;
             end;
           until (choix5>=1) AND (choix5<=3);
@@ -297,7 +297,7 @@ implementation
         end;
       end;
     until (choix1>=0) AND (choix1<=9);
-  end;}
+  end;
 
   procedure afficherMenuPrincipale();
     begin
