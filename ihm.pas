@@ -4,7 +4,7 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, types, SatisfactIUTLogic, constantes;
+  SysUtils, gestionEcran, declarations, SatisfactIUTLogic;
 
   procedure afficherTitre();
   procedure afficherHistoire();

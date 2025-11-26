@@ -2,7 +2,8 @@ unit objets;
 {$codepage utf8} 
 interface
 
-uses types;
+uses declarations, sysutils;
+
 
   // Fonction pour initialiser une recette vide
   function InitRecette: _Recette;

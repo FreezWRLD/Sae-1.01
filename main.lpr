@@ -2,7 +2,7 @@ program main;
 {$mode objfpc}{$H+}
 {$codepage utf8} 
 uses
-  sysutils, types, gestionEcran, ihm, objets, SatisfactIUTLogic, constantes, logic;
+  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic;
 
 begin
   effacerEtColorierEcran(Black);
