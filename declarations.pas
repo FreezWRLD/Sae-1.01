@@ -3,9 +3,9 @@ unit declarations;
 interface
 
 const
-  X_MENU_PRINCIPALE = 10;
+  X_MENU_PRINCIPALE = 5;
   Y_MENU_PRINCIPALE = 27;
-  L_MENU = 60;
+  L_MENU = 50;
   H_MENU = 12;
   
 type
