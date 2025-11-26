@@ -132,6 +132,38 @@ type
     coutEnegrie: 0;
   );
 
+  DEFAULT_MINE : _Batiment = (
+    nom: _TypeBatiment.mine;
+    niveau: 1;
+    ressourceProduite: _TypeRessources.MineraiCuivre;
+    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.MineraiCuivre; quantiteProduite: 20;);
+    coutEnegrie: 20;
+  );
+
+  DEFAULT_CONSTRUCTEUR : _Batiment = (
+    nom: _TypeBatiment.constructeur;
+    niveau: 1;
+    ressourceProduite: _TypeRessources.LingotCuivre;
+    recette: (RessourcesEntree: (20,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.LingotCuivre; quantiteProduite: 10;);
+    coutEnegrie: 30;
+  );
+
+  DEFAULT_CENTRALE : _Batiment = (
+    nom: _TypeBatiment.centrale;
+    niveau: 1;
+    ressourceProduite: _TypeRessources.Energie;
+    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 100;);
+    coutEnegrie: -100;
+  );
+
+  DEFAULT_ASCENSEUR_ORBITAL : _Batiment = (
+    nom: _TypeBatiment.ascenseurOrbital;
+    niveau: 1;
+    ressourceProduite: _TypeRessources.Energie;
+    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
+    coutEnegrie: 300;
+  );
+
 implementation
   
 
