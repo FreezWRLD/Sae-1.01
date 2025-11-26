@@ -48,7 +48,8 @@ type
     gisementCuivre,
     gisementFer,
     gisementCalcaire,
-    gisementCharbon
+    gisementCharbon,
+    vide
   );
 
   _TypeZone = (
