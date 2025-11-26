@@ -118,6 +118,261 @@ implementation
       afficherMenuDemarrage();
     end;
 
+<<<<<<< HEAD
+{
+  procedure menu();
+  var
+    choix1,choix2,choix3,choix4:Integer;
+  begin
+  writeln('Que voulez-vous faire ?'); // Position à mettre (déplacercurseurXY)
+  writeln('1/ Construire un bâtiment');
+  writeln('2/ Changer la production');
+  writeln('3/ Améliorer un bâtiment');
+  writeln('4/ Explorer la zone');
+  writeln('5/ Changer de zone');
+  writeln('6/ Transférer des ressources');
+  writeln('7/ Passer la journée');
+  writeln('8/ Missions');
+  writeln('9/ Wiki');
+  writeln('0/ Quitter la partie');
+    repeat
+    readln(choix1);
+      case choix1 of
+        0:
+        begin
+          //ecranJoueur();
+        end;
+        1:
+        begin
+          //selectionEmplacement();
+          writeln('Quel bâtiment voulez-vous construire ?');
+          writeln('1/ Construire une mine');
+          writeln('2/ Construire un constructeur');
+          writeln('3/ Construire une centrale');
+          writeln('4/ Construire l''ascenseur orbital');
+          repeat
+            readln(choix2);
+            case choix2 of
+              1:
+              begin
+                
+              end;
+              2:
+              begin
+                
+              end;
+              3:
+              begin
+                
+              end;
+              4:
+              begin
+                
+              end;
+            end
+          until (choix2>=1) AND (choix2<=4);
+        end;
+        2:
+        begin
+          writeln('Que doit produire le constructeur ?');
+          writeln('1/ Lingots de cuivre');
+          writeln('2/ Lingots de fer');
+          writeln('3/ Cables de cuivre');
+          writeln('4/ Plaques de fer');
+          writeln('5/ Tuyaux en fer');
+          writeln('6/ Autres');
+<<<<<<< HEAD
+          repeat
+            readln(choix3);
+            case choix3 of
+              1:
+              begin
+                
+              end;
+              2:
+              begin
+                
+              end;
+              3:
+              begin
+                
+              end;
+              4:
+              begin
+                
+              end;
+              5:
+              begin
+                
+              end;
+              6:
+              begin
+                writeln('1/ Sacs de Béton');
+                writeln('2/ Acier');
+                writeln('3/ Plaques renforcées');
+                writeln('4/ Poutres industrielles');
+                writeln('5/ Fondations');
+                writeln('6/ Quiter');
+                repeat
+                  readln(choix4);
+                  case choix4 of
+                    1:
+                    begin
+                      
+                    end;
+                    2:
+                    begin
+                      
+                    end;
+                    3:
+                    begin
+                      
+                    end;
+                    4:
+                    begin
+                      
+                    end;
+                    5:
+                    begin
+                      
+                    end;
+                    6:
+                    begin
+                      ecranJeu();
+                    end;
+                  end;
+                until (choix4>=1) AND (choix4=<6);  
+          until (choix3>=1) AND (choix3=<6);
+=======
+          readln(choix3);
+          case choix3 of
+            1:
+            begin
+              
+            end;
+            2:
+            begin
+              
+            end;
+            3:
+            begin
+              
+            end;
+            4:
+            begin
+              
+            end;
+            5:
+            begin
+              
+            end;
+            6:
+            begin
+              writeln('1/ Sacs de Béton');
+              writeln('2/ Acier');
+              writeln('3/ Plaques renforcées');
+              writeln('4/ Poutres industrielles');
+              writeln('5/ Fondations');
+              writeln('6/ Quiter');
+              readln(choix4);
+              case choix4 of
+                1:
+                begin
+                  
+                end;
+                2:
+                begin
+                  
+                end;
+                3:
+                begin
+                  
+                end;
+                4:
+                begin
+                  
+                end;
+                5:
+                begin
+                  
+                end;
+                6:
+                begin
+                  //ecranJeu();
+                end;
+
+>>>>>>> d1fb91e885d2877704212d25cda2cc956e272244
+              end;
+            end;
+          end;
+        end;
+        3:
+        begin
+          estBatiment();
+        end;
+        4:
+        begin
+          exploreZone();
+        end;
+        5:
+        begin
+          writeln('Dans quelle zone voulez-vous aller ?');
+          writeln('1/ Zone de départ');
+          writeln('2/ Zone du désert rocheux');
+          writeln('3/ Zone de la forêt nordique');
+          repeat
+            case choix5 of
+              1:
+              begin
+                zonededepart();
+              end;
+              2:
+              begin
+                zonedudesertrocheux();
+              end;
+              3:
+              begin
+                zonedelaforetnordique();
+              end;
+            end;
+          until (choix5>=1) AND (choix5=<3);
+        end;
+        6:
+        begin
+          writeln('Vers quelle zone ?');
+          writeln('1/ Zone de départ');
+          writeln('2/ Zone du désert rocheux');
+          writeln('3/ Zone de la forêt nordique');
+          repeat
+            case choix6 of
+              1:
+              begin
+                
+              end;
+              2:
+              begin
+                
+              end;
+              3:
+              begin
+                
+              end;
+            end;
+          until (choix6>=1) AND (choix6=<3);
+        end;
+        7:
+        begin
+          
+        end;
+        8:
+        begin
+          
+        end;
+        9:
+        begin
+          
+        end;
+=======
 
   procedure afficherMenuPrincipale();
     begin
@@ -238,6 +493,7 @@ implementation
       // 9/ Wiki
       // 0/ Quitter la partie
       0: quitterIHM();
+>>>>>>> 3469f48f3a23be123e1d6d60e73c123a439cdd9c
       end;
     until choix in [1..10];
     end;
