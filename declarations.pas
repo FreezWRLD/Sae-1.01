@@ -91,7 +91,7 @@ type
 
   _Recette = record
     RessourcesEntree : array[_TypeRessources] of Integer;
-    RessourcesSortie : array[_TypeRessources] of Integer;
+    RessourcesSortie : _TypeRessources;
     quantiteProduite : Integer;
     end;
 

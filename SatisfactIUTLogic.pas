@@ -9,9 +9,6 @@ uses
 
 implementation
 
-
-
-  
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
     i:Integer;
@@ -23,11 +20,10 @@ implementation
     end;
   end;
 
-  procedure jourSuivant(var date : _Date; var inventaire : _Inventaire); //Passe au jour suivant
+  procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
   var
     i:_TypeZone;
     j:Integer;
-    ensembleDeZones:_EnsembleDeZones;
   begin
     if date.jour < 31 then
       date.jour := date.jour + 1
@@ -43,40 +39,39 @@ implementation
       end;
     end;
 
-    for i in _TypeZone do
+    for i := Low(_TypeZone) to High(_TypeZone) do
     begin
       for j:=0 to Length(ensembleDeZones[i].emplacements)-1 do
       begin
-      {
         case ensembleDeZones[i].emplacements[j].batiment.nom of
           mine:
           begin
-            ensembleDeZones[i].inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + ((ensembleDeZones[i].emplacements[j].batiment.recette.RessourcesSortie * ensembleDeZones[i].emplacements[j].gisement.mineraiPurete) * ensembleDeZones[i].emplacements[j].batiment.niveau);
+            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + ((ensembleDeZones[i].emplacements[j].batiment.recette.quantiteProduite * ensembleDeZones[i].emplacements[j].gisement.mineraiPurete) * ensembleDeZones[i].emplacements[j].batiment.niveau);
           end;
           constructeur:
           begin
-            ensembleDeZones[i].inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.recette.RessourcesSortie * ensembleDeZones[i].emplacements[j].batiment.niveau);
+            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.recette.quantiteProduite * ensembleDeZones[i].emplacements[j].batiment.niveau);
           end;
           centrale:
           begin
-            ensembleDeZones[i].inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.recette.RessourcesSortie)
+            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.recette.quantiteProduite);
           end;
-          }
         end;
       end;
     end;
+  end;
 
-  function RandomGisement():_Gisement; //Génère 2 gisements aleatoires pour un emplacement (si gisement existe => random)
+  function RandomGisement():_Gisement; //Génère 1 gisement aléatoire pour un emplacement (existe aléatoirement)
   begin
-    if Random(1) = 1 then
+    if Random(2) = 1 then
     begin
-      RandomGisement.existe:=True;
-      RandomGisement.typeGisement:=_TypeGisement(Random(4));
-      RandomGisement.mineraiPurete:=_Purete(Random(3));
+      RandomGisement.existe := True;
+      RandomGisement.typeGisement := _TypeGisement(Random(4));
+      RandomGisement.mineraiPurete := _Purete(Random(3));
     end
     else
     begin
-      RandomGisement.existe:=False;
+      RandomGisement.existe := False;
     end;
   end;
 
@@ -107,14 +102,13 @@ implementation
     InitDate.mois:=_Mois(Random(12));
     InitDate.annee:=_Annee(Random(2023));
   end;
-
-  procedure InitInventaires(zone : _Zone);
+  procedure InitInventaires(var zone : _Zone);
   var
     i:_TypeRessources;
   begin
-    for i in _TypeRessources do
+    for i := Low(_TypeRessources) to High(_TypeRessources) do
     begin
-      zone.inventaire.quantites[i]:=0;
+      zone.inventaire.quantites[i] := 0;
     end;
   end;
 
