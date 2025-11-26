@@ -49,7 +49,7 @@ type
     gisementFer,
     gisementCalcaire,
     gisementCharbon,
-    vide
+    gisementVide
   );
 
   _TypeZone = (
