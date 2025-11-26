@@ -5,6 +5,11 @@ interface
 uses
   sysutils, objets, declarations;
 
+  procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
+  procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
+  function GetDate(date : _Date):String; //Retourne la date sous forme de chaîne de caractères
+  function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
+  function InitDate():_Date; //Initialise la date de début du jeu
 
 
 implementation
@@ -80,21 +85,25 @@ implementation
     GetDate := intToStr(date.jour) + '/' + intToStr(date.mois) + '/' + intToStr(date.annee);
   end;
 
-  {function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
+  function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
 
   var
     i:_TypeZone;
   begin
-    
-
     for i in _TypeZone do
     begin     
-      
       InitZones[i].typeZone:=i;
-      InitZones[i].emplacements:=(false,vide,RandomGisement()); 
-      InitZones[i].inventaire:=[]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
-      
-    end;}
+      SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
+      InitInventaires(InitZones[i]);
+      for var j:=1 to Length(InitZones[i].emplacements)-1 do
+      begin
+        InitZones[i].emplacements[j].estDecouvert := False;
+        InitZones[i].emplacements[j].gisement := RandomGisement();
+      end;
+    end;
+    InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
+    InitZones[base].emplacements[0].batiment := hub; //Le premier emplacement de la zone de base contient toujours le hub
+  end;
 
   function InitDate():_Date; //Initialise la date de début du jeu
   begin
