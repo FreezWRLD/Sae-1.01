@@ -352,10 +352,10 @@ implementation
       effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         'Quel bâtiment voulez-vous construire ?',
-        '1/ Construire une mine',
-        '2/ Construire un constructeur',
-        '3/ Construire une centrale',
-        '4/ Construire l''ascenseur orbital'
+        '  1/ Construire une mine',
+        '  2/ Construire un constructeur',
+        '  3/ Construire une centrale',
+        '  4/ Construire l''ascenseur orbital'
       ]);
       readln(choix);
     until choix in [1..4];
@@ -366,12 +366,12 @@ implementation
     effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
     afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
       'Que doit produire le constructeur ?',
-      '1/ Lingots de cuivre',
-      '2/ Lingots de fer',
-      '3/ Cables de cuivre',
-      '4/ Plaques de fer',
-      '5/ Tuyaux en fer',
-      '6/ Autres'
+      '  1/ Lingots de cuivre',
+      '  2/ Lingots de fer',
+      '  3/ Cables de cuivre',
+      '  4/ Plaques de fer',
+      '  5/ Tuyaux en fer',
+      '  6/ Autres'
     ]);
   end;
 
@@ -405,10 +405,8 @@ implementation
       afficherMenuPrincipale();
       readln(choix);
       case choix of
-      // 1/ Construire un bâtiment
-      1: menuConstruction();
-      // 2/ Changer la production
-      2: menuProductionConstructeur();
+      1: menuConstruction(); // 1/ Construire un bâtiment
+      2: menuProductionConstructeur(); // 2/ Changer la production
       // 3/ Améliorer un bâtiment
       // 4/ Explorer la zone
       // 4 : explorationEmplacement();

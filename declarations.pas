@@ -2,6 +2,12 @@ unit declarations;
 {$codepage utf8}   
 interface
 
+const
+  X_MENU_PRINCIPALE = 5;
+  Y_MENU_PRINCIPALE = 27;
+  L_MENU = 49;
+  H_MENU = 12;
+  
 type
 
   {types Simples}
