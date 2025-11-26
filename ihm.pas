@@ -42,267 +42,16 @@ implementation
       afficheLigneParLigne(x, y, lignesVides);
     end;
   
- 
-
- procedure menu();
-  var
-    choix1,choix2,choix3,choix4,choix5,choix6:Integer;
+  procedure cadrechoixmenu();
   begin
-  writeln('Que voulez-vous faire ?'); // Position à mettre (déplacercurseurXY)
-  writeln('1/ Construire un bâtiment');
-  writeln('2/ Changer la production');
-  writeln('3/ Améliorer un bâtiment');
-  writeln('4/ Explorer la zone');
-  writeln('5/ Changer de zone');
-  writeln('6/ Transférer des ressources');
-  writeln('7/ Passer la journée');
-  writeln('8/ Missions');
-  writeln('9/ Wiki');
-  writeln('0/ Quitter la partie');
-    repeat
-    readln(choix1);
-      case choix1 of
-        0:
-        begin
-          ecranDemarrage();
-        end;
-        1:
-        begin
-          //selectionEmplacement();
-          writeln('Quel bâtiment voulez-vous construire ?');
-          writeln('1/ Construire une mine');
-          writeln('2/ Construire un constructeur');
-          writeln('3/ Construire une centrale');
-          writeln('4/ Construire l''ascenseur orbital');
-          repeat
-            readln(choix2);
-            case choix2 of
-              1:
-              begin
-                //construireMine();
-              end;
-              2:
-              begin
-                
-              end;
-              3:
-              begin
-                //construireCentrale();
-              end;
-              4:
-              begin
-                //construireAscenseurOrbital();
-              end;
-            end
-          until (choix2>=1) AND (choix2<=4);
-        end;
-        2:
-        begin
-          writeln('Que doit produire le constructeur ?');
-          writeln('1/ Lingots de cuivre');
-          writeln('2/ Lingots de fer');
-          writeln('3/ Cables de cuivre');
-          writeln('4/ Plaques de fer');
-          writeln('5/ Tuyaux en fer');
-          writeln('6/ Autres');
-          repeat
-            readln(choix3);
-            case choix3 of
-              1:
-              begin
-                
-              end;
-              2:
-              begin
-                
-              end;
-              3:
-              begin
-                
-              end;
-              4:
-              begin
-                
-              end;
-              5:
-              begin
-                
-              end;
-              6:
-              begin
-                writeln('1/ Sacs de Béton');
-                writeln('2/ Acier');
-                writeln('3/ Plaques renforcées');
-                writeln('4/ Poutres industrielles');
-                writeln('5/ Fondations');
-                writeln('6/ Quiter');
-                repeat
-                  readln(choix4);
-                  case choix4 of
-                    1: 
-                    begin
-                      
-                    end;
-                    2: 
-                    begin
-                      
-                    end;
-                    3: 
-                    begin
-                      
-                    end;
-                    4: 
-                    begin
-                      
-                    end;
-                    5: 
-                    begin
-                      
-                    end;
-                    6: 
-                    begin
-                      //ecranJeu();
-                    end;
-                  end;
-                until (choix4>=1) AND (choix4<=6); 
-              end;
-            end;
-          until (choix3>=1) AND (choix3<=6);
-          readln(choix3);
-          case choix3 of
-            1: 
-            begin
-              
-            end;
-            2: 
-            begin
-              
-            end;
-            3: 
-            begin
-              
-            end;
-            4: 
-            begin
-              
-            end;
-            5: 
-            begin
-              
-            end;
-            6: 
-            begin
-              writeln('1/ Sacs de Béton');
-              writeln('2/ Acier');
-              writeln('3/ Plaques renforcées');
-              writeln('4/ Poutres industrielles');
-              writeln('5/ Fondations');
-              writeln('6/ Quiter');
-              readln(choix4);
-              case choix4 of
-                1: 
-                begin
-                  
-                end;
-                2: 
-                begin
-                  
-                end;
-                3: 
-                begin
-                  
-                end;
-                4: 
-                begin
-                  
-                end;
-                5: 
-                begin
-                  
-                end;
-                6: 
-                begin
-                  //ecranJeu();
-                end;
-
-              end;
-            end;
-          end;
-        end;
-        3: 
-        begin
-          //estBatiment();
-        end;
-        4: 
-        begin
-          //exploreZone();
-        end;
-        5: 
-        begin
-          writeln('Dans quelle zone voulez-vous aller ?');
-          writeln('1/ Zone de départ');
-          writeln('2/ Zone du désert rocheux');
-          writeln('3/ Zone de la forêt nordique');
-          repeat
-            case choix5 of
-              1: 
-              begin
-                //zonededepart();
-              end;
-              2: 
-              begin
-                // zonedudesertrocheux();
-              end;
-              3:
-              begin
-                //zonedelaforetnordique();
-              end;
-            end;
-          until (choix5>=1) AND (choix5<=3);
-        end;
-        6: 
-        begin
-          writeln('Vers quelle zone ?');
-          writeln('1/ Zone de départ');
-          writeln('2/ Zone du désert rocheux');
-          writeln('3/ Zone de la forêt nordique');
-          repeat
-            case choix6 of
-              1: 
-              begin
-                
-              end;
-              2: 
-              begin
-                
-              end;
-              3: 
-              begin
-                
-              end;
-            end;
-          until (choix6>=1) AND (choix6<=3);
-        end;
-        7: 
-        begin
-          
-        end;
-        8: 
-        begin
-          
-        end;
-        9: 
-        begin
-          
-        end;
-      end;
-    until (choix1>=0) AND (choix1<=9);
+    dessinerCadreXY(40,36,49,38,simple,white,black);
+    deplacerCurseurXY(44,37);
   end;
 
   procedure afficherMenuPrincipale();
     begin
       couleurTexte(15);
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         'Que voulez-vous faire ?',
         '  1/ Construire un bâtiment',
@@ -316,11 +65,12 @@ implementation
         '  9/ Wiki',
         '  0/ Quitter la partie'
       ]);
+      cadrechoixmenu();
     end;
 
   procedure menuRessourcesPage1();
     begin
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         '1/ Lingots de fer',
         '2/ Câbles de cuivre',
@@ -329,11 +79,13 @@ implementation
         '5/ Sacs de Béton',
         '6/ Autres'
       ]);
+      cadrechoixmenu();
     end;
 
   procedure menuRessourcesPage2();
     begin
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      couleurTexte(15);
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         '1/ Acier ',
         '2/ Plaques renforcecées',
@@ -341,6 +93,7 @@ implementation
         '4/ Fondations',
         '5/ Autres'
       ]);
+      cadrechoixmenu();
     end;
 
 
@@ -349,7 +102,7 @@ implementation
       choix:integer;
     begin
     repeat
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         'Quel bâtiment voulez-vous construire ?',
         '  1/ Construire une mine',
@@ -357,13 +110,14 @@ implementation
         '  3/ Construire une centrale',
         '  4/ Construire l''ascenseur orbital'
       ]);
+      cadrechoixmenu();
       readln(choix);
     until choix in [1..4];
     end;
 
   procedure menuProductionConstructeur();
   begin
-    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU, H_MENU);
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
     afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
       'Que doit produire le constructeur ?',
       '  1/ Lingots de cuivre',
@@ -373,6 +127,7 @@ implementation
       '  5/ Tuyaux en fer',
       '  6/ Autres'
     ]);
+    cadrechoixmenu();
   end;
 
   procedure afficherInventaire();
@@ -394,13 +149,13 @@ implementation
       'Poutres industrielles',
       'Fondations'
     ]);
-    deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
   end;
 
   procedure menuDeJeu();
   var
     choix: integer;
   begin
+    deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
     repeat
       afficherMenuPrincipale();
       readln(choix);
