@@ -27,8 +27,8 @@ type
 
   {Types énumérés}
   _TypeRessources = (
-    MineraiCuivre,
-    MineraiFer,
+    Cuivre,
+    Fer,
     Calcaire,
     Charbon,
     LingotCuivre,
@@ -51,6 +51,7 @@ type
     gisementCharbon,
     gisementVide
   );
+  _TypeGisement = Cuivre .. Charbon;
 
   _TypeZone = (
     base,
@@ -65,13 +66,8 @@ type
     MINE,
     CONSTRUCTEUR,
     CENTRALE,
-    ASCENSEUR_ORBITAL
-  );
-
-  _TypeEmplacement = (
-    vide,
-    gisement,
-    batiment
+    ASCENSEUR_ORBITAL,
+    VIDE
   );
 
   {Types Records}
@@ -140,8 +136,8 @@ type
   DEFAULT_MINE : _Batiment = (
     nom: _TypeBatiment.MINE;
     niveau: 1;
-    ressourceProduite: _TypeRessources.MineraiCuivre;
-    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.MineraiCuivre; quantiteProduite: 20;);
+    ressourceProduite: _TypeRessources.Cuivre;
+    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Cuivre; quantiteProduite: 20;);
     coutEnegrie: 20;
   );
 
@@ -167,6 +163,18 @@ type
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
     coutEnegrie: 300;
+  );
+
+  DEFAULT_EMPLACEMENT_VIDE : _Emplacement = (
+    estDecouvert: False;
+    batiment: (
+      nom: _TypeBatiment.VIDE;
+      niveau: 1;
+      ressourceProduite: _TypeRessources.Energie;
+      recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
+      coutEnegrie: 0;
+    );
+    gisement: (existe: False; typeGisement: Cuivre; mineraiPurete: 1;);
   );
 
 implementation

@@ -8,6 +8,7 @@ uses
 
   procedure ecranDemarrage();
   procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
+  procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
   
 implementation
   //Affichage d'un message de fin
@@ -246,7 +247,99 @@ procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
 
   end;
 
- procedure ecranJeu();
+  // Affiche un emplacement selon son état (découvert/non découvert) et son contenu
+  procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
+  var
+    largeurCadre: integer;
+    couleurCadre: word;
+  begin
+    largeurCadre := 70; // Même largeur que pour les bâtiments
+    
+    // Détermination de la couleur du cadre selon l'état et le contenu de l'emplacement
+    if emplacement.estDecouvert then
+    begin
+      if (emplacement.batiment.nom = VIDE) and (not emplacement.gisement.existe) then
+      begin
+        // Emplacement vide découvert - fond blanc
+        dessinerCadreXY(x, y, x + 70, y + 6, simple, White, Black);
+        deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT VIDE')) div 2, y + 3);
+        write('EMPLACEMENT VIDE');
+      end
+      else
+      begin
+        if emplacement.batiment.nom <> VIDE then
+        begin
+          // Bâtiment - contour blanc
+          dessinerCadreXY(x, y, x + 70, y + 6, simple, White, Black);
+          deplacerCurseurXY(x + 6, y + 2);
+          write('BATIMENT    : ', emplacement.batiment.nom);
+          deplacerCurseurXY(x + 6, y + 4);
+          if (emplacement.batiment.nom = mine) or (emplacement.batiment.nom = constructeur) then
+          write('NIVEAU      : ', emplacement.batiment.niveau);
+        end
+        else if emplacement.gisement.existe then
+        begin
+          // Gisement non exploité - marron
+          dessinerCadreXY(x, y, x + 70, y + 6, simple, Brown, Black);
+          deplacerCurseurXY(x + 6, y + 2);
+          write('GISEMENT NON EXPLOITÉ');
+          deplacerCurseurXY(x + 6, y + 4);
+          write('MINERAI   : ', emplacement.gisement.typeGisement);
+          deplacerCurseurXY(x + 41, y + 2);
+          write('PURETE : ', emplacement.gisement.mineraiPurete);
+        end;
+      end;
+    end
+    else
+    begin
+      // Emplacement non découvert - gris clair
+      dessinerCadreXY(x, y, x + 70, y + 6, simple, DarkGray, Black);
+      deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT NON DECOUVERT')) div 2, y + 3);
+      write('EMPLACEMENT NON DECOUVERT');
+    end;
+  end;
+
+{if emplacement.estDecouvert then
+begin
+  if (emplacement.batiment.nom = VIDE) and (not emplacement.gisement.existe) then
+  begin
+    // Afficher emplacement vide
+    // Exemple : Form1.Canvas.TextOut(x, y, 'Vide');
+  end
+  else
+  begin
+    if emplacement.batiment.nom <> VIDE then
+    begin
+      // Afficher le bâtiment
+      // Exemple : Form1.Canvas.TextOut(x, y, 'Bâtiment: ' + GetBatimentNom(emplacement.batiment.nom));
+    end
+    else if emplacement.gisement.existe then
+    begin
+      // Afficher le gisement
+      // Exemple : Form1.Canvas.TextOut(x, y, 'Gisement: ' + GetGisementType(emplacement.gisement.typeGisement));
+    end;
+  end;
+end;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  procedure ecranJeu();
     
     begin
     dessinerCadreXY(0,0,L_MENU,39,simple,white,black);

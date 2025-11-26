@@ -6,68 +6,46 @@ uses
 
 var
   i: Integer;
-  zone: _Zone;
+  batiments: _ListeDeBatiments;
+  emplacementVide, emplacementNonDecouvert, emplacementBatiment, emplacementGisement: _Emplacement;
 
 begin
-  // Initialisation du jeu
+  // Initialisation des variables du joueur
   initialiserZones;
   
-  // Récupération de la zone de base
-  zone := JZones[base];
+  // Création d'un emplacement vide découvert
+  emplacementVide.estDecouvert := True;
+  emplacementVide.batiment.nom := VIDE;
+  emplacementVide.gisement.existe := False;
   
-  // Affichage de l'en-tête
-  effacerEcran;
-  deplacerCurseurXY(5, 2);
-  write('=== ZONE DE BASE ===');
+  // Création d'un emplacement non découvert
+  emplacementNonDecouvert.estDecouvert := False;
   
-  // Affichage des emplacements
-  deplacerCurseurXY(5, 4);
-  writeln('Emplacements :');
+  // Création d'un emplacement avec un bâtiment (HUB)
+  emplacementBatiment.estDecouvert := True;
+  emplacementBatiment.batiment := DEFAULT_HUB;
+  emplacementBatiment.gisement.existe := False;
   
-  for i := 0 to High(zone.emplacements) do
-  begin
-    deplacerCurseurXY(10, 6 + i*2);
-    write('Emplacement ', i+1, ' : ');
-    
-    if zone.emplacements[i].estDecouvert then
-    begin
-      if zone.emplacements[i].batiment.typeBatiment = hub then
-        write('Hub (Niveau ', zone.emplacements[i].batiment.niveau, ')')
-      else if zone.emplacements[i].gisement.existe then
-        write('Gisement de fer (Pureté: ', zone.emplacements[i].gisement.mineraiPurete, ')')
-      else
-        write('Vide');
-    end
-    else
-    begin
-      write('Non découvert');
-    end;
-  end;
+  // Création d'un emplacement avec un gisement de fer niveau 2
+  emplacementGisement.estDecouvert := True;
+  emplacementGisement.batiment.nom := VIDE;
+  emplacementGisement.gisement.existe := True;
+  emplacementGisement.gisement.typeGisement := Fer;
+  emplacementGisement.gisement.mineraiPurete := 2;
   
-  // Affichage de l'inventaire
-  deplacerCurseurXY(5, 28);
-  write('=== INVENTAIRE ===');
+  // Affichage des différents types d'emplacements
+  // 1. Emplacement vide découvert
+  afficherEmplacement(10, 5, emplacementVide);
   
-  deplacerCurseurXY(10, 30);
-  write('Fer : ', zone.inventaire.quantites[fer]);
+  // 2. Emplacement non découvert
+  afficherEmplacement(10, 12, emplacementNonDecouvert);
   
-  deplacerCurseurXY(10, 31);
-  write('Cuivre : ', zone.inventaire.quantites[cuivre]);
+  // 3. Emplacement avec un bâtiment (HUB)
+  afficherEmplacement(10, 19, emplacementBatiment);
   
-  deplacerCurseurXY(10, 32);
-  write('Charbon : ', zone.inventaire.quantites[charbon]);
+  // 4. Emplacement avec un gisement de fer niveau 2
+  afficherEmplacement(10, 26, emplacementGisement);
   
-  // Positionnement du curseur en bas de l'écran
-  deplacerCurseurXY(1, 40);
-  write('Appuyez sur Entrée pour quitter...');
-  
+  // Attente de l'utilisateur avant de quitter
   readln;
 end.
-
-{    // Initialisation de la liste des bâtiments
-    JZones[tz].batiments[0] := DEFAULT_HUB;
-    JZones[tz].batiments[1] := DEFAULT_MINE;
-    JZones[tz].batiments[2] := DEFAULT_CONSTRUCTEUR;
-    JZones[tz].batiments[3] := DEFAULT_CENTRALE;
-    JZones[tz].batiments[4] := DEFAULT_ASCENSEUR_ORBITAL;
-    }
