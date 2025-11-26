@@ -63,3 +63,11 @@ begin
   
   readln;
 end.
+
+{    // Initialisation de la liste des bâtiments
+    JZones[tz].batiments[0] := DEFAULT_HUB;
+    JZones[tz].batiments[1] := DEFAULT_MINE;
+    JZones[tz].batiments[2] := DEFAULT_CONSTRUCTEUR;
+    JZones[tz].batiments[3] := DEFAULT_CENTRALE;
+    JZones[tz].batiments[4] := DEFAULT_ASCENSEUR_ORBITAL;
+    }
