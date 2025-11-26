@@ -44,6 +44,7 @@ implementation
   
   procedure cadrechoixmenu();
   begin
+    couleurTexte(15);
     dessinerCadreXY(40,36,49,38,simple,white,black);
     deplacerCurseurXY(44,37);
   end;
@@ -70,6 +71,7 @@ implementation
 
   procedure menuRessourcesPage1();
     begin
+      couleurTexte(15);
       effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         '1/ Lingots de fer',
@@ -102,6 +104,7 @@ implementation
       choix:integer;
     begin
     repeat
+      couleurTexte(15);
       effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
         'Quel bâtiment voulez-vous construire ?',
@@ -117,6 +120,7 @@ implementation
 
   procedure menuProductionConstructeur();
   begin
+    couleurTexte(15);
     effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
     afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
       'Que doit produire le constructeur ?',
@@ -132,6 +136,21 @@ implementation
 
   procedure afficherInventaire();
   begin
+    deplacerCurseurXY(14,2);
+    couleurTexte(15);
+    write('INVENTAIRE DE LA ZONE');
+    deplacerCurseurXY(X_MENU_PRINCIPALE,5);
+    couleurTexte(9);
+    write('Marza''Coin                   : '{,valeurMarzaCoin()});
+    couleurTexte(4);
+    afficheLigneParLigne(X_MENU_PRINCIPALE,7,[
+      'Production d''électricité',
+      'Consommation d''électricité'
+    ]);
+    afficheLigneParLigne(34,7,[
+      ': '{+valeurprodelec},
+      ': '{+valeurconselec}
+    ]);
     couleurTexte(15);
     afficheLigneParLigne(X_MENU_PRINCIPALE, 10, [
       'Minerai de cuivre',
@@ -144,10 +163,26 @@ implementation
       'Plaques de fer',
       'Tuyaux en fer',
       'Sacs de béton',
-      'Acier ',
-      'Plaques renforcecées',
+      'Acier',
+      'Plaques renforcées',
       'Poutres industrielles',
       'Fondations'
+    ]);
+    afficheLigneParLigne(34,10,[
+      ': '{+valeurmineraidecuivre},
+      ': '{+valeurmineraidefer},
+      ': '{+valeurcalcaire},
+      ': '{+valeurcharbon},
+      ': '{+valeurlingotsdecuivre},
+      ': '{+valeurlingotsdefer},
+      ': '{+valeurcablesdecuivre},
+      ': '{+valeurplaquesdefer},
+      ': '{+valeurtuyauxdefer},
+      ': '{+valeursacsdebeton},
+      ': '{+valeuracier},
+      ': '{+valeurplaquesrenforcees},
+      ': '{+valeurpoutresindustrielles},
+      ': '{+valeurfondations}
     ]);
   end;
 
