@@ -6,17 +6,7 @@ interface
 uses
   SysUtils, gestionEcran, declarations, SatisfactIUTLogic;
 
-  procedure afficherTitre();
-  procedure afficherHistoire();
-  procedure afficherEcranDemarrage(); //Procédure qui affichera l'écran d'accueil et qui renvoira le choix de l'utilisateur
-  procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
-  procedure afficheLigneParLigne(x, y: integer; message: _Message);
-  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer);
-  procedure menuDeJeu();
-  procedure afficherInventaire();
-  procedure afficherEcranJeu();
-  procedure quitterIHM();
-  procedure afficherMenuDemarrage();
+  procedure lancementDeJeu();
   
 implementation
   //Affichage d'un message de fin
@@ -285,7 +275,28 @@ procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
 
   end;
 
- 
+  procedure MenuDemarrage();
+  var
+    choix:string; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
+  begin
+    repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
+      readln(choix);
+      if (choix = '1') then afficherHistoire() else quitterIHM();
+    until (choix='1') OR (choix='2');
+  end;
+
+  procedure lancementDeJeu();
+  var
+      choix:string; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
+  begin
+    afficherEcranDemarrage();
+    afficherTitre();
+    afficherMenuDemarrage();
+    repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
+        readln(choix);
+        if (choix = '1') then begin afficherEcranJeu(); end else begin quitterIHM(); end;
+    until (choix='1') OR (choix='2');  
+  end;
   
 
   
