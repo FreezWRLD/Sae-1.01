@@ -201,11 +201,11 @@ implementation
       2: menuProductionConstructeur(); // 2/ Changer la production
       // 3/ Améliorer un bâtiment
       // 4/ Explorer la zone
-      4 : explorationEmplacement(JZones[ZoneActuelle]);
+      //4 : explorationEmplacement(JZones[ZoneActuelle]);
       // 5/ Changer de zone
       // 6/ Transférer des ressources
       // 7/ Passer la journée 
-      7: jourSuivant(JDate, JInventaire, JZones);
+      //7: jourSuivant(JDate, JInventaire, JZones);
       // 8/ Missions
       // 9/ Wiki
       // 0/ Quitter la partie

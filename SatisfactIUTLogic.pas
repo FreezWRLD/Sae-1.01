@@ -68,6 +68,24 @@ implementation
     end;
   end;
 
+
+  {function setMine(minerai : _TypeRessources):_Batiment;
+  begin
+    
+  end;
+
+  procedure ConstructionSurEmplacement(var emplacement : _Emplacement; batiment : _Batiment);
+  begin
+    if emplacement.estDecouvert then
+    begin
+      case batiment of
+        Mine :
+        begin
+          emplacement.batiment := setMine();
+        end;
+    end;
+  end;}
+
   function RandomGisement():_Gisement; //Génère 1 gisement aléatoire pour un emplacement (existe aléatoirement)
   begin
     if Random(2) = 1 then
@@ -87,7 +105,7 @@ implementation
     GetDate := intToStr(date.jour) + '/' + intToStr(date.mois) + '/' + intToStr(date.annee);
   end;
 
-    procedure InitInventaires(var zone : _Zone);
+  procedure InitInventaires(var zone : _Zone);
   var
     i:_TypeRessources;
   begin

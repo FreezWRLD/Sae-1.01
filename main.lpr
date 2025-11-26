@@ -8,10 +8,14 @@ var
   i: Integer;
   batiments: _ListeDeBatiments;
   emplacementVide, emplacementNonDecouvert, emplacementBatiment, emplacementGisement: _Emplacement;
+  JZones : _EnsembleDeZones ;
+  JDate : _Date;
+  JInventaire : _Inventaire;
+  ZoneActuelle : _TypeZone;  // Zone actuelle du joueur
 
 begin
   // Initialisation des variables du joueur
-  initialiserZones;
+  initialiserJeu(JDate, ZoneActuelle, JZones);
   
   // Création d'un emplacement vide découvert
   emplacementVide.estDecouvert := True;
