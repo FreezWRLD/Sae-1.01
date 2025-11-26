@@ -44,13 +44,7 @@ type
     Energie
   );
 
-  _TypeGisement = (
-    gisementCuivre,
-    gisementFer,
-    gisementCalcaire,
-    gisementCharbon,
-    gisementVide
-  );
+
   _TypeGisement = Cuivre .. Charbon;
 
   _TypeZone = (
