@@ -46,7 +46,7 @@ implementation
 
  procedure menu();
   var
-    choix,choix1,choix2,choix3,choix4,choix5,choix6:Integer;
+    choix1,choix2,choix3,choix4,choix5,choix6:Integer;
   begin
   writeln('Que voulez-vous faire ?'); // Position à mettre (déplacercurseurXY)
   writeln('1/ Construire un bâtiment');
@@ -64,7 +64,7 @@ implementation
       case choix1 of
         0:
         begin
-          //ecranJoueur();
+          ecranDemarrage();
         end;
         1:
         begin
@@ -79,7 +79,7 @@ implementation
             case choix2 of
               1:
               begin
-                
+                //construireMine();
               end;
               2:
               begin
@@ -87,11 +87,11 @@ implementation
               end;
               3:
               begin
-                
+                //construireCentrale();
               end;
               4:
               begin
-                
+                //construireAscenseurOrbital();
               end;
             end
           until (choix2>=1) AND (choix2<=4);
