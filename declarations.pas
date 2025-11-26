@@ -1,8 +1,13 @@
-unit types;
+unit declarations;
 {$codepage utf8}   
 interface
-  
 
+const
+  X_MENU_PRINCIPALE = 10;
+  Y_MENU_PRINCIPALE = 27;
+  L_MENU = 60;
+  H_MENU = 12;
+  
 type
 
   {types Simples}
@@ -16,6 +21,8 @@ type
 
   //Niveau de batiment
   _Niveau = 1 .. 3;
+
+  _Message = array of string;
 
   {Types énumérés}
   _TypeRessources = (

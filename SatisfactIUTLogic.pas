@@ -3,14 +3,13 @@ unit SatisfactIUTLogic;
 {$mode objfpc}{$H+}
 interface
 uses
-  sysutils, objets, types;
-
-{function InitZones():_EnsembleDeZones;}
-function InitDate():_Date; //Initialise la date de début du jeu
+  sysutils, objets, declarations;
 
 
-  
+
 implementation
+
+
 
   
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
