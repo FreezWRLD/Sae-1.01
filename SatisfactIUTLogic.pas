@@ -80,7 +80,7 @@ implementation
     GetDate := intToStr(date.jour) + '/' + intToStr(date.mois) + '/' + intToStr(date.annee);
   end;
 
-  {function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
+  function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
 
   var
     i:_TypeZone;
@@ -91,10 +91,9 @@ implementation
     begin     
       
       InitZones[i].typeZone:=i;
-      InitZones[i].emplacements:=(false,vide,RandomGisement()); 
-      InitZones[i].inventaire:=[]; //Initialise les emplacements par défaut, non découverts, sans batiment et avec des gisements aléatoires
-      
-    end;}
+      SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
+    end;
+  end;
 
   function InitDate():_Date; //Initialise la date de début du jeu
   begin
