@@ -2,7 +2,6 @@ unit declarations;
 {$codepage utf8}   
 interface
 
-
 type
 
   {types Simples}
