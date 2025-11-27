@@ -9,6 +9,8 @@ uses
   procedure ecranDemarrage();
   procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
   procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
+  procedure ecranJeu();
+  procedure afficherWiki();
   
 implementation
   //Affichage d'un message de fin
@@ -49,91 +51,6 @@ implementation
     couleurTexte(15);
     dessinerCadreXY(40,36,49,38,simple,white,black);
     deplacerCurseurXY(44,37);
-  end;
-
-  procedure afficherMenuPrincipale();
-    begin
-      couleurTexte(15);
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-        'Que voulez-vous faire ?',
-        '  1/ Construire un bâtiment',
-        '  2/ Changer la production',
-        '  3/ Améliorer un bâtiment',
-        '  4/ Explorer la zone',
-        '  5/ Changer de zone',
-        '  6/ Transférer des ressources',
-        '  7/ Passer la journée',
-        '  8/ Missions',
-        '  9/ Wiki',
-        '  0/ Quitter la partie'
-      ]);
-      cadrechoixmenu();
-    end;
-
-  procedure menuRessourcesPage1();
-    begin
-      couleurTexte(15);
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-        '1/ Lingots de fer',
-        '2/ Câbles de cuivre',
-        '3/ Plaques de fer',
-        '4/ Tuyaux en fer',
-        '5/ Sacs de Béton',
-        '6/ Autres'
-      ]);
-      cadrechoixmenu();
-    end;
-
-  procedure menuRessourcesPage2();
-    begin
-      couleurTexte(15);
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-        '1/ Acier ',
-        '2/ Plaques renforcecées',
-        '3/ Poutres industrielles',
-        '4/ Fondations',
-        '5/ Autres'
-      ]);
-      cadrechoixmenu();
-    end;
-
-
-  procedure menuConstruction();
-    var
-      choix:integer;
-    begin
-    repeat
-      couleurTexte(15);
-      effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-        'Quel bâtiment voulez-vous construire ?',
-        '  1/ Construire une mine',
-        '  2/ Construire un constructeur',
-        '  3/ Construire une centrale',
-        '  4/ Construire l''ascenseur orbital'
-      ]);
-      cadrechoixmenu();
-      readln(choix);
-    until choix in [1..4];
-    end;
-
-  procedure menuProductionConstructeur();
-  begin
-    couleurTexte(15);
-    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-      'Que doit produire le constructeur ?',
-      '  1/ Lingots de cuivre',
-      '  2/ Lingots de fer',
-      '  3/ Cables de cuivre',
-      '  4/ Plaques de fer',
-      '  5/ Tuyaux en fer',
-      '  6/ Autres'
-    ]);
-    cadrechoixmenu();
   end;
 
   procedure afficherInventaire();
@@ -188,31 +105,7 @@ implementation
     ]);
   end;
 
-  procedure menuDeJeu();
-  var
-    choix: integer;
-  begin
-    deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
-    repeat
-      afficherMenuPrincipale();
-      readln(choix);
-      case choix of
-      1: menuConstruction(); // 1/ Construire un bâtiment
-      2: menuProductionConstructeur(); // 2/ Changer la production
-      // 3/ Améliorer un bâtiment
-      // 4/ Explorer la zone
-      //4 : explorationEmplacement(JZones[ZoneActuelle]);
-      // 5/ Changer de zone
-      // 6/ Transférer des ressources
-      // 7/ Passer la journée 
-      //7: jourSuivant(JDate, JInventaire, JZones);
-      // 8/ Missions
-      // 9/ Wiki
-      // 0/ Quitter la partie
-    
-      end;
-    until choix in [1..10];
-    end;
+  
 
   
 
@@ -321,32 +214,253 @@ begin
   end;
 end;}
 
+  procedure cadrePrincip();
+  begin
+    dessinerCadreXY(0,0,L_MENU,39,simple,white,black);
+    dessinerCadreXY(50,0,199,39,simple,white,black);
+  end;
+
+  procedure effacerTexteMenu();
+  begin
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
+  end;
+
+  procedure effacerTexteInventaire();
+  begin
+    effacerZoneDeTexte(X_INVENTAIRE,Y_INVENTAIRE,L_INVENTAIRE,H_INVENTAIRE);
+  end;
+
+  procedure effacerTexteAffichage();
+  begin
+    effacerZoneDeTexte(X_AFFICHAGE,Y_AFFICHAGE,L_AFFICHAGE,H_AFFICHAGE);
+  end;
+
+  procedure afficherMenuPrincipale();
+    begin
+      couleurTexte(15);
+      effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Que voulez-vous faire ?',
+        '  1/ Construire un bâtiment',
+        '  2/ Changer la production',
+        '  3/ Améliorer un bâtiment',
+        '  4/ Explorer la zone',
+        '  5/ Changer de zone',
+        '  6/ Transférer des ressources',
+        '  7/ Passer la journée',
+        '  8/ Missions',
+        '  9/ Wiki',
+        '  0/ Quitter la partie'
+      ]);
+      cadrechoixmenu();
+    end;
+
+  procedure menuRessourcesPage1();
+    begin
+      couleurTexte(15);
+      effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        '1/ Lingots de fer',
+        '2/ Câbles de cuivre',
+        '3/ Plaques de fer',
+        '4/ Tuyaux en fer',
+        '5/ Sacs de Béton',
+        '6/ Autres'
+      ]);
+      cadrechoixmenu();
+    end;
+
+  procedure menuRessourcesPage2();
+    begin
+      couleurTexte(15);
+      effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        '1/ Acier ',
+        '2/ Plaques renforcecées',
+        '3/ Poutres industrielles',
+        '4/ Fondations',
+        '5/ Autres'
+      ]);
+      cadrechoixmenu();
+    end;
 
 
+  procedure menuConstruction();
+    var
+      choix:integer;
+    begin
+    repeat
+      couleurTexte(15);
+      effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Quel bâtiment voulez-vous construire ?',
+        '  1/ Construire une mine',
+        '  2/ Construire un constructeur',
+        '  3/ Construire une centrale',
+        '  4/ Construire l''ascenseur orbital'
+      ]);
+      cadrechoixmenu();
+      readln(choix);
+    until choix in [1..4];
+    end;
 
+  procedure menuProductionConstructeur();
+  begin
+    couleurTexte(15);
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Que doit produire le constructeur ?',
+      '  1/ Lingots de cuivre',
+      '  2/ Lingots de fer',
+      '  3/ Cables de cuivre',
+      '  4/ Plaques de fer',
+      '  5/ Tuyaux en fer',
+      '  6/ Autres'
+    ]);
+    cadrechoixmenu();
+  end;
 
+  procedure wikibat();
+  begin
+    effacerTexteAffichage();
+    afficheLigneParLigne(65,5,[
+      'Mine Mk.',
+      '   - Coût de construction : Plaques de fer (x10)',
+      '   - Energie consommée : 100',
+      '   - Coût d''amélioration niv 2 : Plaques de fer (x20) / Sacs de Béton (x20)',
+      '   - Coût d''amélioration niv 3 : Plaques de fer (x20) / Acier (x20)',
+      '',
+      'Constructeur',
+      '   - Coût de construction : Cables de cuivre (x10) / Plaques de fer (x10)',
+      '   - Energie consommée : 200',
+      '   - Coût d''amélioration niv 2 : Plaques de fer (x20) / Sacs de Béton (x20)',
+      '   - Coût d''amélioration niv 3 : Plaques de fer (x20) / Acier (x20)',
+      '',
+      'HUB',
+      '   - Energie consommée : 100',
+      '',
+      'Centrale électrique',
+      '   - Coût de construction : Cables de cuivre (x30) / Plaques de fer (x10) / Sacs de Béton (x20)',
+      '   - Energie produite : 1200',
+      '',
+      'Ascenseur orbital',
+      '   - Coût de construction : Cables de cuivre (x200) / Plaques de fer (x200) / Sacs de Béton (x200)',
+      '   - Energie consommée : 1000'
+    ]);
+    afficherWiki();
+  end;
 
+  procedure wikiprod();
+  begin
+    effacerTexteAffichage();
+    afficheLigneParLigne(55,4,[
+      'Lingots de cuivre',
+      '   - Quantité produite par lot : 15',
+      '   - Ressources nécessaires : Minerai de cuivre (x30)',
+      '',
+      '',
+      'Lingots de fer',
+      '   - Quantité produite par lot : 15',
+      '   - Ressources nécessaires : Minerai de fer (x30)',
+      '',
+      '',
+      'Cables de cuivre',
+      '   - Quantité produite par lot : 5',
+      '   - Ressources nécessaires : Lingots de cuivre (x15)',
+      '',
+      '',
+      'Plaques de fer',
+      '   - Quantité produite par lot : 10',
+      '   - Ressources nécessaires : Lingots de fer (x60)',
+      '',
+      '',
+      'Tuyaux en fer',
+      '   - Quantité produite par lot : 10',
+      '   - Ressources nécessaires : Lingots de fer (x30)',
+      '',
+      '',
+      'Sacs de Béton',
+      '   - Quantité produite par lot : 5',
+      '   - Ressources nécessaires : Calcaire (x15)',
+      '',
+      '',
+      'Acier',
+      '   - Quantité produite par lot : 15',
+      '   - Ressources nécessaires : Minerai de fer (x30) / Charbon (x15)'
+    ]);
+    afficheLigneParLigne(120,4,[
+      'Plaques renforcées',
+      '   - Quantité produite par lot : 2',
+      '   - Ressources nécessaires : Plaques de fer (x20) / Acier (x20)',
+      '',
+      '',
+      'Poutres industrielles',
+      '   - Quantité produite par lot : 2',
+      '   - Ressources nécessaires : Plaques de fer (x20) / Sacs de Béton (x15)',
+      '',
+      '',
+      'Fondations',
+      '   - Quantité produite par lot : 2',
+      '   - Ressources nécessaires : Sacs de Béton (x30)'
+    ]);
+    afficherWiki();
+  end;
 
+  procedure afficherWiki();
+  var
+    choix:Integer; //Correspondant au choix de l'utilisateur dans le menu wiki
+  begin
+    effacerTexteInventaire();
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE,Y_MENU_PRINCIPALE,[
+      'Que veux-tu faire ?',
+      '  1/ Voir la liste des bâtiments',
+      '  2/ Voir la liste des productions',
+      '  3/ Quitter le wiki'
+    ]);
+    cadrechoixmenu();
+    readln(choix);
+    repeat
+    case choix of
+      1:wikibat();
+      2:wikiprod();
+      3:ecranJeu();
+    end;
+  until (choix=1)OR(choix=2)OR(choix=3);
+  end;
 
-
-
-
-
-
-
-
-
-
-
+  procedure menuDeJeu();
+  var
+    choix: integer;
+  begin
+    deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
+    repeat
+      afficherMenuPrincipale();
+      readln(choix);
+      case choix of
+      1: menuConstruction(); // 1/ Construire un bâtiment
+      2: menuProductionConstructeur(); // 2/ Changer la production
+      // 3/ Améliorer un bâtiment
+      // 4/ Explorer la zone
+      //4 : explorationEmplacement(JZones[ZoneActuelle]);
+      // 5/ Changer de zone
+      // 6/ Transférer des ressources
+      // 7/ Passer la journée 
+      //7: jourSuivant(JDate, JInventaire, JZones);
+      // 8/ Missions
+      9: afficherWiki();// 9/ Wiki
+      // 0/ Quitter la partie
+    
+      end;
+    until (choix>=0) AND (choix<=9);
+    end;
 
   procedure ecranJeu();
     
     begin
-    dessinerCadreXY(0,0,L_MENU,39,simple,white,black);
-    dessinerCadreXY(50,0,199,39,simple,white,black);
+    cadrePrincip();
     afficherInventaire();
     menuDeJeu();
-    
     end;
 
   procedure ecranDemarrage();
@@ -428,5 +542,4 @@ end;}
 
   
 
-  
 end.

@@ -7,7 +7,15 @@ const
   Y_MENU_PRINCIPALE = 27;
   L_MENU = 50;
   H_MENU = 12;
-  
+  X_INVENTAIRE = 5;
+  Y_INVENTAIRE = 2;
+  L_INVENTAIRE = 30;
+  H_INVENTAIRE = 22;
+  X_AFFICHAGE = 51;
+  Y_AFFICHAGE = 3;
+  L_AFFICHAGE = 148;
+  H_AFFICHAGE = 36;
+
 type
 
   {types Simples}

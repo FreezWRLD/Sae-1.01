@@ -14,7 +14,7 @@ var
   ZoneActuelle : _TypeZone;  // Zone actuelle du joueur
 
 begin
-  // Initialisation des variables du joueur
+  {// Initialisation des variables du joueur
   initialiserJeu(JDate, ZoneActuelle, JZones);
   
   // Création d'un emplacement vide découvert
@@ -51,5 +51,6 @@ begin
   afficherEmplacement(10, 26, emplacementGisement);
   
   // Attente de l'utilisateur avant de quitter
-  readln;
+  readln;}
+  ecranDemarrage();
 end.
