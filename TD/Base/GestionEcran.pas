@@ -1,8 +1,10 @@
 unit GestionEcran;
 {$codepage utf8} 
 {$mode objfpc}{$H+}
+
 interface
-    uses SysUtils, Windows;
+uses
+  SysUtils, Windows, declarations;
 
     // repr�sente une coordonn�e � l'�cran (0,0 = coin haut-gauche)
     type coordonnees = record
