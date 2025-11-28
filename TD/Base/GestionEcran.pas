@@ -1,9 +1,10 @@
 unit GestionEcran;
-
+{$codepage utf8} 
+{$mode objfpc}{$H+}
 interface
     uses SysUtils, Windows;
 
-    // représente une coordonnée à l'écran (0,0 = coin haut-gauche)
+    // reprï¿½sente une coordonnï¿½e ï¿½ l'ï¿½cran (0,0 = coin haut-gauche)
     type coordonnees = record
       x : integer;
       y : integer;
@@ -13,7 +14,7 @@ interface
     // pour les cadres
     type typeBordure = (simple, double);
 
-    // supprime tous les caractères de l'écran mais ne change pas les couleurs
+    // supprime tous les caractï¿½res de l'ï¿½cran mais ne change pas les couleurs
     // de fond
     procedure effacerEcran;
 
@@ -22,15 +23,15 @@ interface
     // Change la taille de la fenetre
     procedure changerTailleConsole(largeur,hauteur : Integer);
 
-    // supprime tous les caractères de l'écran et colorie le fond dans la couleur
-    // désirée (cette couleur est gardée comme couleur de fond par défaut et la
-    // couleur du texte est conservée)
+    // supprime tous les caractï¿½res de l'ï¿½cran et colorie le fond dans la couleur
+    // dï¿½sirï¿½e (cette couleur est gardï¿½e comme couleur de fond par dï¿½faut et la
+    // couleur du texte est conservï¿½e)
     procedure effacerEtColorierEcran(couleur : Byte);
 
-    // déplace le curseur à la position donnée
+    // dï¿½place le curseur ï¿½ la position donnï¿½e
     procedure deplacerCurseur(position : coordonnees);
 
-    // déplace le curseur aux coordonnées X, Y
+    // dï¿½place le curseur aux coordonnï¿½es X, Y
     procedure deplacerCurseurXY(x, y : integer);
 
     // retourne la position actuelle du curseur
@@ -42,16 +43,16 @@ interface
     // change la colonne du curseur sans changer la ligne
     procedure changerColonneCurseur(position : integer);
 
-    // affiche le texte à la position donnée
+    // affiche le texte ï¿½ la position donnï¿½e
     procedure ecrireEnPosition(position : coordonnees; texte: string);
 
-    // dessine un cadre à partir des coordonnées des points haut-gauche
+    // dessine un cadre ï¿½ partir des coordonnï¿½es des points haut-gauche
     // et bas-droite, du type de bordure, de la couleur de trait et de
     // la couleur de fond
     procedure dessinerCadreXY(x,y,x2,y2 : integer; t : typeBordure; coulTrait, coulFond : byte);
     procedure dessinerCadre(c1, c2 : coordonnees; t : typeBordure; ct, cf : byte);
 
-    // attends le nombre de ms indiqué
+    // attends le nombre de ms indiquï¿½
     procedure attendre(millisecondes : integer);
 
     // change la couleur de fond actuelle
@@ -65,6 +66,22 @@ interface
 
 	// Change la couleur de la zone
     procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
+
+  // Affiche ligne par ligne du texte saisi entre cote
+  procedure afficheLigneParLigne(x, y: integer; message: _Message);
+  
+
+  // Efface la zone de texte menu
+  procedure effacerTexteMenu();
+
+  // Efface la zone de texte de l'inventaire
+  procedure effacerTexteInventaire();
+
+  // Efface la zone de texte de l'affichage
+  procedure effacerTexteAffichage();
+
+  // Efface la zone de texte du cadre choix
+  procedure effacerTexteCadreChoix();
 
     const
       // Codes des couleurs
@@ -87,6 +104,49 @@ interface
 
 implementation
 
+  procedure afficheLigneParLigne(x, y: integer; message: _Message);
+    var
+      i: integer;
+    begin
+      for i := 0 to High(message) do
+      begin
+        deplacerCurseurXY(x, y+i);
+        writeln(message[i]);
+      end;
+    end;
+
+  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer);
+    var
+      i: integer;
+      lignesVides: _Message;
+    begin
+      SetLength(lignesVides, hauteur);
+      for i := 0 to hauteur - 1 do
+        lignesVides[i] := StringOfChar(' ', largeur);
+      
+      afficheLigneParLigne(x, y, lignesVides);
+    end;
+
+  procedure effacerTexteMenu();
+  begin
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
+  end;
+
+  procedure effacerTexteInventaire();
+  begin
+    effacerZoneDeTexte(X_INVENTAIRE,Y_INVENTAIRE,L_INVENTAIRE,H_INVENTAIRE);
+  end;
+
+  procedure effacerTexteAffichage();
+  begin
+    effacerZoneDeTexte(X_AFFICHAGE,Y_AFFICHAGE,L_AFFICHAGE,H_AFFICHAGE);
+  end;
+
+  procedure effacerTexteCadreChoix();
+  begin
+    effacerZoneDeTexte(X_CADRECHOIX,Y_CADRECHOIX,L_CADRECHOIX,H_CADRECHOIX);
+  end;
+
     procedure effacerEcran;
     var
       stdOutputHandle : Cardinal;
@@ -108,32 +168,6 @@ implementation
       cursorPos.Y := 0;
       SetConsoleCursorPosition(stdOutputHandle, cursorPos);
       couleurFond(0);
-    end;
-
-    procedure changerTailleConsole(largeur,hauteur : Integer);
-    var
-       Con: THandle;
-       Size: TCoord;
-       Rect: TSmallRect;
-       Wnd: HWND;
-    begin
-        effacerEcran();
-        Con := GetStdHandle(STD_OUTPUT_HANDLE);
-        Size := GetLargestConsoleWindowSize(Con);
-        Size.X := largeur;
-        Size.Y := hauteur;
-
-        SetConsoleScreenBufferSize(Con, Size);
-
-        Rect.Left := -10;
-        Rect.Top := -10;
-        Rect.Right := Size.X-11;
-        Rect.Bottom := Size.Y-11;
-        SetConsoleWindowInfo(Con, True, Rect);
-
-        Wnd := GetConsoleWindow;               
-
-        SetWindowPos(Wnd, 0, 0, 0, 0, 0, SWP_NOSIZE);
     end;
 
     procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
@@ -270,7 +304,7 @@ implementation
         write(bords[H]);
       write(bords[CHD]);
 
-      // on dessine les lignes intermédiaires
+      // on dessine les lignes intermï¿½diaires
       for i := c1.y+1 to c2.y-1 do
       begin
         deplacerCurseurXY(c1.x, i);
