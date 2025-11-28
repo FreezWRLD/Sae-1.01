@@ -21,17 +21,27 @@ uses
   procedure AfficherEmplacementZone(zone : _Zone);
   procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
   procedure afficherMenuChangerDeZone();
+  procedure quitterIHM();
+  procedure afficherMenuDemarrage();
 implementation
 
   //Affichage d'un message de fin
   procedure quitterIHM();
-    begin
-      effacerEcran();
-      dessinerCadreXY(31,13,88,15, double, white, black);
-      deplacerCurseurXY(56,14);
-      writeln('AU REVOIR');
-      readln;
-    end;
+  var
+    x,y,x2,y2,xtext,ytext : integer;
+  begin
+    effacerEcran();
+    x := (199 div 2 ) - 15 ;
+    y := (39 div 2 ) - 2 ;
+    x2 := (199 div 2 ) + 15;
+    y2 := (39 div 2 ) + 2;
+    xtext := x + (32-Length('AU REVOIR')) div 2;
+    ytext := y + 2;
+    dessinerCadreXY(x, y, x2, y2, double, white, black);
+    deplacerCurseurXY(xtext, ytext);
+    writeln('AU REVOIR');
+    readln;
+  end;  
 
   procedure afficheLigneParLigne(x, y: integer; message: _Message);
     var
@@ -83,6 +93,19 @@ implementation
     dessinerCadreXY(40,36,49,38,simple,white,black);
     deplacerCurseurXY(44,37);
   end;
+
+  procedure afficherMenuDemarrage();
+  begin
+        dessinerCadreXY(75,32,125,38,simple,white,black); //au niveau du texte "appuyez sur une touche pour continuer" // Dessine le cadre pour le menu
+    deplacerCurseurXY(88,34); // Crée le menu
+    write('Menu principal');
+    deplacerCurseurXY(88,35);
+    write('1/ Commencer la partie');
+    deplacerCurseurXY(88,36);
+    writeln('2/ Quitter');
+  end;
+
+
 
   procedure afficherInventaire();
   begin
@@ -461,7 +484,6 @@ implementation
     ColorierZone(8,8,65,66,12);ColorierZone(8,8,71,72,12);ColorierZone(8,8,79,82,12);ColorierZone(8,8,111,114,12);ColorierZone(8,8,123,124,12); //Dessin de la ligne 12
     ColorierZone(8,8,65,66,13);ColorierZone(8,8,71,72,13);ColorierZone(8,8,75,78,13);ColorierZone(8,8,115,118,13);ColorierZone(8,8,123,124,13); //Dessin de la ligne 13
     ColorierZone(8,8,65,66,14);ColorierZone(8,8,71,74,14);ColorierZone(8,8,119,122,14);ColorierZone(8,8,123,124,14); //Dessin de la ligne 14
-  
   end;  
     
 
@@ -494,14 +516,6 @@ implementation
     writeln();
     writeln('                                                                                < Appuyez sur une touche pour continuer >');
     readln();
-    dessinerCadreXY(75,32,125,38,simple,white,black); //au niveau du texte "appuyez sur une touche pour continuer" // Dessine le cadre pour le menu
-    deplacerCurseurXY(88,34); // Crée le menu
-    write('Menu principal');
-    deplacerCurseurXY(88,35);
-    write('1/ Commencer la partie');
-    deplacerCurseurXY(88,36);
-    writeln('2/ Quitter');
-    choixmenudemarrage();
   end;
   
   procedure ecranDemarrage();
@@ -532,8 +546,6 @@ implementation
     affichageCentre('vous atteignez (contre toute attente) la surface martienne sans le moindre incident majeur.',22);
     affichageCentre('Maintenant, il est temps de vous mettre au travail. L''IUT a besoin de vous !',24);
     affichageCentre('< Appuyez sur une touche pour continuer >',32);
-    readln();
-    ecranJeu();
   end;
     
 end.

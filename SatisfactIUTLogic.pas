@@ -11,7 +11,7 @@ uses
   function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
   function InitDate():_Date; //Initialise la date de début du jeu
   procedure menuDeJeu();
-  procedure choixmenudemarrage();
+  procedure menuDemarrage();
   procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
   procedure InitInventaires(var zone : _Zone);
 implementation
@@ -158,6 +158,7 @@ uses
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
 
+
   // 5 -> Logique du menu changer de zone
   procedure menuChangerDeZone();
   var 
@@ -173,7 +174,7 @@ uses
       3:ZoneActuelle:=foretNordique;
       4:ZoneActuelle:=volcanique;
       5:ZoneActuelle:=desertique;
-      0:ZoneActuelle:=base;
+      0:menuDeJeu();
       end;
     until choix in [0 .. 5];
     //writeln(ZoneActuelle);
@@ -185,6 +186,7 @@ uses
     choix: integer;
   begin
   repeat
+    afficherMenuPrincipale();
     cadrechoixmenu();
     readln(choix);
     case choix of
@@ -205,17 +207,23 @@ uses
   until choix in[0..9];
   end;
 
-  procedure choixmenudemarrage();
+  procedure menuDemarrage();
   var 
     choix: Integer;
   begin
+    repeat
+    ecranDemarrage();
+    afficherMenuDemarrage();
     readln(choix);
-    repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
       case choix of
-        1:histoire();
-        2:  
+        1: 
+        begin 
+          histoire(); 
+          ecranJeu(); 
+        end;
+        2:quitterIHM();
       end;
-    until (choix=1) OR (choix=2);
+    until choix in[1..2];
   end; 
 
   end.

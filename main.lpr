@@ -17,7 +17,7 @@ begin
   writeln(JZones[ZoneActuelle].inventaire.quantites[Beton]);
   readln;
   effacerEcran;
-  ecranDemarrage;
+  menuDemarrage();
   
 
   {// Création d'un emplacement vide découvert
