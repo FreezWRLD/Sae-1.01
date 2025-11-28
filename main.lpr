@@ -55,6 +55,6 @@ begin
   ecranDemarrage();
 end.}
 begin
-  ecranDemarrage();
+  dessin();
   readln
 end.
