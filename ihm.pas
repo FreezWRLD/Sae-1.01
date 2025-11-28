@@ -4,13 +4,11 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
+  SysUtils, gestionEcran, declarations, SatisfactIUTLogic;
 
   procedure ecranDemarrage();
   procedure dessin();
   procedure histoire();
-  procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
-  procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
   procedure ecranJeu();
   procedure cadrechoixmenu();
   
@@ -19,6 +17,9 @@ uses
   procedure menuConstruction();
   procedure menuProductionConstructeur();
   procedure afficherWiki();
+
+  procedure AfficherEmplacementZone(zone : _Zone);
+  procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
 
 implementation
 
@@ -135,114 +136,80 @@ implementation
     ]);
   end;
 
-  
-
-  
-
-  // Fonction pour afficher un bâtiment dans un cadre formaté
-// x, y : position du coin supérieur gauche du cadre
-procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
-  var
-    largeurCadre: integer;
+  procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
+  const 
+    largeurCadre = 60;
   begin
-    largeurCadre := 70; // Largeur du cadre
-    
-    // Dessin du cadre
-    dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
-
-    deplacerCurseurXY(x + 6, y + 2);
-    write('BATIMENT   : ', unBatiment.nom); 
-
-    if unBatiment.nom <> hub then begin
-      deplacerCurseurXY(x + 6, y + 3);
-      write('NIVEAU     : ', unBatiment.niveau);
-    end;
-
-    if unBatiment.nom <> hub then begin
-      deplacerCurseurXY(x + 6, y + 4);
-      write('RESSOURCE  : ', unBatiment.ressourceProduite);
-    end;
-
-    if unBatiment.nom <> hub then begin
-      deplacerCurseurXY(x + 6, y + 5);
-      write('ENERGIE    : ', unBatiment.coutEnegrie);
-    end;
-
-  end;
-
-  // Affiche un emplacement selon son état (découvert/non découvert) et son contenu
-  procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
-  var
-    largeurCadre: integer;
-    couleurCadre: word;
-  begin
-    largeurCadre := 70; // Même largeur que pour les bâtiments
-    
-    // Détermination de la couleur du cadre selon l'état et le contenu de l'emplacement
-    if emplacement.estDecouvert then
+    if emplacement.estDecouvert = True then
     begin
-      if (emplacement.batiment.nom = VIDE) and (not emplacement.gisement.existe) then
+      if emplacement.batiment.nom <> VIDE then
       begin
-        // Emplacement vide découvert - fond blanc
-        dessinerCadreXY(x, y, x + 70, y + 6, simple, White, Black);
-        deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT VIDE')) div 2, y + 3);
-        write('EMPLACEMENT VIDE');
+        dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+        deplacerCurseurXY(x+10, y+2);
+        write('Batiment : ', emplacement.batiment.nom);
+        deplacerCurseurXY(x+10, y+4);
+        write('Niveau : ', emplacement.batiment.niveau);
+        deplacerCurseurXY(x+30, y+2);
+        write('Production : ', emplacement.batiment.ressourceProduite);
       end
       else
       begin
-        if emplacement.batiment.nom <> VIDE then
+        if emplacement.gisement.existe then
         begin
-          // Bâtiment - contour blanc
-          dessinerCadreXY(x, y, x + 70, y + 6, simple, White, Black);
-          deplacerCurseurXY(x + 6, y + 2);
-          write('BATIMENT    : ', emplacement.batiment.nom);
-          deplacerCurseurXY(x + 6, y + 4);
-          if (emplacement.batiment.nom = mine) or (emplacement.batiment.nom = constructeur) then
-          write('NIVEAU      : ', emplacement.batiment.niveau);
+          dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+          deplacerCurseurXY(x+10, y+2);
+          write('Gisement non exploité : ', emplacement.gisement.typeGisement);
+          deplacerCurseurXY(x+10, y+4);
+          write('Purete : ', emplacement.gisement.mineraiPurete);
         end
-        else if emplacement.gisement.existe then
+        else
         begin
-          // Gisement non exploité - marron
-          dessinerCadreXY(x, y, x + 70, y + 6, simple, Brown, Black);
-          deplacerCurseurXY(x + 6, y + 2);
-          write('GISEMENT NON EXPLOITÉ');
-          deplacerCurseurXY(x + 6, y + 4);
-          write('MINERAI   : ', emplacement.gisement.typeGisement);
-          deplacerCurseurXY(x + 41, y + 2);
-          write('PURETE : ', emplacement.gisement.mineraiPurete);
+          dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+          deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT VIDE')) div 2, y + 3);
+          write('EMPLACEMENT VIDE');
         end;
       end;
     end
     else
     begin
-      // Emplacement non découvert - gris clair
-      dessinerCadreXY(x, y, x + 70, y + 6, simple, DarkGray, Black);
+      dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, DarkGray, Black);
       deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT NON DECOUVERT')) div 2, y + 3);
       write('EMPLACEMENT NON DECOUVERT');
     end;
   end;
 
-{if emplacement.estDecouvert then
-begin
-  if (emplacement.batiment.nom = VIDE) and (not emplacement.gisement.existe) then
+  procedure AfficherEmplacementZone(zone : _Zone);
+  var 
+    x, y : integer;
   begin
-    // Afficher emplacement vide
-    // Exemple : Form1.Canvas.TextOut(x, y, 'Vide');
-  end
-  else
-  begin
-    if emplacement.batiment.nom <> VIDE then
-    begin
-      // Afficher le bâtiment
-      // Exemple : Form1.Canvas.TextOut(x, y, 'Bâtiment: ' + GetBatimentNom(emplacement.batiment.nom));
-    end
-    else if emplacement.gisement.existe then
-    begin
-      // Afficher le gisement
-      // Exemple : Form1.Canvas.TextOut(x, y, 'Gisement: ' + GetGisementType(emplacement.gisement.typeGisement));
-    end;
+    x := 60;
+    y := 5;
+    
+    AfficherEmplacement1(x,y,zone.emplacements[0]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[1]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[2]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[3]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[4]);
+    y := y+7;
+
+    x := 132;
+    y := 5;
+
+    AfficherEmplacement1(x,y,zone.emplacements[5]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[6]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[7]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[8]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[9]);
+    y := y+7;
   end;
-end;}
 
   procedure cadrePrincip();
   begin
