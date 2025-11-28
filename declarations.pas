@@ -26,7 +26,7 @@ type
   //Date
   _Jour = 1 .. 31;
   _Mois = 1 .. 12;
-  _Annee = 2020 .. 2025;
+  _Annee = 2000 .. 2025;
 
   //Niveau de gisement
   _Purete = 1 .. 3;

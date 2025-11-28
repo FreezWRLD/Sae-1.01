@@ -2,9 +2,9 @@ program main;
 {$mode objfpc}{$H+}
 {$codepage utf8} 
 uses
-  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic, joueur;
+  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic;
 
-{var
+var
   i: Integer;
   batiments: _ListeDeBatiments;
   emplacementVide, emplacementNonDecouvert, emplacementBatiment, emplacementGisement: _Emplacement;
@@ -15,9 +15,12 @@ uses
 
 begin
   // Initialisation des variables du joueur
+  Randomize();
   initialiserJeu(JDate, ZoneActuelle, JZones);
-  
-  // Création d'un emplacement vide découvert
+  writeln(GetDate(JDate));
+  readln;
+
+  {// Création d'un emplacement vide découvert
   emplacementVide.estDecouvert := True;
   emplacementVide.batiment.nom := VIDE;
   emplacementVide.gisement.existe := False;
@@ -53,8 +56,13 @@ begin
   // Attente de l'utilisateur avant de quitter
   readln;
   ecranDemarrage();
-end.}
+end.
 begin
+<<<<<<< HEAD
   dessin();
   readln
+=======
+  ecranDemarrage();
+  readln}
+>>>>>>> eb629e9bd776a01528d57f402350b99b10e51398
 end.

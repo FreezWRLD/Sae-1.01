@@ -12,10 +12,18 @@ uses
   function InitDate():_Date; //Initialise la date de début du jeu
   procedure menuDeJeu();
   procedure choixmenudemarrage();
+  procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
 
 implementation
 uses
  ihm;
+
+  procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
+  begin
+    JZones := InitZones();
+    JDate := InitDate();
+    ZoneActuelle := base;
+  end;
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
@@ -106,6 +114,7 @@ uses
   function GetDate(date : _Date):String; //Retourne la date sous forme de chaîne de caractères
   begin 
     GetDate := intToStr(date.jour) + '/' + intToStr(date.mois) + '/' + intToStr(date.annee);
+    GetDate := Format('%.2d/%.2d/%.4d', [date.jour, date.mois, date.annee])
   end;
 
   procedure InitInventaires(var zone : _Zone);
@@ -142,7 +151,7 @@ uses
   begin
     InitDate.jour:=_Jour(Random(31));
     InitDate.mois:=_Mois(Random(12));
-    InitDate.annee:=_Annee(Random(2023));
+    InitDate.annee:=_Annee(Random(25)+2000);
   end;
 
   procedure menuDeJeu();
