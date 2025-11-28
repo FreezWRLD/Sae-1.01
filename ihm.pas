@@ -7,12 +7,21 @@ uses
   SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
 
   procedure ecranDemarrage();
+  procedure dessin();
+  procedure histoire();
   procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
   procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
   procedure ecranJeu();
-  procedure afficherWiki();
+  procedure cadrechoixmenu();
   
+  procedure afficherMenuPrincipale();
+  
+  procedure menuConstruction();
+  procedure menuProductionConstructeur();
+  procedure afficherWiki();
+
 implementation
+
   //Affichage d'un message de fin
   procedure quitterIHM();
     begin
@@ -45,9 +54,30 @@ implementation
       
       afficheLigneParLigne(x, y, lignesVides);
     end;
+
+  procedure effacerTexteMenu();
+  begin
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
+  end;
+
+  procedure effacerTexteInventaire();
+  begin
+    effacerZoneDeTexte(X_INVENTAIRE,Y_INVENTAIRE,L_INVENTAIRE,H_INVENTAIRE);
+  end;
+
+  procedure effacerTexteAffichage();
+  begin
+    effacerZoneDeTexte(X_AFFICHAGE,Y_AFFICHAGE,L_AFFICHAGE,H_AFFICHAGE);
+  end;
+
+  procedure effacerTexteCadreChoix();
+  begin
+    effacerZoneDeTexte(X_CADRECHOIX,Y_CADRECHOIX,L_CADRECHOIX,H_CADRECHOIX);
+  end;
   
   procedure cadrechoixmenu();
   begin
+    effacerTexteCadreChoix();
     couleurTexte(15);
     dessinerCadreXY(40,36,49,38,simple,white,black);
     deplacerCurseurXY(44,37);
@@ -218,21 +248,6 @@ end;}
   begin
     dessinerCadreXY(0,0,L_MENU,39,simple,white,black);
     dessinerCadreXY(50,0,199,39,simple,white,black);
-  end;
-
-  procedure effacerTexteMenu();
-  begin
-    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-  end;
-
-  procedure effacerTexteInventaire();
-  begin
-    effacerZoneDeTexte(X_INVENTAIRE,Y_INVENTAIRE,L_INVENTAIRE,H_INVENTAIRE);
-  end;
-
-  procedure effacerTexteAffichage();
-  begin
-    effacerZoneDeTexte(X_AFFICHAGE,Y_AFFICHAGE,L_AFFICHAGE,H_AFFICHAGE);
   end;
 
   procedure afficherMenuPrincipale();
@@ -429,46 +444,32 @@ end;}
   until (choix=1)OR(choix=2)OR(choix=3);
   end;
 
-  procedure menuDeJeu();
-  var
-    choix: integer;
+  procedure affichemenuDeJeu();
   begin
     deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
-    repeat
-      afficherMenuPrincipale();
-      readln(choix);
-      case choix of
-      1: menuConstruction(); // 1/ Construire un bâtiment
-      2: menuProductionConstructeur(); // 2/ Changer la production
-      // 3/ Améliorer un bâtiment
-      // 4/ Explorer la zone
-      //4 : explorationEmplacement(JZones[ZoneActuelle]);
-      // 5/ Changer de zone
-      // 6/ Transférer des ressources
-      // 7/ Passer la journée 
-      //7: jourSuivant(JDate, JInventaire, JZones);
-      // 8/ Missions
-      9: afficherWiki();// 9/ Wiki
-      // 0/ Quitter la partie
-    
-      end;
-    until (choix>=0) AND (choix<=9);
-    end;
+    afficherMenuPrincipale();
+    menuDeJeu();
+  end;
+  
 
   procedure ecranJeu();
     
     begin
+    effacerEcran();
     cadrePrincip();
     afficherInventaire();
-    menuDeJeu();
+    affichemenuDeJeu();
     end;
 
-  procedure ecranDemarrage();
-  var
-    choix:integer=0; //Variable de type entier saisit au clavier qui correspond au choix de l'utilisateur
+  procedure dessin();
   begin
+    effacerEcran();
+    ColorierZone(15,15,55,70,0);
+  end;  
     
-    ColorierZone(15,15,40,45,1);
+
+  procedure logo();
+  begin
     couleurTexte(6);
     deplacerCurseurXY(0,9);
     writeln('                   _________________________________________________________________________________________________________________________________________________________');
@@ -497,49 +498,45 @@ end;}
     writeln('                                                                                < Appuyez sur une touche pour continuer >');
     readln();
     dessinerCadreXY(75,32,125,38,simple,white,black); //au niveau du texte "appuyez sur une touche pour continuer" // Dessine le cadre pour le menu
-    
     deplacerCurseurXY(88,34); // Crée le menu
     write('Menu principal');
     deplacerCurseurXY(88,35);
     write('1/ Commencer la partie');
     deplacerCurseurXY(88,36);
     writeln('2/ Quitter');
-    
-    
-    readln(choix);
-    repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
-      case choix of
-        1:
-        begin
-          effacerEcran();
-          couleurTexte(15);
-          affichageCentre('Dans une réalité. pas si alternative que ça.',3);
-          affichageCentre('2024 : une année particulièrement compliquée.',5);
-          affichageCentre('Suite à un mouvement de grève encore jamais vu (les Gilets Verts) pas moins de douze gouvernements',6);
-          affichageCentre('se sont succédé entre janvier et mars. Oui, douze. En trois mois.',7);
-          affichageCentre('L''instabilité économique provoquée par ces changements politiques incessants a plongé le pays dans',9);
-          affichageCentre('une ère de chaos. Et ce qui devait arriver... arriva. Privée de toute subvention de l''État, la direc',10);
-          affichageCentre('tion de l''IUT de Dijon a dû se rendre à l''évidence : à défaut d''avoir un budget, il allait falloir',11);
-          affichageCentre('utiliser la seule ressource encore abondante et peu coûteuse... vous, les étudiant(e)s.',12);
-          affichageCentre('Le 30 avril 2024, la direction dévoile alors une stratégie de redressement financier pour le moins',14);
-          affichageCentre('novatrice : Envoyer les étudiant(e)s coloniser dautres planètes et y construire des usines de pro',15);
-          affichageCentre('duction automatisées. Un moyen simple (et étonnamment peu onéreux) d''obtenir rapidement les ressour',16);
-          affichageCentre('ces nécessaires à la survie de l''établissement.',17);
-          affichageCentre('C''est ainsi que, le 15 septembre 2024, vous embarquez pour un voyage à destination de Mars, à bord',19);
-          affichageCentre('d''une fusée baptisée "Maëlle", fièrement assemblée lors d''une SAE du département GMP. Avec pour',20);
-          affichageCentre('seul(e)s compagnons la Lune, le ciel, et une check-list de sécurité rédigée par Franck Deher,',21);
-          affichageCentre('vous atteignez (contre toute attente) la surface martienne sans le moindre incident majeur.',22);
-          affichageCentre('Maintenant, il est temps de vous mettre au travail. L''IUT a besoin de vous !',24);
-          affichageCentre('< Appuyez sur une touche pour continuer >',32);
-        readln();
-        effacerEcran();
-        ecranJeu();
-        end;
-        2:  
-      end;
-    until (choix=1) OR (choix=2);
-  end;  
-
+    choixmenudemarrage();
+  end;
   
+  procedure ecranDemarrage();
+  begin
+    dessin();
+    logo();
+  end;
 
+  procedure histoire();
+  begin    
+    effacerEcran();
+    couleurTexte(15);
+    affichageCentre('Dans une réalité. pas si alternative que ça.',3);
+    affichageCentre('2024 : une année particulièrement compliquée.',5);
+    affichageCentre('Suite à un mouvement de grève encore jamais vu (les Gilets Verts) pas moins de douze gouvernements',6);
+    affichageCentre('se sont succédé entre janvier et mars. Oui, douze. En trois mois.',7);
+    affichageCentre('L''instabilité économique provoquée par ces changements politiques incessants a plongé le pays dans',9);
+    affichageCentre('une ère de chaos. Et ce qui devait arriver... arriva. Privée de toute subvention de l''État, la direc',10);
+    affichageCentre('tion de l''IUT de Dijon a dû se rendre à l''évidence : à défaut d''avoir un budget, il allait falloir',11);
+    affichageCentre('utiliser la seule ressource encore abondante et peu coûteuse... vous, les étudiant(e)s.',12);
+    affichageCentre('Le 30 avril 2024, la direction dévoile alors une stratégie de redressement financier pour le moins',14);
+    affichageCentre('novatrice : Envoyer les étudiant(e)s coloniser dautres planètes et y construire des usines de pro',15);
+    affichageCentre('duction automatisées. Un moyen simple (et étonnamment peu onéreux) d''obtenir rapidement les ressour',16);
+    affichageCentre('ces nécessaires à la survie de l''établissement.',17);
+    affichageCentre('C''est ainsi que, le 15 septembre 2024, vous embarquez pour un voyage à destination de Mars, à bord',19);
+    affichageCentre('d''une fusée baptisée "Maëlle", fièrement assemblée lors d''une SAE du département GMP. Avec pour',20);
+    affichageCentre('seul(e)s compagnons la Lune, le ciel, et une check-list de sécurité rédigée par Franck Deher,',21);
+    affichageCentre('vous atteignez (contre toute attente) la surface martienne sans le moindre incident majeur.',22);
+    affichageCentre('Maintenant, il est temps de vous mettre au travail. L''IUT a besoin de vous !',24);
+    affichageCentre('< Appuyez sur une touche pour continuer >',32);
+    readln();
+    ecranJeu();
+  end;
+    
 end.

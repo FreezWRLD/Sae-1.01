@@ -3,16 +3,19 @@ unit SatisfactIUTLogic;
 {$mode objfpc}{$H+}
 interface
 uses
-  sysutils, objets, declarations;
+  sysutils, objets, declarations,gestionEcran;
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
   function GetDate(date : _Date):String; //Retourne la date sous forme de chaîne de caractères
   function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
   function InitDate():_Date; //Initialise la date de début du jeu
-
+  procedure menuDeJeu();
+  procedure choixmenudemarrage();
 
 implementation
+uses
+ ihm;
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
@@ -141,4 +144,42 @@ implementation
     InitDate.mois:=_Mois(Random(12));
     InitDate.annee:=_Annee(Random(2023));
   end;
+
+  procedure menuDeJeu();
+  var
+    choix: integer;
+  begin
+  repeat
+    cadrechoixmenu();
+    readln(choix);
+    case choix of
+      1: menuConstruction(); // 1/ Construire un bâtiment
+      2: menuProductionConstructeur(); // 2/ Changer la production
+      // 3/ Améliorer un bâtiment
+      // 4/ Explorer la zone
+      //4 : explorationEmplacement(JZones[ZoneActuelle]);
+      // 5/ Changer de zone
+      // 6/ Transférer des ressources
+      // 7/ Passer la journée 
+      //7: jourSuivant(JDate, JInventaire, JZones);
+      // 8/ Missions
+      9: afficherWiki(); // 9/ Wiki
+      0: ecranDemarrage(); // 0/ Quitter la partie
+    end;
+  until choix in[0..9];
+  end;
+
+  procedure choixmenudemarrage();
+  var 
+    choix: Integer;
+  begin
+    readln(choix);
+    repeat                   // Choix du menu jusqu'a que le choix soit égale à 1 ou 2
+      case choix of
+        1:histoire();
+        2:  
+      end;
+    until (choix=1) OR (choix=2);
+  end; 
+
   end.
