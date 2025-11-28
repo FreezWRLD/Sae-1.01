@@ -39,7 +39,58 @@ implementation
     dessinerCadreXY(x, y, x2, y2, double, white, black);
     deplacerCurseurXY(xtext, ytext);
     writeln('AU REVOIR');
-    attendre(3000);
+    readln;
+  end;  
+
+  procedure afficheLigneParLigne(x, y: integer; message: _Message);
+    var
+      i: integer;
+    begin
+      for i := 0 to High(message) do
+      begin
+        deplacerCurseurXY(x, y+i);
+        writeln(message[i]);
+      end;
+    end;
+
+  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer);
+    var
+      i: integer;
+      lignesVides: _Message;
+    begin
+      SetLength(lignesVides, hauteur);
+      for i := 0 to hauteur - 1 do
+        lignesVides[i] := StringOfChar(' ', largeur);
+      
+      afficheLigneParLigne(x, y, lignesVides);
+    end;
+
+  procedure effacerTexteMenu();
+  begin
+    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
+  end;
+
+  procedure effacerTexteInventaire();
+  begin
+    effacerZoneDeTexte(X_INVENTAIRE,Y_INVENTAIRE,L_INVENTAIRE,H_INVENTAIRE);
+  end;
+
+  procedure effacerTexteAffichage();
+  begin
+    effacerZoneDeTexte(X_AFFICHAGE,Y_AFFICHAGE,L_AFFICHAGE,H_AFFICHAGE);
+  end;
+
+  procedure effacerTexteCadreChoix();
+  begin
+    effacerZoneDeTexte(X_CADRECHOIX,Y_CADRECHOIX,L_CADRECHOIX,H_CADRECHOIX);
+  end;
+
+  procedure cadrechoixmenu();
+  begin
+    effacerTexteCadreChoix();
+    couleurTexte(15);
+    dessinerCadreXY(40,36,49,38,simple,white,black);
+    deplacerCurseurXY(44,37);
   end;
 
   procedure afficherMenuDemarrage();
