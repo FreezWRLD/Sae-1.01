@@ -17,6 +17,13 @@ implementation
 uses
  ihm;
 
+  procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
+  begin
+    JZones := InitZones();
+    JDate := InitDate();
+    ZoneActuelle := base;
+  end;
+
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
     i:Integer;
