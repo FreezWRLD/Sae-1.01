@@ -486,6 +486,7 @@ implementation
     ColorierZone(8,8,51,52,37);ColorierZone(8,8,63,64,37);ColorierZone(8,8,69,70,37);ColorierZone(8,8,73,74,37);ColorierZone(8,8,83,84,37);ColorierZone(8,8,87,88,37);ColorierZone(8,8,103,104,37);ColorierZone(8,8,109,110,37);ColorierZone(8,8,115,116,37);ColorierZone(8,8,121,122,37);ColorierZone(8,8,127,128,37);ColorierZone(8,8,139,140,37);ColorierZone(8,8,145,146,37); //Dessin de la ligne 37
     ColorierZone(8,8,51,52,38);ColorierZone(8,8,63,64,38);ColorierZone(8,8,69,70,38);ColorierZone(8,8,73,74,38);ColorierZone(8,8,83,84,38);ColorierZone(8,8,87,88,38);ColorierZone(8,8,103,104,38);ColorierZone(8,8,109,110,38);ColorierZone(8,8,115,116,38);ColorierZone(8,8,121,122,38);ColorierZone(8,8,127,128,38);ColorierZone(8,8,139,140,38);ColorierZone(8,8,145,146,38); //Dessin de la ligne 38
     ColorierZone(8,8,51,146,39); //Dessin de la ligne 39 
+    attendre(500);
   end;  
     
 

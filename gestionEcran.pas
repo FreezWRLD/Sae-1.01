@@ -5,13 +5,8 @@ unit gestionEcran;
 
 
 interface
-<<<<<<< HEAD
     uses SysUtils, Windows, declarations;
-    
-=======
-    uses SysUtils, Windows;
 
->>>>>>> bdb06c00b22db6dc87e17d8ed4c1c11c0cf040ad
     // représente une coordonnée à l'écran (0,0 = coin haut-gauche)
     type coordonnees = record
       x : integer;
@@ -313,11 +308,6 @@ implementation
       TextAttr := (LastMode and $0F) or ((couleur shl 4) and $F0);
       SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), TextAttr);
     end;
-
-  function propre(t:string) : string;
-  begin
-    propre:=t
-  end;
 
   procedure affichageCentre(s:string;y:integer);
   begin
