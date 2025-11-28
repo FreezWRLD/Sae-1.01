@@ -55,5 +55,5 @@ begin
   
   // Attente de l'utilisateur avant de quitter
   readln;}
-  ecranDemarrage();
+  menuDemarrage();
 end.
