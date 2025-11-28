@@ -118,7 +118,7 @@ implementation
       'Fondations'
     ]);
     afficheLigneParLigne(34,10,[
-      ': '{+valeurmineraidecuivre},
+      ': ',intToStr(JInventaire.quantites[Cuivre]),
       ': '{+valeurmineraidefer},
       ': '{+valeurcalcaire},
       ': '{+valeurcharbon},
