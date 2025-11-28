@@ -4,7 +4,7 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, declarations, SatisfactIUTLogic;
+  SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
 
   procedure ecranDemarrage();
   procedure dessin();
@@ -119,20 +119,20 @@ implementation
       'Fondations'
     ]);
     afficheLigneParLigne(34,10,[
-      ': ',intToStr(JInventaire.quantites[Cuivre]),
-      ': '{+valeurmineraidefer},
-      ': '{+valeurcalcaire},
-      ': '{+valeurcharbon},
-      ': '{+valeurlingotsdecuivre},
-      ': '{+valeurlingotsdefer},
-      ': '{+valeurcablesdecuivre},
-      ': '{+valeurplaquesdefer},
-      ': '{+valeurtuyauxdefer},
-      ': '{+valeursacsdebeton},
-      ': '{+valeuracier},
-      ': '{+valeurplaquesrenforcees},
-      ': '{+valeurpoutresindustrielles},
-      ': '{+valeurfondations}
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Cuivre]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Fer]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Calcaire]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Charbon]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[LingotCuivre]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[LingotFer]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[CableCuivre]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[PlaqueFer]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[TuyauFer]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Beton]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Acier]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[PlaqueRenforcee]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[PoutreIndustrielle]),
+      ': '+intToStr(JZones[ZoneActuelle].inventaire.quantites[Fondation])
     ]);
   end;
 

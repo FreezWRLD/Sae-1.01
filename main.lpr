@@ -2,17 +2,8 @@ program main;
 {$mode objfpc}{$H+}
 {$codepage utf8} 
 uses
-  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic, typinfo ;
+  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic, typinfo, joueur ;
 
-var
-  i: Integer;
-  batiments: _ListeDeBatiments;
-  emplacementVide, emplacementNonDecouvert, emplacementBatiment, emplacementGisement: _Emplacement;
-  JZones : _EnsembleDeZones ;
-  JDate : _Date;
-  JInventaire : _Inventaire;
-  ZoneActuelle : _TypeZone;  // Zone actuelle du joueur
-  ti : PTypeInfo;
 
 begin
   // Initialisation des variables du joueur
@@ -22,10 +13,8 @@ begin
   jourSuivant(JDate, JInventaire, JZones);
   writeln(Getdate(JDate));
 
-  ti := TypeInfo(intToStr(JInventaire.quantites[Cuivre]));
-  WriteLn('Type = ', ti^.Name);
-
-  writeln(JInventaire.quantites[Cuivre]);
+  InitInventaires(JZones[ZoneActuelle]);
+  writeln(JZones[ZoneActuelle].inventaire.quantites[Beton]);
   readln;
   effacerEcran;
   ecranDemarrage;
@@ -66,14 +55,5 @@ begin
   
   // Attente de l'utilisateur avant de quitter
   readln;
-  ecranDemarrage();
-end.
-begin
-<<<<<<< HEAD
-  dessin();
-  readln
-=======
-  ecranDemarrage();
-  readln}
->>>>>>> eb629e9bd776a01528d57f402350b99b10e51398
+  ecranDemarrage();}
 end.

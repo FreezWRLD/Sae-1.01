@@ -13,7 +13,7 @@ uses
   procedure menuDeJeu();
   procedure choixmenudemarrage();
   procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
-
+  procedure InitInventaires(var zone : _Zone);
 implementation
 uses
  ihm;
@@ -125,6 +125,10 @@ uses
     begin
       zone.inventaire.quantites[i] := 0;
     end;
+    // Cas particulier
+    zone.inventaire.quantites[CableCuivre] := 100;
+    zone.inventaire.quantites[PlaqueFer] := 100;
+    zone.inventaire.quantites[Beton] := 20;
   end;
 
   function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
