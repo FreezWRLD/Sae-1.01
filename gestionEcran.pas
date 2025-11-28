@@ -6,12 +6,12 @@ unit gestionEcran;
 
 interface
     uses SysUtils, Windows;
-    
+
     // représente une coordonnée à l'écran (0,0 = coin haut-gauche)
     type coordonnees = record
-    x : integer;
-    y : integer;
-  end;
+      x : integer;
+      y : integer;
+    end;
 
     // permet d'indiquer si l'on souhaite une bordure simple ou double
     // pour les cadres
@@ -66,20 +66,7 @@ interface
   procedure ColorierZone(couleur : Byte ;couleurT : Byte; xStart,xEnd,y:Integer);
 
   procedure affichageCentre(s:string;y:integer); //Affiche dans le centre de l'écran le texte à la ligne souhaitée
-
-  procedure afficheLigneParLigne(x, y: integer; message: _Message); //Affiche les textes entre cotes ligne par ligne à partir des coordonnées x et y
-
-  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer); //Efface une zone de texte donnée par ses coordonnées et sa taille
-
-  procedure effacerTexteMenu(); //Efface la zone de texte du menu principale
-
-  procedure effacerTexteInventaire(); //Efface la zone de texte de l'inventaire
-
-  procedure effacerTexteAffichage(); //Efface la zone de texte d'affichage
-
-  procedure effacerTexteCadreChoix(); //Efface la zone de texte du cadre de choix
-
-  procedure cadrechoixmenu(); //Dessine le cadre du menu de choix
+  
 
     const
       // Codes des couleurs
@@ -331,57 +318,6 @@ implementation
   begin
     deplacerCurseurXY((200-Length(UTF8Decode(s)))div 2,y);
     writeln(s);
-  end;
-  
-  procedure afficheLigneParLigne(x, y: integer; message: _Message);
-    var
-      i: integer;
-    begin
-      for i := 0 to High(message) do
-      begin
-        deplacerCurseurXY(x, y+i);
-        writeln(message[i]);
-      end;
-    end;
-
-  procedure effacerZoneDeTexte(x, y, largeur, hauteur: integer);
-    var
-      i: integer;
-      lignesVides: _Message;
-    begin
-      SetLength(lignesVides, hauteur);
-      for i := 0 to hauteur - 1 do
-        lignesVides[i] := StringOfChar(' ', largeur);
-      
-      afficheLigneParLigne(x, y, lignesVides);
-    end;
-
-  procedure effacerTexteMenu();
-  begin
-    effacerZoneDeTexte(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, L_MENU-X_MENU_PRINCIPALE, H_MENU);
-  end;
-
-  procedure effacerTexteInventaire();
-  begin
-    effacerZoneDeTexte(X_INVENTAIRE,Y_INVENTAIRE,L_INVENTAIRE,H_INVENTAIRE);
-  end;
-
-  procedure effacerTexteAffichage();
-  begin
-    effacerZoneDeTexte(X_AFFICHAGE,Y_AFFICHAGE,L_AFFICHAGE,H_AFFICHAGE);
-  end;
-
-  procedure effacerTexteCadreChoix();
-  begin
-    effacerZoneDeTexte(X_CADRECHOIX,Y_CADRECHOIX,L_CADRECHOIX,H_CADRECHOIX);
-  end;
-
-  procedure cadrechoixmenu();
-  begin
-    effacerTexteCadreChoix();
-    couleurTexte(15);
-    dessinerCadreXY(40,36,49,38,simple,white,black);
-    deplacerCurseurXY(44,37);
   end;
 
 end.
