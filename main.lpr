@@ -6,7 +6,7 @@ uses
 
 
 begin
-  // Initialisation des variables du joueur
+  {// Initialisation des variables du joueur
   Randomize();
   initialiserJeu(JDate, ZoneActuelle, JZones);
   writeln(GetDate(JDate));
@@ -20,7 +20,7 @@ begin
   ecranDemarrage;
   
 
-  {// Création d'un emplacement vide découvert
+  // Création d'un emplacement vide découvert
   emplacementVide.estDecouvert := True;
   emplacementVide.batiment.nom := VIDE;
   emplacementVide.gisement.existe := False;
@@ -54,6 +54,6 @@ begin
   afficherEmplacement(10, 26, emplacementGisement);
   
   // Attente de l'utilisateur avant de quitter
-  readln;
-  ecranDemarrage();}
+  readln;}
+  ecranDemarrage();
 end.
