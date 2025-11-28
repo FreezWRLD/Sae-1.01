@@ -96,13 +96,13 @@ implementation
 
   procedure afficherMenuDemarrage();
   begin
-        dessinerCadreXY(75,32,125,38,simple,white,black); //au niveau du texte "appuyez sur une touche pour continuer" // Dessine le cadre pour le menu
+    dessinerCadreXY(75,32,125,38,simple,white,black); //au niveau du texte "appuyez sur une touche pour continuer" // Dessine le cadre pour le menu
     deplacerCurseurXY(88,34); // Crée le menu
-    write('Menu principal');
-    deplacerCurseurXY(88,35);
-    write('1/ Commencer la partie');
-    deplacerCurseurXY(88,36);
-    writeln('2/ Quitter');
+    afficheLigneParLigne(88,34, [
+      'Menu principal',
+      '1/ Commencer la partie',
+      '2/ Quitter'
+    ]);
   end;
 
 
