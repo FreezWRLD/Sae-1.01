@@ -138,17 +138,23 @@ uses
   begin
     for i in _TypeZone do
     begin     
-      InitZones[i].typeZone:=i;
+      InitZones[i].typeZone := i;
       SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
       InitInventaires(InitZones[i]);
-      for j:=1 to Length(InitZones[i].emplacements)-1 do
+      
+      // Initialisation de tous les emplacements comme non découverts et vides
+      for j := 0 to Length(InitZones[i].emplacements) - 1 do
       begin
         InitZones[i].emplacements[j].estDecouvert := False;
+        InitZones[i].emplacements[j].batiment.nom := VIDE;
+        InitZones[i].emplacements[j].batiment.niveau := 1;
         InitZones[i].emplacements[j].gisement := RandomGisement();
       end;
     end;
     InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
     InitZones[base].emplacements[0].batiment := DEFAULT_HUB; //Le premier emplacement de la zone de base contient toujours le hub
+    InitZones[base].emplacements[1].estDecouvert := True;
+    InitZones[base].emplacements[2].estDecouvert := True;
   end;
 
   function InitDate():_Date; //Initialise la date de début du jeu
@@ -158,22 +164,101 @@ uses
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
   
+// Fonction pour sélectionner un emplacement
+{function selectionnerEmplacement: _Emplacement;
+var
+  choix: integer;
+  zone: _Zone;
+begin
+  zone := JZones[ZoneActuelle];
+  repeat
+    AfficherEmplacementZone(zone);  // Affiche la zone actuelle
+    //writeln('Sélectionnez un emplacement (2-10) ou 0 pour annuler :');
+    //writeln('(L''emplacement 1 est réservé au Hub)');
+    readln(choix);
+    
+    if choix = 0 then
+    begin
+      // Retourne un emplacement vide si annulation
+      selectionnerEmplacement.estDecouvert := False;
+      exit;
+    end;
+      
+    if (choix >= 2) and (choix <= 10) then
+    begin
+      if zone.emplacements[choix-1].estDecouvert then
+        exit(zone.emplacements[choix-1])
+      else
+        writeln('Cet emplacement n''est pas encore découvert !');
+    end
+    else if choix = 1 then
+      writeln('L''emplacement 1 est réservé au Hub !')
+    else
+      writeln('Choix invalide. Veuillez choisir un nombre entre 2 et 10.');
+  until false;
+end;}
+
+
+procedure ConstruireBatiment(batiment: _Batiment);
+var
+  choix: integer;
+  zone: _Zone;
+begin
+  zone := JZones[ZoneActuelle];
+  AfficherEmplacementZone(zone);
+  afficherConstruireBatiment();
+  readln(choix);
+
+  if (choix >= 2) and (choix <= 10) then
+  begin
+    if zone.emplacements[choix-1].estDecouvert then
+    begin
+      if zone.emplacements[choix-1].batiment.nom = VIDE then
+      begin
+        if zone.emplacements[choix-1].gisement.existe then
+        begin
+          if batiment.nom = MINE then
+          begin
+            zone.emplacements[choix-1].batiment := batiment;
+            zone.emplacements[choix-1].batiment.ressourceProduite := zone.emplacements[choix-1].gisement.typeGisement;
+          end;
+        end
+        else
+        begin
+          if batiment.nom <> MINE then
+          begin
+            zone.emplacements[choix-1].batiment := batiment;
+          end;
+        end;
+      end;
+    end;
+  end;
+  afficherEmplacementZone(zone);
+  menuDeJeu();
+end;
+
+
+
+
+
   // 1 -> Menu construction
   procedure menuConstruction();
-    var 
-      choix: integer;
-    begin
-      repeat
+  var 
+    choix: integer;
+  begin
+    repeat
       afficherMenuConstruction();
       readln(choix);
-        case choix of 
-        //1:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], Mine);
-        //2:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], Constructeur);
-        //3:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], Centrale);
-        //4:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], AscenseurOrbital);
-        0:menuDeJeu();
-        end;
-      until choix in [0..4];
+      case choix of 
+        1: ConstruireBatiment(DEFAULT_MINE);
+        2: ConstruireBatiment(DEFAULT_CONSTRUCTEUR);
+        3: ConstruireBatiment(DEFAULT_CENTRALE);
+        4: ConstruireBatiment(DEFAULT_ASCENSEUR_ORBITAL);
+        0: menuDeJeu();
+        else 
+          writeln('Option non valide');
+      end;
+    until choix = 0;
       //writeln(ZoneActuelle);
       //readln;
     end;
@@ -216,6 +301,8 @@ uses
   procedure menuExplorer();
   begin
     explorationEmplacement(JZones[ZoneActuelle]);
+    AfficherEmplacementZone(JZones[ZoneActuelle]);
+    menuDeJeu();
   end;
 
 

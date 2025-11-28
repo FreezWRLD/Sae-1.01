@@ -11,6 +11,7 @@ uses
   procedure ecranJeu();
   
   procedure afficherMenuDeJeu();
+  procedure afficherConstruireBatiment();
   
   procedure afficherMenuConstruction();
   procedure afficherMenuChangerProduction(page:integer);
@@ -165,7 +166,7 @@ implementation
     begin
       if emplacement.batiment.nom <> VIDE then
       begin
-        dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+        dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, LightBlue, Black);
         deplacerCurseurXY(x+10, y+2);
         write('Batiment : ', emplacement.batiment.nom);
         deplacerCurseurXY(x+10, y+4);
@@ -177,7 +178,7 @@ implementation
       begin
         if emplacement.gisement.existe then
         begin
-          dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+          dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, Brown, Black);
           deplacerCurseurXY(x+10, y+2);
           write('Gisement non exploité : ', emplacement.gisement.typeGisement);
           deplacerCurseurXY(x+10, y+4);
@@ -185,16 +186,16 @@ implementation
         end
         else
         begin
-          dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
-          deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT VIDE')) div 2, y + 3);
+          dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, White, Black);
+          deplacerCurseurXY(x + (L_EMPLACEMENT - Length('EMPLACEMENT VIDE')) div 2, y + 3);
           write('EMPLACEMENT VIDE');
         end;
       end;
     end
     else
     begin
-      dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, DarkGray, Black);
-      deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT NON DECOUVERT')) div 2, y + 3);
+      dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, DarkGray, Black);
+      deplacerCurseurXY(x + (L_EMPLACEMENT - Length('EMPLACEMENT NON DECOUVERT')) div 2, y + 3);
       write('EMPLACEMENT NON DECOUVERT');
     end;
   end;
@@ -203,33 +204,23 @@ implementation
   var 
     x, y : integer;
   begin
-    x := 60;
-    y := 5;
+    x := L_MENU+2;
+    y := 4;
     
-    AfficherEmplacement1(x,y,zone.emplacements[0]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[1]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[2]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[3]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[4]);
-    y := y+7;
+    for i := 0 to 4 do
+    begin
+      AfficherEmplacement1(x,y,zone.emplacements[i]);
+      y := y+7;
+    end;
 
-    x := 132;
-    y := 5;
+    x := L_MENU +2 + L_EMPLACEMENT +5;
+    y := 4;
 
-    AfficherEmplacement1(x,y,zone.emplacements[5]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[6]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[7]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[8]);
-    y := y+7;
-    AfficherEmplacement1(x,y,zone.emplacements[9]);
-    y := y+7;
+    for i := 5 to 9 do
+    begin
+      AfficherEmplacement1(x,y,zone.emplacements[i]);
+      y := y+7;
+    end;
   end;
 
   procedure cadrePrincip();
@@ -272,6 +263,15 @@ implementation
       ]);
       cadrechoixmenu();
     end;
+
+  procedure afficherConstruireBatiment();
+  begin
+    effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Sélectionnez un emplacement'
+      ]);
+      cadrechoixmenu();
+  end;
 
   procedure afficherMenuChangerProduction(page:integer);
   begin
@@ -438,6 +438,7 @@ implementation
     effacerEcran();
     cadrePrincip();
     afficherInventaire();
+    AfficherEmplacementZone(JZones[ZoneActuelle]);
     affichemenuDeJeu();
     end;
 

@@ -55,6 +55,13 @@ begin
   
   // Attente de l'utilisateur avant de quitter
   readln;}
+<<<<<<< HEAD
   ///menuDemarrage();
   dessin();
+=======
+  initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise JZones
+  menuDemarrage();
+  
+  readln
+>>>>>>> 992b175b2a476bfab3d3d4dbe594f5f85cb2290c
 end.
