@@ -158,6 +158,7 @@ uses
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
   
+  // 1 -> Menu construction
   procedure menuConstruction();
     var 
       choix: integer;
@@ -177,7 +178,38 @@ uses
       //readln;
     end;
 
+  procedure menuChangerProduction(page:integer);
+  var 
+    choix: integer;
+  begin
+    repeat
+    afficherMenuChangerProduction(page);
+    readln(choix);
+      case choix of 
+      //1:changerProductionConstructeur(LingotCuivre);
+      //2:changerProductionConstructeur(LingotFer);
+      //3:changerProductionConstructeur(CableCuivre);
+      //4:changerProductionConstructeur(PlaqueFer);
+      //5:changerProductionConstructeur(TuyauFer);
+      6:if page=1 then menuChangerProduction(2) else menuChangerProduction(1);
+      0:menuDeJeu();
+      end;
+    until choix in [0..6];
+  end;
 
+
+  procedure menuAmeliorerBatiement();
+  var 
+    choix: integer;
+  begin
+    repeat
+    //afficherMenuAmeliorerBatiement();
+    readln(choix);
+      case choix of 
+      0:menuDeJeu();
+      end;
+    until choix in [0..1];
+  end;
 
 
   // 4 -> Lancer une exploration
@@ -222,9 +254,10 @@ uses
       1: menuConstruction(); 
       
       // 2/ Changer la production
-      2: menuProductionConstructeur(); 
+      2: menuChangerProduction(1); 
       
       // 3/ Améliorer un bâtiment
+      3: menuAmeliorerBatiement();
       
       // 4/ Explorer la zone
       4: menuExplorer();

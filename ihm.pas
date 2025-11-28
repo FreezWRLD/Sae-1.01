@@ -13,7 +13,7 @@ uses
   procedure afficherMenuDeJeu();
   
   procedure afficherMenuConstruction();
-  procedure menuProductionConstructeur();
+  procedure afficherMenuChangerProduction(page:integer);
   procedure afficherWiki();
 
   procedure AfficherEmplacementZone(zone : _Zone);
@@ -258,35 +258,6 @@ implementation
       cadrechoixmenu();
     end;
 
-  procedure menuRessourcesPage1();
-    begin
-      couleurTexte(15);
-      effacerTexteMenu();
-      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-        '1/ Lingots de fer',
-        '2/ Câbles de cuivre',
-        '3/ Plaques de fer',
-        '4/ Tuyaux en fer',
-        '5/ Sacs de Béton',
-        '6/ Autres'
-      ]);
-      cadrechoixmenu();
-    end;
-
-  procedure menuRessourcesPage2();
-    begin
-      couleurTexte(15);
-      effacerTexteMenu();
-      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
-        '1/ Acier ',
-        '2/ Plaques renforcecées',
-        '3/ Poutres industrielles',
-        '4/ Fondations',
-        '5/ Autres'
-      ]);
-      cadrechoixmenu();
-    end;
-
 
   procedure afficherMenuConstruction();
     begin
@@ -302,10 +273,11 @@ implementation
       cadrechoixmenu();
     end;
 
-  procedure menuProductionConstructeur();
+  procedure afficherMenuChangerProduction(page:integer);
   begin
     couleurTexte(15);
     effacerTexteMenu();
+    if (page = 1) then 
     afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
       'Que doit produire le constructeur ?',
       '  1/ Lingots de cuivre',
@@ -313,6 +285,16 @@ implementation
       '  3/ Cables de cuivre',
       '  4/ Plaques de fer',
       '  5/ Tuyaux en fer',
+      '  6/ Autres'
+    ]);
+    if (page = 2) then 
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Que doit produire le constructeur ?',
+      '  1/ Sacs de béton',
+      '  2/ Acier',
+      '  3/ Plaques renforcées',
+      '  4/ Poutres industrielles',
+      '  5/ Fondations',
       '  6/ Autres'
     ]);
     cadrechoixmenu();
