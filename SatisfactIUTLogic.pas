@@ -138,17 +138,23 @@ uses
   begin
     for i in _TypeZone do
     begin     
-      InitZones[i].typeZone:=i;
+      InitZones[i].typeZone := i;
       SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
       InitInventaires(InitZones[i]);
-      for j:=1 to Length(InitZones[i].emplacements)-1 do
+      
+      // Initialisation de tous les emplacements comme non découverts et vides
+      for j := 0 to Length(InitZones[i].emplacements) - 1 do
       begin
         InitZones[i].emplacements[j].estDecouvert := False;
+        InitZones[i].emplacements[j].batiment.nom := VIDE;
+        InitZones[i].emplacements[j].batiment.niveau := 1;
         InitZones[i].emplacements[j].gisement := RandomGisement();
       end;
     end;
     InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
     InitZones[base].emplacements[0].batiment := DEFAULT_HUB; //Le premier emplacement de la zone de base contient toujours le hub
+    InitZones[base].emplacements[1].estDecouvert := True;
+    InitZones[base].emplacements[2].estDecouvert := True;
   end;
 
   function InitDate():_Date; //Initialise la date de début du jeu
@@ -216,6 +222,8 @@ uses
   procedure menuExplorer();
   begin
     explorationEmplacement(JZones[ZoneActuelle]);
+    AfficherEmplacementZone(JZones[ZoneActuelle]);
+    menuDeJeu();
   end;
 
 

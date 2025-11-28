@@ -19,6 +19,7 @@ const
   Y_CADRECHOIX = 36;
   L_CADRECHOIX = 10; 
   H_CADRECHOIX = 3;
+  L_EMPLACEMENT = 70;
 
 type
 

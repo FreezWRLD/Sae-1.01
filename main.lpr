@@ -55,5 +55,8 @@ begin
   
   // Attente de l'utilisateur avant de quitter
   readln;}
+  initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise JZones
   menuDemarrage();
+  
+  readln
 end.
