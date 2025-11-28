@@ -55,9 +55,10 @@ begin
   
   // Attente de l'utilisateur avant de quitter
   readln;}
-  //initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise JZones
+  initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise JZones
   //menuDemarrage();
-  GetProduction();
+  writeln(GetProductionEnergie());
+  writeln(GetCoutEnergie());
   
   readln
 end.
