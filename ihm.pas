@@ -9,8 +9,6 @@ uses
   procedure ecranDemarrage();
   procedure dessin();
   procedure histoire();
-  procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
-  procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
   procedure ecranJeu();
   procedure cadrechoixmenu();
   
@@ -19,6 +17,9 @@ uses
   procedure menuConstruction();
   procedure menuProductionConstructeur();
   procedure afficherWiki();
+
+  procedure AfficherEmplacementZone(zone : _Zone);
+  procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
 
 implementation
 
@@ -74,7 +75,7 @@ implementation
   begin
     effacerZoneDeTexte(X_CADRECHOIX,Y_CADRECHOIX,L_CADRECHOIX,H_CADRECHOIX);
   end;
-  
+
   procedure cadrechoixmenu();
   begin
     effacerTexteCadreChoix();
@@ -135,114 +136,80 @@ implementation
     ]);
   end;
 
-  
-
-  
-
-  // Fonction pour afficher un bâtiment dans un cadre formaté
-// x, y : position du coin supérieur gauche du cadre
-procedure afficherBatiment(x, y: integer; unBatiment: _Batiment);
-  var
-    largeurCadre: integer;
+  procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
+  const 
+    largeurCadre = 60;
   begin
-    largeurCadre := 70; // Largeur du cadre
-    
-    // Dessin du cadre
-    dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
-
-    deplacerCurseurXY(x + 6, y + 2);
-    write('BATIMENT   : ', unBatiment.nom); 
-
-    if unBatiment.nom <> hub then begin
-      deplacerCurseurXY(x + 6, y + 3);
-      write('NIVEAU     : ', unBatiment.niveau);
-    end;
-
-    if unBatiment.nom <> hub then begin
-      deplacerCurseurXY(x + 6, y + 4);
-      write('RESSOURCE  : ', unBatiment.ressourceProduite);
-    end;
-
-    if unBatiment.nom <> hub then begin
-      deplacerCurseurXY(x + 6, y + 5);
-      write('ENERGIE    : ', unBatiment.coutEnegrie);
-    end;
-
-  end;
-
-  // Affiche un emplacement selon son état (découvert/non découvert) et son contenu
-  procedure afficherEmplacement(x, y: integer; const emplacement: _Emplacement);
-  var
-    largeurCadre: integer;
-    couleurCadre: word;
-  begin
-    largeurCadre := 70; // Même largeur que pour les bâtiments
-    
-    // Détermination de la couleur du cadre selon l'état et le contenu de l'emplacement
-    if emplacement.estDecouvert then
+    if emplacement.estDecouvert = True then
     begin
-      if (emplacement.batiment.nom = VIDE) and (not emplacement.gisement.existe) then
+      if emplacement.batiment.nom <> VIDE then
       begin
-        // Emplacement vide découvert - fond blanc
-        dessinerCadreXY(x, y, x + 70, y + 6, simple, White, Black);
-        deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT VIDE')) div 2, y + 3);
-        write('EMPLACEMENT VIDE');
+        dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+        deplacerCurseurXY(x+10, y+2);
+        write('Batiment : ', emplacement.batiment.nom);
+        deplacerCurseurXY(x+10, y+4);
+        write('Niveau : ', emplacement.batiment.niveau);
+        deplacerCurseurXY(x+30, y+2);
+        write('Production : ', emplacement.batiment.ressourceProduite);
       end
       else
       begin
-        if emplacement.batiment.nom <> VIDE then
+        if emplacement.gisement.existe then
         begin
-          // Bâtiment - contour blanc
-          dessinerCadreXY(x, y, x + 70, y + 6, simple, White, Black);
-          deplacerCurseurXY(x + 6, y + 2);
-          write('BATIMENT    : ', emplacement.batiment.nom);
-          deplacerCurseurXY(x + 6, y + 4);
-          if (emplacement.batiment.nom = mine) or (emplacement.batiment.nom = constructeur) then
-          write('NIVEAU      : ', emplacement.batiment.niveau);
+          dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+          deplacerCurseurXY(x+10, y+2);
+          write('Gisement non exploité : ', emplacement.gisement.typeGisement);
+          deplacerCurseurXY(x+10, y+4);
+          write('Purete : ', emplacement.gisement.mineraiPurete);
         end
-        else if emplacement.gisement.existe then
+        else
         begin
-          // Gisement non exploité - marron
-          dessinerCadreXY(x, y, x + 70, y + 6, simple, Brown, Black);
-          deplacerCurseurXY(x + 6, y + 2);
-          write('GISEMENT NON EXPLOITÉ');
-          deplacerCurseurXY(x + 6, y + 4);
-          write('MINERAI   : ', emplacement.gisement.typeGisement);
-          deplacerCurseurXY(x + 41, y + 2);
-          write('PURETE : ', emplacement.gisement.mineraiPurete);
+          dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, White, Black);
+          deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT VIDE')) div 2, y + 3);
+          write('EMPLACEMENT VIDE');
         end;
       end;
     end
     else
     begin
-      // Emplacement non découvert - gris clair
-      dessinerCadreXY(x, y, x + 70, y + 6, simple, DarkGray, Black);
+      dessinerCadreXY(x, y, x + largeurCadre, y + 6, simple, DarkGray, Black);
       deplacerCurseurXY(x + (largeurCadre - Length('EMPLACEMENT NON DECOUVERT')) div 2, y + 3);
       write('EMPLACEMENT NON DECOUVERT');
     end;
   end;
 
-{if emplacement.estDecouvert then
-begin
-  if (emplacement.batiment.nom = VIDE) and (not emplacement.gisement.existe) then
+  procedure AfficherEmplacementZone(zone : _Zone);
+  var 
+    x, y : integer;
   begin
-    // Afficher emplacement vide
-    // Exemple : Form1.Canvas.TextOut(x, y, 'Vide');
-  end
-  else
-  begin
-    if emplacement.batiment.nom <> VIDE then
-    begin
-      // Afficher le bâtiment
-      // Exemple : Form1.Canvas.TextOut(x, y, 'Bâtiment: ' + GetBatimentNom(emplacement.batiment.nom));
-    end
-    else if emplacement.gisement.existe then
-    begin
-      // Afficher le gisement
-      // Exemple : Form1.Canvas.TextOut(x, y, 'Gisement: ' + GetGisementType(emplacement.gisement.typeGisement));
-    end;
+    x := 60;
+    y := 5;
+    
+    AfficherEmplacement1(x,y,zone.emplacements[0]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[1]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[2]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[3]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[4]);
+    y := y+7;
+
+    x := 132;
+    y := 5;
+
+    AfficherEmplacement1(x,y,zone.emplacements[5]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[6]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[7]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[8]);
+    y := y+7;
+    AfficherEmplacement1(x,y,zone.emplacements[9]);
+    y := y+7;
   end;
-end;}
 
   procedure cadrePrincip();
   begin
@@ -464,7 +431,22 @@ end;}
   procedure dessin();
   begin
     effacerEcran();
-    ColorierZone(15,15,55,70,0);
+    ColorierZone(7,7,59,69,0);ColorierZone(7,7,110,119,0); //Dessin de la ligne 0
+    ColorierZone(7,7,59,68,1);ColorierZone(7,7,111,120,1); //Dessin de la ligne 1
+    ColorierZone(7,7,59,66,2);ColorierZone(7,7,113,120,2); //Dessin de la ligne 2
+    ColorierZone(7,7,59,68,3);ColorierZone(7,7,114,121,3); //Dessin de la ligne 3
+    ColorierZone(7,7,61,70,4);ColorierZone(7,7,113,122,4); //Dessin de la ligne 4
+    ColorierZone(7,7,65,71,5);ColorierZone(8,8,111,126,5); //Dessin de la ligne 5
+    ColorierZone(7,7,67,72,6);ColorierZone(8,8,111,112,6); ColorierZone(8,8,115,116,6);ColorierZone(8,8,121,122,6);ColorierZone(8,8,125,126,6); //Dessin de la ligne 6
+    ColorierZone(7,7,65,72,7);ColorierZone(8,8,113,124,7); //Dessin de la ligne 7
+    ColorierZone(7,7,65,71,8);ColorierZone(8,8,95,98,8);ColorierZone(8,8,113,114,8);ColorierZone(8,8,123,124,8); //Dessin de la ligne 8
+    ColorierZone(7,7,65,70,9);ColorierZone(8,8,91,94,9);ColorierZone(8,8,99,102,9);ColorierZone(8,8,113,114,9);ColorierZone(8,8,123,124,9); //Dessin de la ligne 9
+    ColorierZone(8,8,65,72,10);ColorierZone(8,8,87,90,10);ColorierZone(8,8,103,106,10);ColorierZone(8,8,113,114,10);ColorierZone(8,8,123,124,10); //Dessin de la ligne 10
+    ColorierZone(8,8,65,66,11);ColorierZone(8,8,71,72,11);ColorierZone(8,8,83,86,11);ColorierZone(8,8,107,110,11);ColorierZone(8,8,113,114,11);ColorierZone(8,8,123,124,11); //Dessin de la ligne 11
+    ColorierZone(8,8,65,66,12);ColorierZone(8,8,71,72,12);ColorierZone(8,8,79,82,12);ColorierZone(8,8,111,114,12);ColorierZone(8,8,123,124,12); //Dessin de la ligne 12
+    ColorierZone(8,8,65,66,13);ColorierZone(8,8,71,72,13);ColorierZone(8,8,75,78,13);ColorierZone(8,8,115,118,13);ColorierZone(8,8,123,124,13); //Dessin de la ligne 13
+    ColorierZone(8,8,65,66,14);ColorierZone(8,8,71,74,14);ColorierZone(8,8,119,122,14);ColorierZone(8,8,123,124,14); //Dessin de la ligne 14
+  
   end;  
     
 

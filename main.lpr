@@ -69,6 +69,11 @@ begin
   ecranDemarrage();
 end.
 begin
+<<<<<<< HEAD
+  dessin();
+  readln
+=======
   ecranDemarrage();
   readln}
+>>>>>>> eb629e9bd776a01528d57f402350b99b10e51398
 end.
