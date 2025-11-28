@@ -7,12 +7,10 @@ uses
   SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
 
   procedure ecranDemarrage();
-  procedure dessin();
   procedure histoire();
   procedure ecranJeu();
-  procedure cadrechoixmenu();
   
-  procedure afficherMenuPrincipale();
+  procedure afficherMenuDeJeu();
   
   procedure menuConstruction();
   procedure menuProductionConstructeur();
@@ -21,8 +19,8 @@ uses
   procedure AfficherEmplacementZone(zone : _Zone);
   procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
   procedure afficherMenuChangerDeZone();
-  procedure quitterIHM();
   procedure afficherMenuDemarrage();
+  procedure quitterIHM();
 implementation
 
   //Affichage d'un message de fin
@@ -240,7 +238,7 @@ implementation
     dessinerCadreXY(50,0,199,39,simple,white,black);
   end;
 
-  procedure afficherMenuPrincipale();
+  procedure afficherMenuDeJeu();
     begin
       couleurTexte(15);
       effacerTexteMenu();
@@ -452,7 +450,7 @@ implementation
   procedure affichemenuDeJeu();
   begin
     deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
-    afficherMenuPrincipale();
+    afficherMenuDeJeu();
     menuDeJeu();
   end;
   
@@ -522,6 +520,7 @@ implementation
   begin
     dessin();
     logo();
+    afficherMenuDemarrage();
   end;
 
   procedure histoire();

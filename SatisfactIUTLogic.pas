@@ -186,8 +186,7 @@ uses
     choix: integer;
   begin
   repeat
-    afficherMenuPrincipale();
-    cadrechoixmenu();
+    afficherMenuDeJeu();
     readln(choix);
     case choix of
       1: menuConstruction(); // 1/ Construire un bâtiment
@@ -202,7 +201,7 @@ uses
       //7: jourSuivant(JDate, JInventaire, JZones);
       // 8/ Missions
       9: afficherWiki(); // 9/ Wiki
-      0: ecranDemarrage(); // 0/ Quitter la partie
+      0: menuDemarrage(); // 0/ Quitter la partie
     end;
   until choix in[0..9];
   end;
@@ -213,7 +212,6 @@ uses
   begin
     repeat
     ecranDemarrage();
-    afficherMenuDemarrage();
     readln(choix);
       case choix of
         1: 
