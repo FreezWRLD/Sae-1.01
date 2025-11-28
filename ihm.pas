@@ -20,7 +20,7 @@ uses
 
   procedure AfficherEmplacementZone(zone : _Zone);
   procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
-
+  procedure afficherMenuChangerDeZone();
 implementation
 
   //Affichage d'un message de fin
@@ -298,6 +298,21 @@ implementation
       '  4/ Plaques de fer',
       '  5/ Tuyaux en fer',
       '  6/ Autres'
+    ]);
+    cadrechoixmenu();
+  end;
+
+  procedure afficherMenuChangerDeZone();
+  begin
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Quelle zone voulez-vous visiter ?',
+      '  1/ Base',
+      '  2/ Rocheux',
+      '  3/ Forêt Nordique',
+      '  4/ Volcanique',
+      '  5/ Désertique',
+      '  0/ Retour au menu principal'
     ]);
     cadrechoixmenu();
   end;

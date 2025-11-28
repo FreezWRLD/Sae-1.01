@@ -3,7 +3,7 @@ unit SatisfactIUTLogic;
 {$mode objfpc}{$H+}
 interface
 uses
-  sysutils, objets, declarations,gestionEcran;
+  sysutils, objets, declarations,gestionEcran, joueur;
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
@@ -158,6 +158,28 @@ uses
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
 
+  // 5 -> Logique du menu changer de zone
+  procedure menuChangerDeZone();
+  var 
+    i:_TypeZone;
+    choix: integer;
+  begin
+    repeat
+    afficherMenuChangerDeZone();
+    readln(choix);
+      case choix of 
+      1:ZoneActuelle:=base;
+      2:ZoneActuelle:=rocheux;
+      3:ZoneActuelle:=foretNordique;
+      4:ZoneActuelle:=volcanique;
+      5:ZoneActuelle:=desertique;
+      0:ZoneActuelle:=base;
+      end;
+    until choix in [0 .. 5];
+    //writeln(ZoneActuelle);
+    readln;
+  end;
+
   procedure menuDeJeu();
   var
     choix: integer;
@@ -172,6 +194,7 @@ uses
       // 4/ Explorer la zone
       //4 : explorationEmplacement(JZones[ZoneActuelle]);
       // 5/ Changer de zone
+      5: menuChangerDeZone();
       // 6/ Transférer des ressources
       // 7/ Passer la journée 
       //7: jourSuivant(JDate, JInventaire, JZones);
