@@ -75,7 +75,7 @@ implementation
   begin
     effacerZoneDeTexte(X_CADRECHOIX,Y_CADRECHOIX,L_CADRECHOIX,H_CADRECHOIX);
   end;
-  
+
   procedure cadrechoixmenu();
   begin
     effacerTexteCadreChoix();
@@ -431,7 +431,22 @@ implementation
   procedure dessin();
   begin
     effacerEcran();
-    ColorierZone(15,15,55,70,0);
+    ColorierZone(7,7,59,69,0);ColorierZone(7,7,110,119,0); //Dessin de la ligne 0
+    ColorierZone(7,7,59,68,1);ColorierZone(7,7,111,120,1); //Dessin de la ligne 1
+    ColorierZone(7,7,59,66,2);ColorierZone(7,7,113,120,2); //Dessin de la ligne 2
+    ColorierZone(7,7,59,68,3);ColorierZone(7,7,114,121,3); //Dessin de la ligne 3
+    ColorierZone(7,7,61,70,4);ColorierZone(7,7,113,122,4); //Dessin de la ligne 4
+    ColorierZone(7,7,65,71,5);ColorierZone(8,8,111,126,5); //Dessin de la ligne 5
+    ColorierZone(7,7,67,72,6);ColorierZone(8,8,111,112,6); ColorierZone(8,8,115,116,6);ColorierZone(8,8,121,122,6);ColorierZone(8,8,125,126,6); //Dessin de la ligne 6
+    ColorierZone(7,7,65,72,7);ColorierZone(8,8,113,124,7); //Dessin de la ligne 7
+    ColorierZone(7,7,65,71,8);ColorierZone(8,8,95,98,8);ColorierZone(8,8,113,114,8);ColorierZone(8,8,123,124,8); //Dessin de la ligne 8
+    ColorierZone(7,7,65,70,9);ColorierZone(8,8,91,94,9);ColorierZone(8,8,99,102,9);ColorierZone(8,8,113,114,9);ColorierZone(8,8,123,124,9); //Dessin de la ligne 9
+    ColorierZone(8,8,65,72,10);ColorierZone(8,8,87,90,10);ColorierZone(8,8,103,106,10);ColorierZone(8,8,113,114,10);ColorierZone(8,8,123,124,10); //Dessin de la ligne 10
+    ColorierZone(8,8,65,66,11);ColorierZone(8,8,71,72,11);ColorierZone(8,8,83,86,11);ColorierZone(8,8,107,110,11);ColorierZone(8,8,113,114,11);ColorierZone(8,8,123,124,11); //Dessin de la ligne 11
+    ColorierZone(8,8,65,66,12);ColorierZone(8,8,71,72,12);ColorierZone(8,8,79,82,12);ColorierZone(8,8,111,114,12);ColorierZone(8,8,123,124,12); //Dessin de la ligne 12
+    ColorierZone(8,8,65,66,13);ColorierZone(8,8,71,72,13);ColorierZone(8,8,75,78,13);ColorierZone(8,8,115,118,13);ColorierZone(8,8,123,124,13); //Dessin de la ligne 13
+    ColorierZone(8,8,65,66,14);ColorierZone(8,8,71,74,14);ColorierZone(8,8,119,122,14);ColorierZone(8,8,123,124,14); //Dessin de la ligne 14
+  
   end;  
     
 
