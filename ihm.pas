@@ -4,7 +4,7 @@ unit ihm;
 
 interface
 uses
-  SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
+  SysUtils, gestionEcran, declarations, SatisfactIUTLogic;
 
   procedure ecranDemarrage();
   procedure dessin();
