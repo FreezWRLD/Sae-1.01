@@ -11,6 +11,7 @@ uses
   procedure ecranJeu();
   
   procedure afficherMenuDeJeu();
+  procedure afficherConstruireBatiment();
   
   procedure afficherMenuConstruction();
   procedure afficherMenuChangerProduction(page:integer);
@@ -165,7 +166,7 @@ implementation
     begin
       if emplacement.batiment.nom <> VIDE then
       begin
-        dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, White, Black);
+        dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, LightBlue, Black);
         deplacerCurseurXY(x+10, y+2);
         write('Batiment : ', emplacement.batiment.nom);
         deplacerCurseurXY(x+10, y+4);
@@ -177,7 +178,7 @@ implementation
       begin
         if emplacement.gisement.existe then
         begin
-          dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, White, Black);
+          dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, Brown, Black);
           deplacerCurseurXY(x+10, y+2);
           write('Gisement non exploité : ', emplacement.gisement.typeGisement);
           deplacerCurseurXY(x+10, y+4);
@@ -262,6 +263,15 @@ implementation
       ]);
       cadrechoixmenu();
     end;
+
+  procedure afficherConstruireBatiment();
+  begin
+    effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Sélectionnez un emplacement'
+      ]);
+      cadrechoixmenu();
+  end;
 
   procedure afficherMenuChangerProduction(page:integer);
   begin
