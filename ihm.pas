@@ -12,7 +12,7 @@ uses
   
   procedure afficherMenuDeJeu();
   
-  procedure menuConstruction();
+  procedure afficherMenuConstruction();
   procedure menuProductionConstructeur();
   procedure afficherWiki();
 
@@ -288,11 +288,8 @@ implementation
     end;
 
 
-  procedure menuConstruction();
-    var
-      choix:integer;
+  procedure afficherMenuConstruction();
     begin
-    repeat
       couleurTexte(15);
       effacerTexteMenu();
       afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
@@ -303,8 +300,6 @@ implementation
         '  4/ Construire l''ascenseur orbital'
       ]);
       cadrechoixmenu();
-      readln(choix);
-    until choix in [1..4];
     end;
 
   procedure menuProductionConstructeur();

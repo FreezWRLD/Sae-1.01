@@ -157,6 +157,34 @@ uses
     InitDate.mois:=_Mois(Random(12));
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
+  
+  procedure menuConstruction();
+    var 
+      choix: integer;
+    begin
+      repeat
+      afficherMenuConstruction();
+      readln(choix);
+        case choix of 
+        //1:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], Mine);
+        //2:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], Constructeur);
+        //3:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], Centrale);
+        //4:ConstructionSurEmplacement(JZones[ZoneActuelle].emplacements[0], AscenseurOrbital);
+        0:menuDeJeu();
+        end;
+      until choix in [0..4];
+      //writeln(ZoneActuelle);
+      //readln;
+    end;
+
+
+
+
+  // 4 -> Lancer une exploration
+  procedure menuExplorer();
+  begin
+    explorationEmplacement(JZones[ZoneActuelle]);
+  end;
 
 
   // 5 -> Logique du menu changer de zone
@@ -178,8 +206,9 @@ uses
       end;
     until choix in [0 .. 5];
     //writeln(ZoneActuelle);
-    readln;
+    //readln;
   end;
+
 
   procedure menuDeJeu();
   var
@@ -189,19 +218,32 @@ uses
     afficherMenuDeJeu();
     readln(choix);
     case choix of
-      1: menuConstruction(); // 1/ Construire un bâtiment
-      2: menuProductionConstructeur(); // 2/ Changer la production
+      // 1/ Construire un bâtiment
+      1: menuConstruction(); 
+      
+      // 2/ Changer la production
+      2: menuProductionConstructeur(); 
+      
       // 3/ Améliorer un bâtiment
+      
       // 4/ Explorer la zone
-      //4 : explorationEmplacement(JZones[ZoneActuelle]);
+      4: menuExplorer();
+
       // 5/ Changer de zone
       5: menuChangerDeZone();
+
       // 6/ Transférer des ressources
+
       // 7/ Passer la journée 
-      //7: jourSuivant(JDate, JInventaire, JZones);
+      7: jourSuivant(JDate, JInventaire, JZones);
+
       // 8/ Missions
-      9: afficherWiki(); // 9/ Wiki
-      0: menuDemarrage(); // 0/ Quitter la partie
+
+      // 9/ Wiki
+      9: afficherWiki(); 
+
+      // 0/ Quitter la partie
+      0: menuDemarrage(); 
     end;
   until choix in[0..9];
   end;
