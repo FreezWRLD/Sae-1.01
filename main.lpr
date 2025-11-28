@@ -54,11 +54,20 @@ begin
   afficherEmplacement(10, 26, emplacementGisement);
   
   // Attente de l'utilisateur avant de quitter
+<<<<<<< HEAD
   readln;
   ///menuDemarrage();
  
   initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise JZones
   menuDemarrage();}
   dessin();
+=======
+  readln;}
+  initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise JZones
+  //menuDemarrage();
+  writeln(GetProductionEnergie());
+  writeln(GetCoutEnergie());
+  
+>>>>>>> bdb06c00b22db6dc87e17d8ed4c1c11c0cf040ad
   readln
 end.

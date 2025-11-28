@@ -113,8 +113,9 @@ type
     nom : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
+    //quantiteProduite : Integer;
     recette : _Recette; 
-    coutEnegrie : Integer;
+    energieProduite : Integer;
     end;
 
   _Emplacement = record
@@ -141,7 +142,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 200;);
-    coutEnegrie: 0;
+    energieProduite: 200;
   );
 
   DEFAULT_MINE : _Batiment = (
@@ -149,7 +150,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Cuivre;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Cuivre; quantiteProduite: 20;);
-    coutEnegrie: 20;
+    energieProduite: -20;
   );
 
   DEFAULT_CONSTRUCTEUR : _Batiment = (
@@ -157,7 +158,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.LingotCuivre;
     recette: (RessourcesEntree: (20,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.LingotCuivre; quantiteProduite: 10;);
-    coutEnegrie: 30;
+    energieProduite: -30;
   );
 
   DEFAULT_CENTRALE : _Batiment = (
@@ -165,7 +166,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 100;);
-    coutEnegrie: -100;
+    energieProduite: 100;
   );
 
   DEFAULT_ASCENSEUR_ORBITAL : _Batiment = (
@@ -173,7 +174,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Energie;
     recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
-    coutEnegrie: 300;
+    energieProduite: -300;
   );
 
   DEFAULT_EMPLACEMENT_VIDE : _Emplacement = (
@@ -183,7 +184,7 @@ type
       niveau: 1;
       ressourceProduite: _TypeRessources.Energie;
       recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
-      coutEnegrie: 0;
+      energieProduite: 0;
     );
     gisement: (existe: False; typeGisement: Cuivre; mineraiPurete: 1;);
   );

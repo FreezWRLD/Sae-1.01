@@ -14,6 +14,8 @@ uses
   procedure menuDemarrage();
   procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
   procedure InitInventaires(var zone : _Zone);
+  function GetProductionEnergie(): integer;
+  function GetCoutEnergie(): integer;
 implementation
 uses
  ihm;
@@ -197,6 +199,34 @@ begin
       writeln('Choix invalide. Veuillez choisir un nombre entre 2 et 10.');
   until false;
 end;}
+
+function GetProductionEnergie(): integer;
+var 
+  total : integer;
+  j : Integer;
+begin
+  total := 0;
+  for j := Low(JZones[ZoneActuelle].emplacements) to High(JZones[ZoneActuelle].emplacements) do
+  begin
+    if JZones[ZoneActuelle].emplacements[j].batiment.energieProduite > 0 then
+      total := total + JZones[ZoneActuelle].emplacements[j].batiment.energieProduite;
+  end;
+  GetProductionEnergie := total;
+end;
+
+function GetCoutEnergie(): integer;
+var 
+  total : integer;
+  j : Integer;
+begin
+  total := 0;
+  for j := Low(JZones[ZoneActuelle].emplacements) to High(JZones[ZoneActuelle].emplacements) do
+  begin
+    if JZones[ZoneActuelle].emplacements[j].batiment.energieProduite < 0 then
+      total := total + JZones[ZoneActuelle].emplacements[j].batiment.energieProduite;
+  end;
+  GetCoutEnergie := total;
+end;
 
 
 procedure ConstruireBatiment(batiment: _Batiment);
