@@ -22,6 +22,7 @@ uses
   procedure afficherMenuChangerDeZone();
   procedure afficherMenuDemarrage();
   procedure quitterIHM();
+  procedure dessin();
 implementation
 
   //Affichage d'un message de fin
@@ -409,6 +410,31 @@ implementation
     ColorierZone(8,8,65,66,12);ColorierZone(8,8,71,72,12);ColorierZone(8,8,79,82,12);ColorierZone(8,8,111,114,12);ColorierZone(8,8,123,124,12); //Dessin de la ligne 12
     ColorierZone(8,8,65,66,13);ColorierZone(8,8,71,72,13);ColorierZone(8,8,75,78,13);ColorierZone(8,8,115,118,13);ColorierZone(8,8,123,124,13); //Dessin de la ligne 13
     ColorierZone(8,8,65,66,14);ColorierZone(8,8,71,74,14);ColorierZone(8,8,119,122,14);ColorierZone(8,8,123,124,14); //Dessin de la ligne 14
+    ColorierZone(8,8,65,70,15);ColorierZone(8,8,79,86,15);ColorierZone(8,8,89,94,15);ColorierZone(8,8,109,114,15);ColorierZone(8,8,123,126,15); //Dessin de la ligne 15
+    ColorierZone(8,8,63,66,16);ColorierZone(8,8,79,82,16);ColorierZone(8,8,85,86,16);ColorierZone(8,8,89,94,16);ColorierZone(8,8,109,114,16);ColorierZone(8,8,127,130,16); //Dessin de la ligne 16
+    ColorierZone(8,8,59,62,17);ColorierZone(8,8,79,86,17);ColorierZone(8,8,89,94,17);ColorierZone(8,8,109,114,17);ColorierZone(8,8,131,134,17); //Dessin de la ligne 17
+    ColorierZone(8,8,55,58,18);ColorierZone(8,8,135,138,18); //Dessin de la ligne 18
+    ColorierZone(8,8,53,56,19);ColorierZone(8,8,137,138,19); //Dessin de la ligne 19
+    ColorierZone(8,8,51,52,20);ColorierZone(8,8,137,138,20); //Dessin de la ligne 20
+    ColorierZone(8,8,51,52,21);ColorierZone(8,8,67,116,21);ColorierZone(8,8,137,138,21); //Dessin de la ligne 21
+    ColorierZone(8,8,51,52,22);ColorierZone(8,8,65,66,22);ColorierZone(8,8,117,118,22);ColorierZone(8,8,137,138,22); //Dessin de la ligne 22
+    ColorierZone(8,8,51,52,23);ColorierZone(8,8,65,66,23);ColorierZone(8,8,79,80,23);ColorierZone(8,8,117,118,23);ColorierZone(8,8,137,138,23); //Dessin de la ligne 23
+    ColorierZone(8,8,51,52,24);ColorierZone(8,8,65,66,24);ColorierZone(8,8,117,118,24);ColorierZone(8,8,133,144,24); //Dessin de la ligne 24
+    ColorierZone(8,8,51,52,25);ColorierZone(8,8,65,80,25);ColorierZone(8,8,89,104,25);ColorierZone(8,8,113,118,25);ColorierZone(8,8,133,134,25);ColorierZone(8,8,143,144,25); //Dessin de la ligne 25
+    ColorierZone(8,8,51,52,26);ColorierZone(8,8,65,66,26);ColorierZone(8,8,117,118,26);ColorierZone(8,8,133,134,26);ColorierZone(8,8,143,144,26); //Dessin de la ligne 26
+    ColorierZone(8,8,51,52,27);ColorierZone(8,8,65,66,27);ColorierZone(8,8,69,70,27);ColorierZone(8,8,79,92,27);ColorierZone(8,8,95,104,27);ColorierZone(8,8,107,118,27);ColorierZone(8,8,133,134,27);ColorierZone(8,8,143,144,27); //Dessin de la ligne 27
+    ColorierZone(8,8,51,52,28);ColorierZone(8,8,65,66,28);ColorierZone(8,8,117,118,28);ColorierZone(8,8,133,134,28);ColorierZone(8,8,143,144,28); //Dessin de la ligne 28
+    ColorierZone(8,8,51,52,29);ColorierZone(8,8,57,104,29);ColorierZone(8,8,117,118,29);ColorierZone(8,8,133,134,29);ColorierZone(8,8,143,144,29); //Dessin de la ligne 29
+    ColorierZone(8,8,51,52,30);ColorierZone(8,8,55,56,30);ColorierZone(8,8,105,106,30);ColorierZone(8,8,117,118,30);ColorierZone(8,8,133,134,30);ColorierZone(8,8,143,144,30); //Dessin de la ligne 30
+    ColorierZone(8,8,51,52,31);ColorierZone(8,8,55,106,31);ColorierZone(8,8,113,114,31);ColorierZone(8,8,117,118,31);ColorierZone(8,8,133,134,31);ColorierZone(8,8,143,144,31); //Dessin de la ligne 31
+    ColorierZone(8,8,51,52,32);ColorierZone(8,8,63,64,32);ColorierZone(8,8,69,70,32);ColorierZone(8,8,73,74,32);ColorierZone(8,8,83,84,32);ColorierZone(8,8,87,88,32);ColorierZone(8,8,101,104,32);ColorierZone(8,8,117,118,32);ColorierZone(8,8,127,146,32); //Dessin de la ligne 32
+    ColorierZone(8,8,51,52,33);ColorierZone(8,8,63,64,33);ColorierZone(8,8,69,70,33);ColorierZone(8,8,73,74,33);ColorierZone(8,8,83,84,33);ColorierZone(8,8,87,88,33);ColorierZone(8,8,103,104,33);ColorierZone(8,8,113,118,33);ColorierZone(8,8,127,128,33);ColorierZone(8,8,145,146,33); //Dessin de la ligne 33
+    ColorierZone(8,8,51,52,34);ColorierZone(8,8,63,64,34);ColorierZone(8,8,69,70,34);ColorierZone(8,8,73,74,34);ColorierZone(8,8,83,84,34);ColorierZone(8,8,87,88,34);ColorierZone(8,8,103,128,34);ColorierZone(8,8,145,146,34); //Dessin de la ligne 34
+    ColorierZone(8,8,51,52,35);ColorierZone(8,8,63,64,35);ColorierZone(8,8,69,70,35);ColorierZone(8,8,73,74,35);ColorierZone(8,8,83,84,35);ColorierZone(8,8,87,88,35);ColorierZone(8,8,103,104,35);ColorierZone(8,8,109,110,35);ColorierZone(8,8,115,116,35);ColorierZone(8,8,121,122,35);ColorierZone(8,8,127,128,35);ColorierZone(8,8,139,146,35); //Dessin de la ligne 35
+    ColorierZone(8,8,51,52,36);ColorierZone(8,8,63,64,36);ColorierZone(8,8,69,70,36);ColorierZone(8,8,73,74,36);ColorierZone(8,8,83,84,36);ColorierZone(8,8,87,88,36);ColorierZone(8,8,103,104,36);ColorierZone(8,8,109,110,36);ColorierZone(8,8,115,116,36);ColorierZone(8,8,121,122,36);ColorierZone(8,8,127,128,36);ColorierZone(8,8,139,146,36); //Dessin de la ligne 36
+    ColorierZone(8,8,51,52,37);ColorierZone(8,8,63,64,37);ColorierZone(8,8,69,70,37);ColorierZone(8,8,73,74,37);ColorierZone(8,8,83,84,37);ColorierZone(8,8,87,88,37);ColorierZone(8,8,103,104,37);ColorierZone(8,8,109,110,37);ColorierZone(8,8,115,116,37);ColorierZone(8,8,121,122,37);ColorierZone(8,8,127,128,37);ColorierZone(8,8,139,140,37);ColorierZone(8,8,145,146,37); //Dessin de la ligne 37
+    ColorierZone(8,8,51,52,38);ColorierZone(8,8,63,64,38);ColorierZone(8,8,69,70,38);ColorierZone(8,8,73,74,38);ColorierZone(8,8,83,84,38);ColorierZone(8,8,87,88,38);ColorierZone(8,8,103,104,38);ColorierZone(8,8,109,110,38);ColorierZone(8,8,115,116,38);ColorierZone(8,8,121,122,38);ColorierZone(8,8,127,128,38);ColorierZone(8,8,139,140,38);ColorierZone(8,8,145,146,38); //Dessin de la ligne 38
+    ColorierZone(8,8,51,146,39); //Dessin de la ligne 39 
   end;  
     
 

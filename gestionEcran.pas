@@ -5,7 +5,7 @@ unit gestionEcran;
 
 
 interface
-    uses SysUtils, Windows;
+    uses SysUtils, Windows, declarations;
     
     // représente une coordonnée à l'écran (0,0 = coin haut-gauche)
     type coordonnees = record
