@@ -2,7 +2,7 @@ program main;
 {$mode objfpc}{$H+}
 {$codepage utf8} 
 uses
-  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic;
+  sysutils, declarations, gestionEcran, ihm, objets, SatisfactIUTLogic, typinfo ;
 
 var
   i: Integer;
@@ -12,13 +12,24 @@ var
   JDate : _Date;
   JInventaire : _Inventaire;
   ZoneActuelle : _TypeZone;  // Zone actuelle du joueur
+  ti : PTypeInfo;
 
 begin
   // Initialisation des variables du joueur
   Randomize();
   initialiserJeu(JDate, ZoneActuelle, JZones);
   writeln(GetDate(JDate));
+  jourSuivant(JDate, JInventaire, JZones);
+  writeln(Getdate(JDate));
+
+  ti := TypeInfo(intToStr(JInventaire.quantites[Cuivre]));
+  WriteLn('Type = ', ti^.Name);
+
+  writeln(JInventaire.quantites[Cuivre]);
   readln;
+  effacerEcran;
+  ecranDemarrage;
+  
 
   {// Création d'un emplacement vide découvert
   emplacementVide.estDecouvert := True;
