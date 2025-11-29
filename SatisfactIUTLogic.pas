@@ -363,9 +363,16 @@ end;
       5:ZoneActuelle:=desertique;
       0:menuDeJeu();
       end;
+      ecranJeu();
     until choix in [0 .. 5];
     //writeln(ZoneActuelle);
     //readln;
+  end;
+
+  procedure menuPasserJournee();
+  begin
+    jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+    ecranJeu();
   end;
 
 
@@ -395,7 +402,7 @@ end;
       // 6/ Transférer des ressources
 
       // 7/ Passer la journée 
-      7: jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+      7: menuPasserJournee();
 
       // 8/ Missions
 
