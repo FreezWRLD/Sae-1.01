@@ -5,27 +5,20 @@ interface
 uses
   sysutils, objets, declarations,gestionEcran, joueur;
 
-  procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
-  procedure jourSuivant(var date : _Date); //Passe au jour suivant
-  function GetDate(date : _Date):String; //Retourne la date sous forme de chaîne de caractères
-  function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
-  function InitDate():_Date; //Initialise la date de début du jeu
-  procedure menuDeJeu();
-  procedure menuDemarrage();
-  procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
-  procedure InitInventaires(var zone : _Zone);
+  // Fonctions utilitaires
+  function GetDate(date: _Date): String;
   function GetProductionEnergie(): integer;
   function GetCoutEnergie(): integer;
+
+  // Procédures principales
+  procedure initialiserJeu(var JDate: _Date; var ZoneActuelle: _TypeZone; var JZones: _EnsembleDeZones);
+  procedure menuDemarrage();
+  procedure menuDeJeu();
+
 implementation
 uses
  ihm;
 
-  procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
-  begin
-    JZones := InitZones();
-    JDate := InitDate();
-    ZoneActuelle := base;
-  end;
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
@@ -199,6 +192,13 @@ uses
     InitDate.jour:=_Jour(Random(31));
     InitDate.mois:=_Mois(Random(12));
     InitDate.annee:=_Annee(Random(25)+2000);
+  end;
+
+  procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
+  begin
+    JZones := InitZones();
+    JDate := InitDate();
+    ZoneActuelle := base;
   end;
   
   function CompareInventaireAvecRecette(inventaire : _Inventaire; recette : _Recette) : Boolean;
