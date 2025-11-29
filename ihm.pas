@@ -332,6 +332,7 @@ implementation
 
   procedure afficherMenuWiki();
   begin
+    effacerTexteInventaire();
     effacerTexteMenu();
     afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
       'Que voulez-vous savoir ?',
