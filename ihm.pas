@@ -40,7 +40,7 @@ implementation
     dessinerCadreXY(x, y, x2, y2, double, white, black);
     deplacerCurseurXY(xtext, ytext);
     writeln('AU REVOIR');
-    readln;
+    attendre(1000);
   end;  
 
   procedure afficheLigneParLigne(x, y: integer; message: _Message);
