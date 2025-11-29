@@ -390,7 +390,7 @@ end;
     choix: integer;
   begin
     repeat
-    //afficherMenuAmeliorerBatiement();
+    //Afficher('MenuAmeliorerBatiement');
     readln(choix);
       case choix of 
       0:menuDeJeu();
@@ -502,7 +502,7 @@ end;
       case choix of
         1: 
       begin 
-        histoire(); 
+        Afficher('Histoire');
         ecranJeu(); 
         end;
         2:quitterIHM();
