@@ -29,15 +29,37 @@ uses
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
-    i:Integer;
-    j:Integer; // Déclaration de la variable j
+    i, nbEmplacementsLibres, compteur: Integer;
   begin
-    i := Random(Length(zone.emplacements));
-    if not zone.emplacements[i].estDecouvert then begin zone.emplacements[i].estDecouvert := True; end
-    else
-    begin explorationEmplacement(zone); //Relance la fonction si l'emplacement est déjà découvert
+    // Compter les emplacements non découverts
+    nbEmplacementsLibres := 0;
+    for i := 0 to High(zone.emplacements) do
+    begin
+      if not zone.emplacements[i].estDecouvert then
+        nbEmplacementsLibres := nbEmplacementsLibres + 1;
     end;
-
+    
+    // S'il reste des emplacements à découvrir
+    if nbEmplacementsLibres > 0 then
+    begin
+      // Choisir un nombre aléatoire entre 1 et le nombre d'emplacements libres
+      nbEmplacementsLibres := Random(nbEmplacementsLibres) + 1;
+      compteur := 0;
+      
+      // Parcourir les emplacements jusqu'à trouver le n-ième emplacement non découvert
+      for i := 0 to High(zone.emplacements) do
+      begin
+        if not zone.emplacements[i].estDecouvert then
+        begin
+          compteur := compteur + 1;
+          if compteur = nbEmplacementsLibres then
+          begin
+            zone.emplacements[i].estDecouvert := True;
+            Break; // On sort de la boucle une fois l'emplacement trouvé
+          end;
+        end;
+      end;
+    end;
   end;
 
   procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
@@ -136,7 +158,7 @@ uses
   function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
   var
     i:_TypeZone;
-    j :Integer;
+    j, nbGisements: Integer;
   begin
     for i in _TypeZone do
     begin     
@@ -145,12 +167,23 @@ uses
       InitInventaires(InitZones[i]);
       
       // Initialisation de tous les emplacements comme non découverts et vides
+      nbGisements := 0;
       for j := 0 to Length(InitZones[i].emplacements) - 1 do
       begin
         InitZones[i].emplacements[j].estDecouvert := False;
         InitZones[i].emplacements[j].batiment.nom := VIDE;
         InitZones[i].emplacements[j].batiment.niveau := 1;
-        InitZones[i].emplacements[j].gisement := RandomGisement();
+        
+        // On ne crée un gisement que si on en a moins que le maximum défini
+        if (nbGisements < NOMBRE_MAX_GISEMENTS) and (Random(2) = 1) then
+        begin
+          InitZones[i].emplacements[j].gisement.existe := True;
+          InitZones[i].emplacements[j].gisement.typeGisement := _TypeGisement(Random(4));
+          InitZones[i].emplacements[j].gisement.mineraiPurete := _Purete(Random(3));
+          nbGisements := nbGisements + 1;
+        end
+        else
+          InitZones[i].emplacements[j].gisement.existe := False;
       end;
     end;
     InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
@@ -285,10 +318,8 @@ end;
         3: ConstruireBatiment(DEFAULT_CENTRALE);
         4: ConstruireBatiment(DEFAULT_ASCENSEUR_ORBITAL);
         0: menuDeJeu();
-        else 
-          writeln('Option non valide');
       end;
-    until choix = 0;
+    until choix in [0..4];
       //writeln(ZoneActuelle);
       //readln;
     end;
@@ -365,9 +396,16 @@ end;
       5:ZoneActuelle:=desertique;
       0:menuDeJeu();
       end;
+      ecranJeu();
     until choix in [0 .. 5];
     //writeln(ZoneActuelle);
     //readln;
+  end;
+
+  procedure menuPasserJournee();
+  begin
+    jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+    ecranJeu();
   end;
 
 
@@ -397,7 +435,7 @@ end;
       // 6/ Transférer des ressources
 
       // 7/ Passer la journée 
-      7: jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+      7: menuPasserJournee();
 
       // 8/ Missions
 
@@ -419,9 +457,9 @@ end;
     readln(choix);
       case choix of
         1: 
-        begin 
-          histoire(); 
-          ecranJeu(); 
+      begin 
+        histoire(); 
+        ecranJeu(); 
         end;
         2:quitterIHM();
       end;

@@ -159,6 +159,20 @@ implementation
     ]);
   end;
 
+  procedure afficherZoneActuelle();
+  begin
+    deplacerCurseurXY(78,2);
+    couleurTexte(15);
+    write('ZONE ACTUELLE : ', ZoneActuelle);
+  end;
+
+  procedure afficherDate();
+  begin
+    deplacerCurseurXY(153,2);
+    couleurTexte(15);
+    write('DATE : ', GetDate(JDate));
+  end;
+
   procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
   const 
     largeurCadre = 60;
@@ -439,6 +453,8 @@ implementation
     effacerEcran();
     cadrePrincip();
     afficherInventaire();
+    afficherZoneActuelle();
+    afficherDate();
     AfficherEmplacementZone(JZones[ZoneActuelle]);
     affichemenuDeJeu();
     end;

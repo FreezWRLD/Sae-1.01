@@ -25,6 +25,8 @@ const
   
   L_EMPLACEMENT = 70;
 
+  NOMBRE_MAX_GISEMENTS = 3;  // Nombre maximum de gisements par zone
+
 type
 
   {types Simples}
@@ -63,6 +65,7 @@ type
 
 
   _TypeGisement = Cuivre .. Charbon;
+
 
   _TypeZone = (
     base,
