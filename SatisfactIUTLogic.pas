@@ -158,7 +158,7 @@ uses
   function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
   var
     i:_TypeZone;
-    j :Integer;
+    j, nbGisements: Integer;
   begin
     for i in _TypeZone do
     begin     
@@ -167,12 +167,23 @@ uses
       InitInventaires(InitZones[i]);
       
       // Initialisation de tous les emplacements comme non découverts et vides
+      nbGisements := 0;
       for j := 0 to Length(InitZones[i].emplacements) - 1 do
       begin
         InitZones[i].emplacements[j].estDecouvert := False;
         InitZones[i].emplacements[j].batiment.nom := VIDE;
         InitZones[i].emplacements[j].batiment.niveau := 1;
-        InitZones[i].emplacements[j].gisement := RandomGisement();
+        
+        // On ne crée un gisement que si on en a moins que le maximum défini
+        if (nbGisements < NOMBRE_MAX_GISEMENTS) and (Random(2) = 1) then
+        begin
+          InitZones[i].emplacements[j].gisement.existe := True;
+          InitZones[i].emplacements[j].gisement.typeGisement := _TypeGisement(Random(4));
+          InitZones[i].emplacements[j].gisement.mineraiPurete := _Purete(Random(3));
+          nbGisements := nbGisements + 1;
+        end
+        else
+          InitZones[i].emplacements[j].gisement.existe := False;
       end;
     end;
     InitZones[base].emplacements[0].estDecouvert := True; //Le premier emplacement de la zone de base est toujours découvert
