@@ -9,20 +9,10 @@ uses
   procedure ecranDemarrage();
   procedure histoire();
   procedure ecranJeu();
-  
-  procedure afficherMenuDeJeu();
-  procedure afficherConstruireBatiment();
-  
-  procedure afficherMenuConstruction();
-  procedure afficherMenuChangerProduction(page:integer);
-  procedure afficherWiki();
-
+  // Dans la section interface, après les autres déclarations de procédures
+  procedure Afficher(element: String);
   procedure AfficherEmplacementZone(zone : _Zone);
-  procedure AfficherEmplacement1(x : integer; y : integer; emplacement : _Emplacement);
-  procedure afficherMenuChangerDeZone();
-  procedure afficherMenuDemarrage();
   procedure quitterIHM();
-  procedure dessin();
 implementation
 
   //Affichage d'un message de fin
@@ -330,7 +320,20 @@ implementation
     cadrechoixmenu();
   end;
 
-  procedure wikibat();
+
+  procedure afficherMenuWiki();
+  begin
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Que voulez-vous savoir ?',
+      '  1/ Les bâtiments',
+      '  2/ Les productions',
+      '  0/ Retour au menu principal'
+    ]);
+    cadrechoixmenu();
+  end;
+
+  procedure afficherWikiBatiment();
   begin
     effacerTexteAffichage();
     afficheLigneParLigne(65,5,[
@@ -357,10 +360,9 @@ implementation
       '   - Coût de construction : Cables de cuivre (x200) / Plaques de fer (x200) / Sacs de Béton (x200)',
       '   - Energie consommée : 1000'
     ]);
-    afficherWiki();
   end;
 
-  procedure wikiprod();
+  procedure afficherWikiProduction();
   begin
     effacerTexteAffichage();
     afficheLigneParLigne(55,4,[
@@ -413,30 +415,6 @@ implementation
       '   - Quantité produite par lot : 2',
       '   - Ressources nécessaires : Sacs de Béton (x30)'
     ]);
-    afficherWiki();
-  end;
-
-  procedure afficherWiki();
-  var
-    choix:Integer; //Correspondant au choix de l'utilisateur dans le menu wiki
-  begin
-    effacerTexteInventaire();
-    effacerTexteMenu();
-    afficheLigneParLigne(X_MENU_PRINCIPALE,Y_MENU_PRINCIPALE,[
-      'Que veux-tu faire ?',
-      '  1/ Voir la liste des bâtiments',
-      '  2/ Voir la liste des productions',
-      '  3/ Quitter le wiki'
-    ]);
-    cadrechoixmenu();
-    readln(choix);
-    repeat
-    case choix of
-      1:wikibat();
-      2:wikiprod();
-      3:ecranJeu();
-    end;
-  until (choix=1)OR(choix=2)OR(choix=3);
   end;
 
   procedure affichemenuDeJeu();
@@ -568,4 +546,23 @@ implementation
     affichageCentre('< Appuyez sur une touche pour continuer >',32);
   end;
     
+    // Dans la section implementation, avant la procédure quitterIHM
+  procedure Afficher(element: String);
+  begin
+    case element of
+      'MenuDemarrage': afficherMenuDemarrage();
+      'MenuConstruction': afficherMenuConstruction();
+      'ConstruireBatiment': afficherConstruireBatiment();
+      'MenuChangerProduction1': afficherMenuChangerProduction(1);
+      'MenuChangerProduction2': afficherMenuChangerProduction(2);
+      'MenuChangerDeZone': afficherMenuChangerDeZone();
+      'WikiBatiment': afficherWikiBatiment();
+      'WikiProduction': afficherWikiProduction();
+      'MenuWiki' : afficherMenuWiki();
+      'MenuJeu': afficherMenuDeJeu();
+      else
+        effacerEcran();
+        writeln('Élément d''affichage non reconnu : ', element);
+    end;
+  end;
 end.

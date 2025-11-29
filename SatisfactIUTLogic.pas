@@ -255,7 +255,7 @@ var
 begin
   zone := JZones[ZoneActuelle];
   AfficherEmplacementZone(zone);
-  afficherConstruireBatiment();
+  Afficher('ConstruireBatiment');
   readln(choix);
 
   if (choix >= 2) and (choix <= 10) then
@@ -309,7 +309,7 @@ end;
     choix: integer;
   begin
     repeat
-      afficherMenuConstruction();
+      Afficher('MenuConstruction');
       readln(choix);
       case choix of 
         1: ConstruireBatiment(DEFAULT_MINE);
@@ -328,7 +328,7 @@ end;
     choix: integer;
   begin
     repeat
-    afficherMenuChangerProduction(page);
+    Afficher('MenuChangerProduction'+ IntToStr(page));
     readln(choix);
       if page = 1 then begin
         case choix of 
@@ -385,7 +385,7 @@ end;
     choix: integer;
   begin
     repeat
-    afficherMenuChangerDeZone();
+    Afficher('MenuChangerDeZone');
     readln(choix);
       case choix of 
       1:ZoneActuelle:=base;
@@ -407,13 +407,28 @@ end;
     ecranJeu();
   end;
 
+  procedure menuWiki();
+  var 
+    choix: integer;
+  begin
+  repeat
+    Afficher('MenuWiki');
+    readln(choix);
+      case choix of 
+      1:Afficher('WikiBatiment');
+      2:Afficher('WikiProduction');
+      0:ecranJeu();
+    end;
+    menuWiki();
+  until choix in [0..2];
+  end;
 
   procedure menuDeJeu();
   var
     choix: integer;
   begin
   repeat
-    afficherMenuDeJeu();
+    Afficher('MenuJeu');
     readln(choix);
     case choix of
       // 1/ Construire un bâtiment
@@ -439,7 +454,7 @@ end;
       // 8/ Missions
 
       // 9/ Wiki
-      9: afficherWiki(); 
+      9: menuWiki();
 
       // 0/ Quitter la partie
       0: menuDemarrage(); 
