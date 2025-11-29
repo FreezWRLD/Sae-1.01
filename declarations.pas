@@ -39,7 +39,7 @@ type
   //Niveau de batiment
   _Niveau = 1 .. 3;
 
-  _Message = array of string;
+  _Message = array of UTF8string;
   
 
   {Types énumérés}
