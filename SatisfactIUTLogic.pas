@@ -374,8 +374,8 @@ end;
   procedure menuExplorer();
   begin
     explorationEmplacement(JZones[ZoneActuelle]);
-    AfficherEmplacementZone(JZones[ZoneActuelle]);
-    menuDeJeu();
+    jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+    ecranJeu();
   end;
 
 
