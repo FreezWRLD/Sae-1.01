@@ -137,7 +137,7 @@ type
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
     recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: 200;
+    energieProduite: -100;
   );
 
   DEFAULT_MINE : _Batiment = (
@@ -145,8 +145,8 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Cuivre;
     quantiteProduite: 20;
-    recette: (0,0,0,0,0,0,0,10,0,0,0,0,0,0,0);
-    energieProduite: -20;
+    recette: (0,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Plaques de fer (x10)
+    energieProduite: -100;
   );
 
   DEFAULT_CONSTRUCTEUR : _Batiment = (
@@ -154,8 +154,8 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.LingotCuivre;
     quantiteProduite: 0;
-    recette: (20,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: -30;
+    recette: (10,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Câbles (x10), Plaques (x10)
+    energieProduite: -200;
   );
 
   DEFAULT_CENTRALE : _Batiment = (
@@ -163,8 +163,8 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
-    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: 100;
+    recette: (30,0,0,0,0,0,10,0,20,0,0,0,0,0,0);  // Câbles (x30), Plaques (x10), Béton (x20)
+    energieProduite: 1200;
   );
 
   DEFAULT_ASCENSEUR_ORBITAL : _Batiment = (
@@ -172,8 +172,8 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
-    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: -300;
+    recette: (200,0,0,0,0,0,200,0,200,0,0,0,0,0,0);  // Câbles (x200), Plaques (x200), Béton (x200)
+    energieProduite: -1000;
   );
 
   DEFAULT_EMPLACEMENT_VIDE : _Emplacement = (
