@@ -121,8 +121,8 @@ implementation
       'Consommation d''électricité'
     ]);
     afficheLigneParLigne(34,7,[
-      ': '{+valeurprodelec},
-      ': '{+valeurconselec}
+      ': '+intToStr(GetProductionEnergie()),
+      ': '+intToStr(GetCoutEnergie())
     ]);
     couleurTexte(15);
     afficheLigneParLigne(X_MENU_PRINCIPALE, 10, [
