@@ -300,9 +300,8 @@ end;
     repeat
     afficherMenuChangerProduction(page);
     readln(choix);
-      case page of 
-      1:begin
-          case choix of 
+      if page = 1 then begin
+        case choix of 
           //1:changerProductionConstructeur(LingotCuivre);
           //2:changerProductionConstructeur(LingotFer);
           //3:changerProductionConstructeur(CableCuivre);
@@ -310,10 +309,9 @@ end;
           //5:changerProductionConstructeur(TuyauFer);
           6:menuChangerProduction(2);
           0:menuDeJeu();
-          end;
         end;
-      2:begin
-          case choix of 
+      end else begin
+        case choix of 
           //1:changerProductionConstructeur(Beton);
           //2:changerProductionConstructeur(Acier);
           //3:changerProductionConstructeur(PlaqueRenforcee);
@@ -321,7 +319,6 @@ end;
           //5:changerProductionConstructeur(Fondation);
           6:menuChangerProduction(1);
           0:menuDeJeu();
-          end;
         end;
       end;
     until choix in [0..6];
