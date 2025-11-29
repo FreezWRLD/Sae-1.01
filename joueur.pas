@@ -11,12 +11,19 @@ var
   JDate : _Date;
   JZones : _EnsembleDeZones ;
   ZoneActuelle : _TypeZone = base;  // Zone actuelle du joueur
-  //batiments: _ListeDeBatiments;
-  //emplacementVide, emplacementNonDecouvert, emplacementBatiment, emplacementGisement: _Emplacement;
-  JInventaire : _Inventaire;
 
+  procedure Jeu();
 
 implementation
+uses SatisfactIUTLogic,ihm;
 
-
+  procedure Jeu();
+  begin
+    initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise toutes les variables du jeu
+    ecranDemarrage();
+    readln; 
+    histoire();
+    readln; 
+    ecranJeu();
+  end;
 end.

@@ -96,8 +96,8 @@ implementation
 
   procedure afficherMenuDemarrage();
   begin
-    dessinerCadreXY(75,32,125,38,simple,white,black); //au niveau du texte "appuyez sur une touche pour continuer" // Dessine le cadre pour le menu
-    deplacerCurseurXY(88,34); // Crée le menu
+    dessinerCadreXY(75,32,125,38,simple,white,black); // Dessine le cadre pour le menu
+    deplacerCurseurXY(88,34);
     afficheLigneParLigne(88,34, [
       'Menu principal',
       '1/ Commencer la partie',
@@ -168,11 +168,11 @@ implementation
       if emplacement.batiment.nom <> VIDE then
       begin
         dessinerCadreXY(x, y, x + L_EMPLACEMENT, y + 6, simple, LightBlue, Black);
-        deplacerCurseurXY(x+10, y+2);
+        deplacerCurseurXY(x+7, y+2);
         write('Batiment : ', emplacement.batiment.nom);
-        deplacerCurseurXY(x+10, y+4);
+        deplacerCurseurXY(x+7, y+4);
         write('Niveau : ', emplacement.batiment.niveau);
-        deplacerCurseurXY(x+30, y+2);
+        deplacerCurseurXY(x+40, y+2);
         write('Production : ', emplacement.batiment.ressourceProduite);
       end
       else

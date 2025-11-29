@@ -385,7 +385,7 @@ end;
       // 6/ Transférer des ressources
 
       // 7/ Passer la journée 
-      7: jourSuivant(JDate, JInventaire, JZones);
+      7: jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
 
       // 8/ Missions
 
