@@ -18,13 +18,13 @@ var
   i: _TypeRessources;
 begin
   for i := Low(_TypeRessources) to High(_TypeRessources) do
-    InitRecette.RessourcesEntree[i] := 0;
+    InitRecette[i] := 0;
 end;
 
 function CreerRecette(ressource: _TypeRessources; quantite: Integer): _Recette;
 begin
   CreerRecette := InitRecette();
-  CreerRecette.RessourcesEntree[ressource] := quantite;
+  CreerRecette[ressource] := quantite;
 end;
 {
 initialization
@@ -64,13 +64,13 @@ var
   i: _TypeRessources;
 begin
   for i := Low(_TypeRessources) to High(_TypeRessources) do
-    InitRecette.RessourcesEntree[i] := 0;
+    InitRecette[i] := 0;
 end;
 
 function CreerRecette(ressource: _TypeRessources; quantite: Integer): _Recette;
 begin
   CreerRecette := InitRecette();
-  CreerRecette.RessourcesEntree[ressource] := quantite;
+  CreerRecette[ressource] := quantite;
 end;
 {
 initialization

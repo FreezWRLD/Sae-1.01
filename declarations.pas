@@ -46,21 +46,21 @@ type
 
   {Types énumérés}
   _TypeRessources = (
-    Cuivre,
-    Fer,
-    Calcaire,
-    Charbon,
-    LingotCuivre,
-    LingotFer,
-    CableCuivre,
-    PlaqueFer,
-    TuyauFer,
-    Beton,
-    Acier,
-    PlaqueRenforcee,
-    PoutreIndustrielle,
-    Fondation,
-    Energie
+    Cuivre, // 1
+    Fer, // 2
+    Calcaire, // 3
+    Charbon, // 4
+    LingotCuivre, // 5
+    LingotFer, // 6
+    CableCuivre, // 7
+    PlaqueFer, // 8
+    TuyauFer, // 9
+    Beton, // 10
+    Acier, // 11
+    PlaqueRenforcee, // 12
+    PoutreIndustrielle, // 13
+    Fondation, // 14
+    Aucune // 15
   );
 
 
@@ -101,22 +101,13 @@ type
     mineraiPurete : _Purete;
     end;
 
-  _Recette = record
-    RessourcesEntree : array[_TypeRessources] of Integer;
-    RessourcesSortie : _TypeRessources;
-    quantiteProduite : Integer;
-    end;
-
-  _Production = record
-    RessourcesSortie : array[_TypeRessources] of Integer;
-    quantiteProduite : Integer;
-    end;
+  _Recette = array[_TypeRessources] of Integer;
 
   _Batiment = record
     nom : _TypeBatiment;
     niveau : _Niveau;
     ressourceProduite : _TypeRessources;
-    //quantiteProduite : Integer;
+    quantiteProduite : Integer;
     recette : _Recette; 
     energieProduite : Integer;
     end;
@@ -143,8 +134,9 @@ type
   DEFAULT_HUB : _Batiment = (
     nom: _TypeBatiment.HUB;
     niveau: 1;
-    ressourceProduite: _TypeRessources.Energie;
-    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 200;);
+    ressourceProduite: _TypeRessources.Aucune;
+    quantiteProduite: 0;
+    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     energieProduite: 200;
   );
 
@@ -152,7 +144,8 @@ type
     nom: _TypeBatiment.MINE;
     niveau: 1;
     ressourceProduite: _TypeRessources.Cuivre;
-    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Cuivre; quantiteProduite: 20;);
+    quantiteProduite: 0;
+    recette: (0,0,0,0,0,0,0,10,0,0,0,0,0,0,0);
     energieProduite: -20;
   );
 
@@ -160,23 +153,26 @@ type
     nom: _TypeBatiment.CONSTRUCTEUR;
     niveau: 1;
     ressourceProduite: _TypeRessources.LingotCuivre;
-    recette: (RessourcesEntree: (20,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.LingotCuivre; quantiteProduite: 10;);
+    quantiteProduite: 0;
+    recette: (20,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     energieProduite: -30;
   );
 
   DEFAULT_CENTRALE : _Batiment = (
     nom: _TypeBatiment.CENTRALE;
     niveau: 1;
-    ressourceProduite: _TypeRessources.Energie;
-    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 100;);
+    ressourceProduite: _TypeRessources.Aucune;
+    quantiteProduite: 0;
+    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     energieProduite: 100;
   );
 
   DEFAULT_ASCENSEUR_ORBITAL : _Batiment = (
     nom: _TypeBatiment.ASCENSEUR_ORBITAL;
     niveau: 1;
-    ressourceProduite: _TypeRessources.Energie;
-    recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
+    ressourceProduite: _TypeRessources.Aucune;
+    quantiteProduite: 0;
+    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     energieProduite: -300;
   );
 
@@ -185,8 +181,9 @@ type
     batiment: (
       nom: _TypeBatiment.VIDE;
       niveau: 1;
-      ressourceProduite: _TypeRessources.Energie;
-      recette: (RessourcesEntree: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0); RessourcesSortie: _TypeRessources.Energie; quantiteProduite: 0;);
+      ressourceProduite: _TypeRessources.Aucune;
+      quantiteProduite: 0;
+      recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
       energieProduite: 0;
     );
     gisement: (existe: False; typeGisement: Cuivre; mineraiPurete: 1;);

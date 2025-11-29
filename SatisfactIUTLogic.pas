@@ -88,15 +88,15 @@ uses
         case ensembleDeZones[i].emplacements[j].batiment.nom of
           mine:
           begin
-            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + ((ensembleDeZones[i].emplacements[j].batiment.recette.quantiteProduite * ensembleDeZones[i].emplacements[j].gisement.mineraiPurete) * ensembleDeZones[i].emplacements[j].batiment.niveau);
+            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + ((ensembleDeZones[i].emplacements[j].batiment.quantiteProduite * ensembleDeZones[i].emplacements[j].gisement.mineraiPurete) * ensembleDeZones[i].emplacements[j].batiment.niveau);
           end;
           constructeur:
           begin
-            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.recette.quantiteProduite * ensembleDeZones[i].emplacements[j].batiment.niveau);
+            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.quantiteProduite * ensembleDeZones[i].emplacements[j].batiment.niveau);
           end;
           centrale:
           begin
-            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.recette.quantiteProduite);
+            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.quantiteProduite);
           end;
         end;
       end;
@@ -204,7 +204,7 @@ uses
     i : _TypeRessources;
   begin
     for i := Low(_TypeRessources) to High(_TypeRessources) do
-      if inventaire.quantites[i] < recette.RessourcesEntree[i] then
+      if inventaire.quantites[i] < recette[i] then
         Exit(False);
     CompareInventaireAvecRecette := True;
   end;
@@ -214,7 +214,7 @@ uses
     i : _TypeRessources;
   begin
     for i := Low(_TypeRessources) to High(_TypeRessources) do
-      inventaire.quantites[i] := inventaire.quantites[i] - recette.RessourcesEntree[i];
+      inventaire.quantites[i] := inventaire.quantites[i] - recette[i];
   end;
 
 function GetProductionEnergie(): integer;
