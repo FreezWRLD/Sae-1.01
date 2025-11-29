@@ -176,8 +176,17 @@ implementation
         write('Batiment : ', emplacement.batiment.nom);
         deplacerCurseurXY(x+7, y+4);
         write('Niveau : ', emplacement.batiment.niveau);
-        deplacerCurseurXY(x+40, y+2);
-        write('Production : ', emplacement.batiment.ressourceProduite);
+        if emplacement.batiment.ressourceProduite <> Aucune then
+        begin
+          deplacerCurseurXY(x+40, y+2);
+          write('Production : ', emplacement.batiment.ressourceProduite);
+        end;
+        // Ajout de l'affichage de la pureté du gisement si c'est une mine
+        if (emplacement.batiment.nom = MINE) and emplacement.gisement.existe then
+        begin
+          deplacerCurseurXY(x+40, y+4);
+          write('Pureté : ', emplacement.gisement.mineraiPurete);
+        end;
       end
       else
       begin
