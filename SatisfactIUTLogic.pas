@@ -29,15 +29,21 @@ uses
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
-    i:Integer;
-    j:Integer; // Déclaration de la variable j
+    i, j:Integer;
   begin
-    i := Random(Length(zone.emplacements));
-    if not zone.emplacements[i].estDecouvert then begin zone.emplacements[i].estDecouvert := True; end
-    else
-    begin explorationEmplacement(zone); //Relance la fonction si l'emplacement est déjà découvert
+    j := 0;
+    for i := 0 to Length(zone.emplacements) - 1 do
+    begin
+      if not zone.emplacements[i].estDecouvert then
+        j := j + 1;
     end;
-
+    if j > 0 then
+    begin
+      i := Random(Length(zone.emplacements));
+      while zone.emplacements[i].estDecouvert do
+        i := i + 1; // Cherche le prochain emplacement non découvert
+      zone.emplacements[i].estDecouvert := True;
+    end;
   end;
 
   procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
