@@ -110,6 +110,8 @@ type
     quantiteProduite : Integer;
     recette : _Recette; 
     energieProduite : Integer;
+    recetteMK2 : _Recette;
+    recetteMK3 : _Recette;
     end;
 
   _Emplacement = record
@@ -147,6 +149,8 @@ type
     quantiteProduite: 20;
     recette: (0,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Plaques de fer (x10)
     energieProduite: -100;
+    recetteMK2: (0,0,0,0,0,0,20,0,20,0,0,0,0,0,0);  // Plaques de fer (x20), Sacs de Béton (x20)
+    recetteMK3: (0,0,0,0,0,0,20,0,0,20,0,0,0,0,0);  // Plaques de fer (x20), Acier (x20)
   );
 
   DEFAULT_CONSTRUCTEUR : _Batiment = (
@@ -156,6 +160,8 @@ type
     quantiteProduite: 0;
     recette: (10,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Câbles (x10), Plaques (x10)
     energieProduite: -200;
+    recetteMK2: (20,0,0,0,0,0,20,0,20,0,0,0,0,0,0);  // Câbles (x20), Plaques (x20), Sacs de Béton (x20)
+    recetteMK3: (20,0,0,0,0,0,20,0,0,20,0,0,0,0,0);  // Câbles (x20), Plaques (x20), Acier (x20)
   );
 
   DEFAULT_CENTRALE : _Batiment = (

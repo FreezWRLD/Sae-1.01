@@ -314,7 +314,22 @@ begin
   ecranJeu();
 end;
 
-
+  {procedure AmeliorerBatiment(emplacement : _Emplacement);
+  var
+    choix: integer;
+  begin
+    if choix in [2..10] and emplacement.estDecouvert and emplacement.batiment.nom <> VIDE) then
+      begin
+        if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, emplacement.batiment.recette) then
+        begin
+          emplacement.batiment.niveau := emplacement.batiment.niveau + 1;
+          emplacement.batiment.quantiteProduite := emplacement.batiment.quantiteProduite + 10;
+        DeduireInventaire(emplacement.batiment.recette, JZones[ZoneActuelle].inventaire);
+    end;
+    end;
+    end;
+    
+  end;}
 
 
 
