@@ -285,10 +285,8 @@ end;
         3: ConstruireBatiment(DEFAULT_CENTRALE);
         4: ConstruireBatiment(DEFAULT_ASCENSEUR_ORBITAL);
         0: menuDeJeu();
-        else 
-          writeln('Option non valide');
       end;
-    until choix = 0;
+    until choix in [0..4];
       //writeln(ZoneActuelle);
       //readln;
     end;
@@ -419,9 +417,9 @@ end;
     readln(choix);
       case choix of
         1: 
-        begin 
-          histoire(); 
-          ecranJeu(); 
+      begin 
+        histoire(); 
+        ecranJeu(); 
         end;
         2:quitterIHM();
       end;

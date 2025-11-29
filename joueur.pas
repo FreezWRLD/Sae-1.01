@@ -20,10 +20,6 @@ uses SatisfactIUTLogic,ihm;
   procedure Jeu();
   begin
     initialiserJeu(JDate, ZoneActuelle, JZones);  // Initialise toutes les variables du jeu
-    ecranDemarrage();
-    readln; 
-    histoire();
-    readln; 
-    ecranJeu();
+    menuDemarrage();
   end;
 end.
