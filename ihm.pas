@@ -443,7 +443,6 @@ implementation
   begin
     deplacerCurseurXY(X_MENU_PRINCIPALE+10, 8);
     afficherMenuDeJeu();
-    menuDeJeu();
   end;
   
 
@@ -457,6 +456,7 @@ implementation
     afficherDate();
     AfficherEmplacementZone(JZones[ZoneActuelle]);
     affichemenuDeJeu();
+    menuDeJeu();
     end;
 
   procedure dessin();

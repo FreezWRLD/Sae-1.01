@@ -6,7 +6,7 @@ uses
   sysutils, objets, declarations,gestionEcran, joueur;
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
-  procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
+  procedure jourSuivant(var date : _Date); //Passe au jour suivant
   function GetDate(date : _Date):String; //Retourne la date sous forme de chaîne de caractères
   function InitZones():_EnsembleDeZones; //Initialise les zones avec leurs emplacements
   function InitDate():_Date; //Initialise la date de début du jeu
@@ -62,10 +62,7 @@ uses
     end;
   end;
 
-  procedure jourSuivant(var date : _Date; var inventaire : _Inventaire; ensembleDeZones : _EnsembleDeZones); //Passe au jour suivant
-  var
-    i:_TypeZone;
-    j:Integer;
+  procedure jourSuivant(var date : _Date);
   begin
     if date.jour < 31 then
       date.jour := date.jour + 1
@@ -80,29 +77,34 @@ uses
         date.annee := date.annee + 1;
       end;
     end;
+  end;
 
-    for i := Low(_TypeZone) to High(_TypeZone) do
+  procedure miseAJourInventaire(var zone : _Zone); //Passe au jour suivant
+  var
+    j: Integer;
+    ressource: _TypeRessources;
+  begin
+    // Parcourir seulement les emplacements de la zone donnée
+    for j := 0 to High(zone.emplacements) do
     begin
-      for j:=0 to Length(ensembleDeZones[i].emplacements)-1 do
+      // Vérifier si l'emplacement contient un bâtiment
+      if zone.emplacements[j].batiment.nom <> VIDE then
       begin
-        case ensembleDeZones[i].emplacements[j].batiment.nom of
-          mine:
-          begin
-            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + ((ensembleDeZones[i].emplacements[j].batiment.quantiteProduite * ensembleDeZones[i].emplacements[j].gisement.mineraiPurete) * ensembleDeZones[i].emplacements[j].batiment.niveau);
-          end;
-          constructeur:
-          begin
-            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.quantiteProduite * ensembleDeZones[i].emplacements[j].batiment.niveau);
-          end;
-          centrale:
-          begin
-            inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] := inventaire.quantites[ensembleDeZones[i].emplacements[j].batiment.ressourceProduite] + (ensembleDeZones[i].emplacements[j].batiment.quantiteProduite);
-          end;
-        end;
+        ressource := zone.emplacements[j].batiment.ressourceProduite;
+          // Ajouter la production à l'inventaire 
+          zone.inventaire.quantites[ressource] := 
+            zone.inventaire.quantites[ressource] + 
+            (zone.emplacements[j].batiment.quantiteProduite * 
+            zone.emplacements[j].batiment.niveau);
       end;
     end;
   end;
 
+  procedure passerJournee(var date : _Date; var zone : _Zone); //Passe au jour suivant
+  begin
+    jourSuivant(date);
+    miseAJourInventaire(zone);
+  end;
 
   {function setMine(minerai : _TypeRessources):_Batiment;
   begin
@@ -272,6 +274,7 @@ begin
             begin
               zone.emplacements[choix-1].batiment := batiment;
               zone.emplacements[choix-1].batiment.ressourceProduite := zone.emplacements[choix-1].gisement.typeGisement;
+              zone.emplacements[choix-1].batiment.quantiteProduite := batiment.quantiteProduite;
               DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
             end
           end
@@ -370,7 +373,7 @@ end;
   procedure menuExplorer();
   begin
     explorationEmplacement(JZones[ZoneActuelle]);
-    jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+    passerJournee(JDate, JZones[ZoneActuelle]);
     ecranJeu();
   end;
 
@@ -400,7 +403,7 @@ end;
 
   procedure menuPasserJournee();
   begin
-    jourSuivant(JDate, JZones[ZoneActuelle].inventaire, JZones);
+    passerJournee(JDate, JZones[ZoneActuelle]);
     ecranJeu();
   end;
 

@@ -144,7 +144,7 @@ type
     nom: _TypeBatiment.MINE;
     niveau: 1;
     ressourceProduite: _TypeRessources.Cuivre;
-    quantiteProduite: 0;
+    quantiteProduite: 20;
     recette: (0,0,0,0,0,0,0,10,0,0,0,0,0,0,0);
     energieProduite: -20;
   );
