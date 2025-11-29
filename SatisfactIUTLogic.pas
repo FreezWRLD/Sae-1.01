@@ -244,7 +244,7 @@ begin
     if JZones[ZoneActuelle].emplacements[j].batiment.energieProduite < 0 then
       total := total + JZones[ZoneActuelle].emplacements[j].batiment.energieProduite;
   end;
-  GetCoutEnergie := total;
+  GetCoutEnergie := -total;
 end;
 
 
