@@ -29,20 +29,36 @@ uses
 
   procedure explorationEmplacement(var zone : _Zone); //Explore un emplacement aléatoire dans une zone donnée
   var 
-    i, j:Integer;
+    i, nbEmplacementsLibres, compteur: Integer;
   begin
-    j := 0;
-    for i := 0 to Length(zone.emplacements) - 1 do
+    // Compter les emplacements non découverts
+    nbEmplacementsLibres := 0;
+    for i := 0 to High(zone.emplacements) do
     begin
       if not zone.emplacements[i].estDecouvert then
-        j := j + 1;
+        nbEmplacementsLibres := nbEmplacementsLibres + 1;
     end;
-    if j > 0 then
+    
+    // S'il reste des emplacements à découvrir
+    if nbEmplacementsLibres > 0 then
     begin
-      i := Random(Length(zone.emplacements));
-      while zone.emplacements[i].estDecouvert do
-        i := i + 1; // Cherche le prochain emplacement non découvert
-      zone.emplacements[i].estDecouvert := True;
+      // Choisir un nombre aléatoire entre 1 et le nombre d'emplacements libres
+      nbEmplacementsLibres := Random(nbEmplacementsLibres) + 1;
+      compteur := 0;
+      
+      // Parcourir les emplacements jusqu'à trouver le n-ième emplacement non découvert
+      for i := 0 to High(zone.emplacements) do
+      begin
+        if not zone.emplacements[i].estDecouvert then
+        begin
+          compteur := compteur + 1;
+          if compteur = nbEmplacementsLibres then
+          begin
+            zone.emplacements[i].estDecouvert := True;
+            Break; // On sort de la boucle une fois l'emplacement trouvé
+          end;
+        end;
+      end;
     end;
   end;
 
