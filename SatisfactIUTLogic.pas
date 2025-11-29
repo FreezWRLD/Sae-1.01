@@ -76,6 +76,7 @@ uses
   var
     j: Integer;
     ressource: _TypeRessources;
+    production: integer;
   begin
     // Parcourir seulement les emplacements de la zone donnée
     for j := 0 to High(zone.emplacements) do
@@ -83,12 +84,25 @@ uses
       // Vérifier si l'emplacement contient un bâtiment
       if zone.emplacements[j].batiment.nom <> VIDE then
       begin
+        if zone.emplacements[j].batiment.nom = MINE then
+        begin
+          if zone.emplacements[j].gisement.existe then
+          begin
+            production := zone.emplacements[j].batiment.quantiteProduite * 
+              zone.emplacements[j].batiment.niveau * 
+              zone.emplacements[j].gisement.mineraiPurete;
+          end
+          else
+            production := 0;
+        end
+        else
+          production := zone.emplacements[j].batiment.quantiteProduite * 
+            zone.emplacements[j].batiment.niveau;
+          
         ressource := zone.emplacements[j].batiment.ressourceProduite;
           // Ajouter la production à l'inventaire 
           zone.inventaire.quantites[ressource] := 
-            zone.inventaire.quantites[ressource] + 
-            (zone.emplacements[j].batiment.quantiteProduite * 
-            zone.emplacements[j].batiment.niveau);
+            zone.inventaire.quantites[ressource] + production;
       end;
     end;
   end;
@@ -196,6 +210,7 @@ uses
 
   procedure initialiserJeu(var JDate : _Date; var ZoneActuelle : _TypeZone; var JZones : _EnsembleDeZones);
   begin
+    randomize();
     JZones := InitZones();
     JDate := InitDate();
     ZoneActuelle := base;
