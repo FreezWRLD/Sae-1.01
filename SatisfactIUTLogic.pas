@@ -199,39 +199,23 @@ uses
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
   
-// Fonction pour sélectionner un emplacement
-{function selectionnerEmplacement: _Emplacement;
-var
-  choix: integer;
-  zone: _Zone;
-begin
-  zone := JZones[ZoneActuelle];
-  repeat
-    AfficherEmplacementZone(zone);  // Affiche la zone actuelle
-    //writeln('Sélectionnez un emplacement (2-10) ou 0 pour annuler :');
-    //writeln('(L''emplacement 1 est réservé au Hub)');
-    readln(choix);
-    
-    if choix = 0 then
-    begin
-      // Retourne un emplacement vide si annulation
-      selectionnerEmplacement.estDecouvert := False;
-      exit;
-    end;
-      
-    if (choix >= 2) and (choix <= 10) then
-    begin
-      if zone.emplacements[choix-1].estDecouvert then
-        exit(zone.emplacements[choix-1])
-      else
-        writeln('Cet emplacement n''est pas encore découvert !');
-    end
-    else if choix = 1 then
-      writeln('L''emplacement 1 est réservé au Hub !')
-    else
-      writeln('Choix invalide. Veuillez choisir un nombre entre 2 et 10.');
-  until false;
-end;}
+  function CompareInventaireAvecRecette(inventaire : _Inventaire; recette : _Recette) : Boolean;
+  var
+    i : _TypeRessources;
+  begin
+    for i := Low(_TypeRessources) to High(_TypeRessources) do
+      if inventaire.quantites[i] < recette.RessourcesEntree[i] then
+        Exit(False);
+    CompareInventaireAvecRecette := True;
+  end;
+
+  procedure DeduireInventaire( recette : _Recette; var inventaire : _Inventaire);
+  var 
+    i : _TypeRessources;
+  begin
+    for i := Low(_TypeRessources) to High(_TypeRessources) do
+      inventaire.quantites[i] := inventaire.quantites[i] - recette.RessourcesEntree[i];
+  end;
 
 function GetProductionEnergie(): integer;
 var 
@@ -278,26 +262,38 @@ begin
     begin
       if zone.emplacements[choix-1].batiment.nom = VIDE then
       begin
-        if zone.emplacements[choix-1].gisement.existe then
+        // Vérifier si on a les ressources nécessaires
+        if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, batiment.recette) then
         begin
-          if batiment.nom = MINE then
+          // Pour une mine, vérifier qu'il y a un gisement
+          if (batiment.nom = MINE) then
+          begin
+            if zone.emplacements[choix-1].gisement.existe then
+            begin
+              zone.emplacements[choix-1].batiment := batiment;
+              zone.emplacements[choix-1].batiment.ressourceProduite := zone.emplacements[choix-1].gisement.typeGisement;
+              DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
+            end
+          end
+          // Pour les autres bâtiments, vérifier qu'il n'y a pas de gisement
+          else if not zone.emplacements[choix-1].gisement.existe then
           begin
             zone.emplacements[choix-1].batiment := batiment;
-            zone.emplacements[choix-1].batiment.ressourceProduite := zone.emplacements[choix-1].gisement.typeGisement;
-          end;
+            DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
+          end
         end
         else
         begin
           if batiment.nom <> MINE then
           begin
             zone.emplacements[choix-1].batiment := batiment;
+            DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
           end;
         end;
       end;
     end;
   end;
-  afficherEmplacementZone(zone);
-  menuDeJeu();
+  ecranJeu();
 end;
 
 
