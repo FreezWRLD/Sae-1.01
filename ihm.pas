@@ -553,6 +553,7 @@ implementation
     affichageCentre('vous atteignez (contre toute attente) la surface martienne sans le moindre incident majeur.',22);
     affichageCentre('Maintenant, il est temps de vous mettre au travail. L''IUT a besoin de vous !',24);
     affichageCentre('< Appuyez sur une touche pour continuer >',32);
+    readln();
   end;
     
     // Dans la section implementation, avant la procédure quitterIHM
