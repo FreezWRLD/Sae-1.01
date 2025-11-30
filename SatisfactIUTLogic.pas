@@ -3,7 +3,7 @@ unit SatisfactIUTLogic;
 {$mode objfpc}{$H+}
 interface
 uses
-  sysutils, objets, declarations,gestionEcran, joueur;
+  sysutils, declarations,gestionEcran, joueur;
 
   // Fonctions utilitaires
   function GetDate(date: _Date): String;
