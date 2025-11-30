@@ -321,6 +321,18 @@ implementation
     ]);
   end;
 
+  procedure afficherMenuAmeliorerBatiment();
+  begin
+    couleurTexte(15);
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Que voulez-vous améliorer ?',
+      '  1/ Un bâtiment',
+      '  0/ Retour au menu principal'
+    ]);
+    cadrechoixmenu();
+  end;
+
   procedure afficherMenuChangerProduction(page:integer);
   begin
     couleurTexte(15);
@@ -607,6 +619,7 @@ implementation
       'ConstructionImpossible_GisementPresent': afficherConstructionImpossible('Gisement présent sur cet emplacement');
       'MenuChangerProduction1': afficherMenuChangerProduction(1);
       'MenuChangerProduction2': afficherMenuChangerProduction(2);
+      'MenuAmeliorerBatiment': afficherMenuAmeliorerBatiment();
       'MenuChangerDeZone': afficherMenuChangerDeZone();
       'WikiBatiment': afficherWikiBatiment();
       'WikiProduction': afficherWikiProduction();

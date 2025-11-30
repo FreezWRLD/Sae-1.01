@@ -351,24 +351,59 @@ until (choix = '1') or (choix = '2') or (choix = '3') or (choix = '4') or (choix
 end;
 
 
-
-procedure AmeliorerBatiment();
+  procedure AmeliorerBatiment();
   var
     emplacementSelectionne: Integer;
-    emplacement: _Emplacement;
+    batiment: _Batiment;
+    recetteAmelioration: _Recette;
+    peutAmeliorer: Boolean;
   begin
     emplacementSelectionne := ChoisirEmplacement(JZones[ZoneActuelle]);
-    emplacement := JZones[ZoneActuelle].emplacements[emplacementSelectionne];
-
-    if (emplacement.estDecouvert) and (emplacement.batiment.nom <> VIDE) then
+    batiment := JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment;
+    peutAmeliorer := False;
+    
+    // Vérifier que l'emplacement est découvert
+    if JZones[ZoneActuelle].emplacements[emplacementSelectionne].estDecouvert then
     begin
-      if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, emplacement.batiment.recette) then
+      // Vérifier qu'il y a un bâtiment
+      if batiment.nom <> VIDE then
       begin
-        emplacement.batiment.niveau := emplacement.batiment.niveau + 1;
-        emplacement.batiment.quantiteProduite := emplacement.batiment.quantiteProduite + 10;
-        DeduireInventaire(emplacement.batiment.recette, JZones[ZoneActuelle].inventaire);
+        // Vérifier que c'est un bâtiment améliorable
+        if (batiment.nom = MINE) or (batiment.nom = CONSTRUCTEUR) or 
+          (batiment.nom = CENTRALE) or (batiment.nom = ASCENSEUR_ORBITAL) then
+        begin
+          // Vérifier que le niveau n'est pas déjà au maximum
+          if batiment.niveau < 3 then
+          begin
+            // Déterminer la recette selon le niveau actuel
+            if batiment.niveau = 1 then
+              recetteAmelioration := batiment.recetteMK2
+            else
+              recetteAmelioration := batiment.recetteMK3;
+            
+            // Vérifier les ressources
+            if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, recetteAmelioration) then
+            begin
+              peutAmeliorer := True;
+            end;
+          end;
+        end;
       end;
     end;
+    
+    // Si toutes les vérifications sont passées, améliorer
+    if peutAmeliorer then
+    begin
+      JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment.niveau := 
+        JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment.niveau + 1;
+      
+      JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment.quantiteProduite := 
+        JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment.quantiteProduite + 10;
+      
+      DeduireInventaire(recetteAmelioration, JZones[ZoneActuelle].inventaire);
+    end;
+    
+    ecranJeu();
   end;
 
 
@@ -551,15 +586,16 @@ end;
     until (choix = '0') OR (choix = '1') OR (choix = '2') OR (choix = '3') OR (choix = '4');
     end;
 
-  procedure menuAmeliorerBatiement();
+  procedure menuAmeliorerBatiment();
   var 
     choix: string;
   begin
     repeat
-    //Afficher('MenuAmeliorerBatiement');
-    readln(choix);
+      Afficher('MenuAmeliorerBatiment');
+      readln(choix);
       case choix of 
-      '0':menuDeJeu();
+        '1': AmeliorerBatiment();
+        '0': menuDeJeu();
       end;
     until choix = '0';
   end;
@@ -631,7 +667,7 @@ end;
       '2': menuChangerProduction(); 
       
       // 3/ Améliorer un bâtiment
-      '3': menuAmeliorerBatiement();
+      '3': menuAmeliorerBatiment();
       
       // 4/ Explorer la zone
       '4': menuExplorer();
