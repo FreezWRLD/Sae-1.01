@@ -25,7 +25,7 @@ const
   
   L_EMPLACEMENT = 70;
 
-  NOMBRE_MAX_GISEMENTS = 3;  // Nombre maximum de gisements par zone
+  NOMBRE_MAX_GISEMENTS = 4;  // Nombre maximum de gisements par zone
 
 type
 
@@ -145,7 +145,7 @@ type
   DEFAULT_MINE : _Batiment = (
     nom: _TypeBatiment.MINE;
     niveau: 1;
-    ressourceProduite: _TypeRessources.Cuivre;
+    ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 20;
     recette: (0,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Plaques de fer (x10)
     energieProduite: -100;

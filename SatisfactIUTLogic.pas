@@ -136,7 +136,7 @@ uses
     begin
       RandomGisement.existe := True;
       RandomGisement.typeGisement := _TypeGisement(Random(4));
-      RandomGisement.mineraiPurete := _Purete(Random(3));
+      RandomGisement.mineraiPurete := _Purete(Random(3)+1);
     end
     else
     begin
@@ -184,11 +184,9 @@ uses
         InitZones[i].emplacements[j].batiment.niveau := 1;
         
         // On ne crée un gisement que si on en a moins que le maximum défini
-        if (nbGisements < NOMBRE_MAX_GISEMENTS) and (Random(2) = 1) then
+        if (nbGisements < NOMBRE_MAX_GISEMENTS) then
         begin
-          InitZones[i].emplacements[j].gisement.existe := True;
-          InitZones[i].emplacements[j].gisement.typeGisement := _TypeGisement(Random(4));
-          InitZones[i].emplacements[j].gisement.mineraiPurete := _Purete(Random(3));
+          InitZones[i].emplacements[j].gisement := RandomGisement();
           nbGisements := nbGisements + 1;
         end
         else
