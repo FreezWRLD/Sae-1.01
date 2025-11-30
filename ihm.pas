@@ -7,7 +7,6 @@ uses
   SysUtils, gestionEcran, declarations, SatisfactIUTLogic, joueur;
 
   procedure ecranDemarrage();
-  procedure histoire();
   procedure ecranJeu();
   // Dans la section interface, après les autres déclarations de procédures
   procedure Afficher(element: String);
@@ -532,7 +531,7 @@ implementation
     afficherMenuDemarrage();
   end;
 
-  procedure histoire();
+  procedure afficherHistoire();
   begin    
     effacerEcran();
     couleurTexte(15);
@@ -570,6 +569,7 @@ implementation
       'WikiProduction': afficherWikiProduction();
       'MenuWiki' : afficherMenuWiki();
       'MenuJeu': afficherMenuDeJeu();
+      'Histoire': afficherHistoire();
       else
         effacerEcran();
         writeln('Élément d''affichage non reconnu : ', element);

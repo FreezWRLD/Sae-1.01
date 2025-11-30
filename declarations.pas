@@ -139,7 +139,7 @@ type
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
     recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: -100;
+    energieProduite: 200;
   );
 
   DEFAULT_MINE : _Batiment = (
