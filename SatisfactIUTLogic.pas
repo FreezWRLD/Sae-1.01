@@ -72,37 +72,147 @@ uses
     end;
   end;
 
-  procedure miseAJourInventaire(var zone : _Zone); //Passe au jour suivant
+  // Fonction pour obtenir la quantité produite selon le type de ressource
+  function ObtenirQuantiteProduite(ressource: _TypeRessources): Integer;
+  begin
+    case ressource of
+      LingotCuivre: ObtenirQuantiteProduite := 15;
+      LingotFer: ObtenirQuantiteProduite := 15;
+      CableCuivre: ObtenirQuantiteProduite := 5;
+      PlaqueFer: ObtenirQuantiteProduite := 10;
+      TuyauFer: ObtenirQuantiteProduite := 10;
+      Beton: ObtenirQuantiteProduite := 5;
+      Acier: ObtenirQuantiteProduite := 15;
+      PlaqueRenforcee: ObtenirQuantiteProduite := 2;
+      PoutreIndustrielle: ObtenirQuantiteProduite := 2;
+      Fondation: ObtenirQuantiteProduite := 2;
+      else ObtenirQuantiteProduite := 0; // Pour Aucune ou autres
+    end;
+  end;
+
+  // Fonction pour obtenir les ressources nécessaires à la production
+  function ObtenirRecetteNecessaire(ressource: _TypeRessources): _Recette;
+  var
+    res: _TypeRessources;
+  begin
+    // Initialisation explicite de toutes les cases du tableau à 0
+    for res := Low(_TypeRessources) to High(_TypeRessources) do
+      ObtenirRecetteNecessaire[res] := 0;
+    
+    case ressource of
+      LingotCuivre: ObtenirRecetteNecessaire[Cuivre] := 30;
+      LingotFer: ObtenirRecetteNecessaire[Fer] := 30;
+      CableCuivre: ObtenirRecetteNecessaire[LingotCuivre] := 15;
+      PlaqueFer: ObtenirRecetteNecessaire[LingotFer] := 60;
+      TuyauFer: ObtenirRecetteNecessaire[LingotFer] := 30;
+      Beton: ObtenirRecetteNecessaire[Calcaire] := 15;
+      Acier:
+      begin
+        ObtenirRecetteNecessaire[Fer] := 30;
+        ObtenirRecetteNecessaire[Charbon] := 15;
+      end;
+      PlaqueRenforcee:
+      begin
+        ObtenirRecetteNecessaire[PlaqueFer] := 20;
+        ObtenirRecetteNecessaire[Acier] := 20;
+      end;
+      PoutreIndustrielle:
+      begin
+        ObtenirRecetteNecessaire[PlaqueFer] := 20;
+        ObtenirRecetteNecessaire[Beton] := 15;
+      end;
+      Fondation: ObtenirRecetteNecessaire[Beton] := 30;
+    end;
+  end;
+
+  function CompareInventaireAvecRecette(inventaire : _Inventaire; recette : _Recette) : Boolean;
+  var
+    i : _TypeRessources;
+  begin
+    for i := Low(_TypeRessources) to High(_TypeRessources) do
+      if inventaire.quantites[i] < recette[i] then
+        Exit(False);
+    CompareInventaireAvecRecette := True;
+  end;
+
+  procedure DeduireInventaire( recette : _Recette; var inventaire : _Inventaire);
+  var 
+    i : _TypeRessources;
+  begin
+    for i := Low(_TypeRessources) to High(_TypeRessources) do
+      inventaire.quantites[i] := inventaire.quantites[i] - recette[i];
+  end;
+
+  procedure miseAJourInventaire(var zone : _Zone); // Passe au jour suivant
   var
     j: Integer;
-    ressource: _TypeRessources;
-    production: integer;
+    quantiteProduction: Integer;
+    batiment: _Batiment;
+    ressourcesNecessaires: _Recette;
+    peutProduire: Boolean;
+    energieEstSuffisante: Boolean;
   begin
-    // Parcourir seulement les emplacements de la zone donnée
+    // Vérifier si l'énergie est suffisante
+    energieEstSuffisante := (GetProductionEnergie >= GetCoutEnergie());
+    
+    // Parcourir tous les emplacements de la zone
     for j := 0 to High(zone.emplacements) do
     begin
-      // Vérifier si l'emplacement contient un bâtiment
-      if zone.emplacements[j].batiment.nom <> VIDE then
+      // Vérifier si l'emplacement contient un bâtiment productif
+      if (zone.emplacements[j].batiment.nom <> VIDE) and 
+        (zone.emplacements[j].batiment.nom <> HUB) and
+        (zone.emplacements[j].batiment.quantiteProduite > 0) then
       begin
-        if zone.emplacements[j].batiment.nom = MINE then
+        batiment := zone.emplacements[j].batiment;
+        peutProduire := True;
+        
+        // Vérifier que l'énergie est suffisante
+        if not energieEstSuffisante then
         begin
-          if zone.emplacements[j].gisement.existe then
+          peutProduire := False;
+        end;
+        
+        // Pour les CONSTRUCTEURS : vérifier les ressources nécessaires à la production
+        if peutProduire and (batiment.nom = CONSTRUCTEUR) then
+        begin
+          ressourcesNecessaires := ObtenirRecetteNecessaire(batiment.ressourceProduite);
+          
+          // Vérifier si on a assez de ressources pour produire
+          if not CompareInventaireAvecRecette(zone.inventaire, ressourcesNecessaires) then
           begin
-            production := zone.emplacements[j].batiment.quantiteProduite * 
-              zone.emplacements[j].batiment.niveau * 
+            peutProduire := False;
+          end
+          else
+          begin
+            // Déduire les ressources nécessaires à la production
+            DeduireInventaire(ressourcesNecessaires, zone.inventaire);
+          end;
+        end;
+        
+        // Si production possible, calculer et ajouter
+        if peutProduire then
+        begin
+          // Calculer la production selon le type de bâtiment
+          if batiment.nom = MINE then
+          begin
+            // MINE : production × niveau × pureté du gisement
+            quantiteProduction := 
+              batiment.quantiteProduite * 
+              batiment.niveau * 
               zone.emplacements[j].gisement.mineraiPurete;
           end
           else
-            production := 0;
-        end
-        else
-          production := zone.emplacements[j].batiment.quantiteProduite * 
-            zone.emplacements[j].batiment.niveau;
+          begin
+            // CONSTRUCTEUR : production × niveau
+            quantiteProduction := 
+              batiment.quantiteProduite * 
+              batiment.niveau;
+          end;
           
-        ressource := zone.emplacements[j].batiment.ressourceProduite;
-          // Ajouter la production à l'inventaire 
-          zone.inventaire.quantites[ressource] := 
-            zone.inventaire.quantites[ressource] + production;
+          // Ajouter la production à l'inventaire de la zone
+          zone.inventaire.quantites[batiment.ressourceProduite] := 
+            zone.inventaire.quantites[batiment.ressourceProduite] + quantiteProduction;
+        end;
       end;
     end;
   end;
@@ -214,23 +324,7 @@ uses
     ZoneActuelle := base;
   end;
   
-  function CompareInventaireAvecRecette(inventaire : _Inventaire; recette : _Recette) : Boolean;
-  var
-    i : _TypeRessources;
-  begin
-    for i := Low(_TypeRessources) to High(_TypeRessources) do
-      if inventaire.quantites[i] < recette[i] then
-        Exit(False);
-    CompareInventaireAvecRecette := True;
-  end;
 
-  procedure DeduireInventaire( recette : _Recette; var inventaire : _Inventaire);
-  var 
-    i : _TypeRessources;
-  begin
-    for i := Low(_TypeRessources) to High(_TypeRessources) do
-      inventaire.quantites[i] := inventaire.quantites[i] - recette[i];
-  end;
 
 function GetProductionEnergie(): integer;
 var 
@@ -261,72 +355,198 @@ begin
 end;
 
 
-procedure ConstruireBatiment(batiment: _Batiment);
+function ChoisirEmplacement(zone: _Zone): Integer;
 var
   choix: string;
+begin
+  AfficherEmplacementZone(zone);
+  Afficher('ChoisirEmplacement');
+  readln(choix);
+  ChoisirEmplacement := StrToInt(choix) - 1;
+end;
+
+
+
+procedure AmeliorerBatiment();
+  var
+    emplacementSelectionne: Integer;
+    emplacement: _Emplacement;
+  begin
+    emplacementSelectionne := ChoisirEmplacement(JZones[ZoneActuelle]);
+    emplacement := JZones[ZoneActuelle].emplacements[emplacementSelectionne];
+
+    if (emplacement.estDecouvert) and (emplacement.batiment.nom <> VIDE) then
+    begin
+      if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, emplacement.batiment.recette) then
+      begin
+        emplacement.batiment.niveau := emplacement.batiment.niveau + 1;
+        emplacement.batiment.quantiteProduite := emplacement.batiment.quantiteProduite + 10;
+        DeduireInventaire(emplacement.batiment.recette, JZones[ZoneActuelle].inventaire);
+      end;
+    end;
+  end;
+
+
+  // Change le type de production d'un bâtiment et met à jour la quantité produite
+  procedure ChangerProduction(var batiment: _Batiment; ressource: _TypeRessources);
+  begin
+    batiment.ressourceProduite := ressource;
+    batiment.quantiteProduite := ObtenirQuantiteProduite(ressource);
+  end;
+
+  // Permet au joueur de choisir une production parmi les options disponibles
+  function ChoisirProduction(page: Integer): _TypeRessources;
+  var 
+    choix: string;
+    productionChoisie: _TypeRessources;
+    choixValide: Boolean;
+  begin
+    repeat
+      choixValide := True;
+      Afficher('MenuChangerProduction' + IntToStr(page));
+      readln(choix);
+      
+      if page = 1 then 
+      begin
+        // Gestion de la page 1 : Productions de base
+        case choix of
+          '1': productionChoisie := LingotCuivre;
+          '2': productionChoisie := LingotFer;
+          '3': productionChoisie := CableCuivre;
+          '4': productionChoisie := PlaqueFer;
+          '5': productionChoisie := TuyauFer;
+          '6': 
+            begin
+              productionChoisie := ChoisirProduction(2); // Page suivante
+              choixValide := True;
+            end;
+          '0': 
+            begin
+              menuDeJeu();
+              choixValide := False;
+            end;
+          else
+            choixValide := False;
+        end;
+      end 
+      else if page = 2 then
+      begin
+        // Gestion de la page 2 : Productions avancées
+        case choix of
+          '1': productionChoisie := Beton;
+          '2': productionChoisie := Acier;
+          '3': productionChoisie := PlaqueRenforcee;
+          '4': productionChoisie := PoutreIndustrielle;
+          '5': productionChoisie := Fondation;
+          '6': 
+            begin
+              productionChoisie := ChoisirProduction(1); // Page précédente
+              choixValide := True;
+            end;
+          '0': 
+            begin
+              menuDeJeu();
+              choixValide := False;
+            end;
+          else
+            choixValide := False;
+        end;
+      end
+      else
+      begin
+        // Page invalide, retour à la page 1
+        productionChoisie := ChoisirProduction(1);
+      end;
+      
+    until choixValide and (choix <> '6'); // Continue tant que choix invalide ou navigation
+    
+    ChoisirProduction := productionChoisie;
+  end;
+
+  procedure menuChangerProduction();
+  var
+    emplacement: Integer;
+    ressource: _TypeRessources;
+  begin
+    // Sélection de l'emplacement
+    emplacement := ChoisirEmplacement(JZones[ZoneActuelle]);
+    
+    // Vérification que l'emplacement contient bien un constructeur
+    if (emplacement >= 0) and (emplacement <= High(JZones[ZoneActuelle].emplacements)) and
+       (JZones[ZoneActuelle].emplacements[emplacement].batiment.nom = CONSTRUCTEUR) then
+    begin
+      // Sélection de la ressource
+      ressource := choisirProduction(1);
+      
+      // Application du changement
+      changerProduction(JZones[ZoneActuelle].emplacements[emplacement].batiment, ressource);
+          ecranJeu();
+    end
+    else menuDeJeu;
+  end;
+
+procedure ConstruireBatiment(batiment: _Batiment);
+var
   zone: _Zone;
+  emplacementSelectionne: Integer;
+  peutConstruire: Boolean;
 begin
   zone := JZones[ZoneActuelle];
-  AfficherEmplacementZone(zone);
-  Afficher('ConstruireBatiment');
-  readln(choix);
-
-    if zone.emplacements[StrToInt(choix)-1].estDecouvert then
+  emplacementSelectionne := ChoisirEmplacement(zone);
+  peutConstruire := False;
+  
+  // Vérifier que l'emplacement est découvert
+  if zone.emplacements[emplacementSelectionne].estDecouvert then
+  begin
+    // Vérifier que l'emplacement est vide
+    if zone.emplacements[emplacementSelectionne].batiment.nom = VIDE then
     begin
-      if zone.emplacements[StrToInt(choix)-1].batiment.nom = VIDE then
+      // Vérifier les ressources
+      if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, batiment.recette) then
       begin
-        // Vérifier si on a les ressources nécessaires
-        if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, batiment.recette) then
+        // Vérifier compatibilité gisement/bâtiment
+        if batiment.nom = MINE then
         begin
-          // Pour une mine, vérifier qu'il y a un gisement
-          if (batiment.nom = MINE) then
-          begin
-            if zone.emplacements[StrToInt(choix)-1].gisement.existe then
-            begin
-              zone.emplacements[StrToInt(choix)-1].batiment := batiment;
-              zone.emplacements[StrToInt(choix)-1].batiment.ressourceProduite := zone.emplacements[StrToInt(choix)-1].gisement.typeGisement;
-              zone.emplacements[StrToInt(choix)-1].batiment.quantiteProduite := batiment.quantiteProduite;
-              DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
-            end
-          end
-          // Pour les autres bâtiments, vérifier qu'il n'y a pas de gisement
-          else if not zone.emplacements[StrToInt(choix)-1].gisement.existe then
-          begin
-            zone.emplacements[StrToInt(choix)-1].batiment := batiment;
-            DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
-          end
+          if zone.emplacements[emplacementSelectionne].gisement.existe then
+            peutConstruire := True;
         end
         else
         begin
-          if batiment.nom <> MINE then
-          begin
-            zone.emplacements[StrToInt(choix)-1].batiment := batiment;
-            DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
-          end;
+          if not zone.emplacements[emplacementSelectionne].gisement.existe then
+            peutConstruire := True;
         end;
       end;
     end;
-  ecranJeu();
-end;
-
-  {procedure AmeliorerBatiment(emplacement : _Emplacement);
-  var
-    choix: integer;
+  end;
+  
+  // Si toutes les vérifications sont passées, construire
+  if peutConstruire then
   begin
-    if choix in [2..10] and emplacement.estDecouvert and emplacement.batiment.nom <> VIDE) then
-      begin
-        if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, emplacement.batiment.recette) then
-        begin
-          emplacement.batiment.niveau := emplacement.batiment.niveau + 1;
-          emplacement.batiment.quantiteProduite := emplacement.batiment.quantiteProduite + 10;
-        DeduireInventaire(emplacement.batiment.recette, JZones[ZoneActuelle].inventaire);
-    end;
-    end;
+    // Construire le bâtiment
+    JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment := batiment;
+    
+    // Cas spécial MINE : assigner la ressource du gisement
+    if batiment.nom = MINE then
+    begin
+      JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment.ressourceProduite := 
+        JZones[ZoneActuelle].emplacements[emplacementSelectionne].gisement.typeGisement;
     end;
     
-  end;}
-
-
+    // Cas spécial CONSTRUCTEUR : choisir la production
+    if batiment.nom = CONSTRUCTEUR then
+    begin
+      ChangerProduction(
+        JZones[ZoneActuelle].emplacements[emplacementSelectionne].batiment, 
+        ChoisirProduction(1)
+      );
+    end;
+    
+    // Déduire les ressources de construction
+    DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
+  end;
+  
+  ecranJeu();
+end;
 
   // 1 -> Menu construction
   procedure menuConstruction();
@@ -345,38 +565,6 @@ end;
       end;
     until (choix = '0') OR (choix = '1') OR (choix = '2') OR (choix = '3') OR (choix = '4');
     end;
-
-  procedure menuChangerProduction(page:integer);
-  var 
-    choix: string;
-  begin
-    repeat
-    Afficher('MenuChangerProduction'+ IntToStr(page));
-    readln(choix);
-      if page = 1 then begin
-        case choix of 
-          //1:changerProductionConstructeur(LingotCuivre);
-          //2:changerProductionConstructeur(LingotFer);
-          //3:changerProductionConstructeur(CableCuivre);
-          //4:changerProductionConstructeur(PlaqueFer);
-          //5:changerProductionConstructeur(TuyauFer);
-          '6':menuChangerProduction(2);
-          '0':menuDeJeu();
-        end;
-      end else begin
-        case choix of 
-          //1:changerProductionConstructeur(Beton);
-          //2:changerProductionConstructeur(Acier);
-          //3:changerProductionConstructeur(PlaqueRenforcee);
-          //4:changerProductionConstructeur(PoutreIndustrielle);
-          //5:changerProductionConstructeur(Fondation);
-          '6':menuChangerProduction(1);
-          '0':menuDeJeu();
-        end;
-      end;
-    until (choix = '0') OR (choix = '6');
-  end;
-
 
   procedure menuAmeliorerBatiement();
   var 
@@ -455,7 +643,7 @@ end;
       '1': menuConstruction(); 
       
       // 2/ Changer la production
-      '2': menuChangerProduction(1); 
+      '2': menuChangerProduction(); 
       
       // 3/ Améliorer un bâtiment
       '3': menuAmeliorerBatiement();
@@ -499,5 +687,4 @@ end;
       end;
     until (choix = '1') or (choix = '2');
   end; 
-
-  end.
+end.

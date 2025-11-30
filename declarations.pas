@@ -112,6 +112,7 @@ type
     energieProduite : Integer;
     recetteMK2 : _Recette;
     recetteMK3 : _Recette;
+    ressourceNecessaire : _Recette;
     end;
 
   _Emplacement = record
@@ -139,7 +140,7 @@ type
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
     recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: 200;
+    energieProduite: 500;
   );
 
   DEFAULT_MINE : _Batiment = (
@@ -157,11 +158,12 @@ type
     nom: _TypeBatiment.CONSTRUCTEUR;
     niveau: 1;
     ressourceProduite: _TypeRessources.LingotCuivre;
-    quantiteProduite: 0;
-    recette: (10,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Câbles (x10), Plaques (x10)
+    quantiteProduite: 50;
+    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);  // Câbles (x10), Plaques (x10)
     energieProduite: -200;
     recetteMK2: (20,0,0,0,0,0,20,0,20,0,0,0,0,0,0);  // Câbles (x20), Plaques (x20), Sacs de Béton (x20)
     recetteMK3: (20,0,0,0,0,0,20,0,0,20,0,0,0,0,0);  // Câbles (x20), Plaques (x20), Acier (x20)
+    ressourceNecessaire: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
   );
 
   DEFAULT_CENTRALE : _Batiment = (
