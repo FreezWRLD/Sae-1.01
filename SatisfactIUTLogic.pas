@@ -359,9 +359,11 @@ function ChoisirEmplacement(zone: _Zone): Integer;
 var
   choix: string;
 begin
+repeat 
   AfficherEmplacementZone(zone);
   Afficher('ChoisirEmplacement');
   readln(choix);
+until (choix = '1') or (choix = '2') or (choix = '3') or (choix = '4') or (choix = '5') or (choix = '6') or (choix = '7') or (choix = '8') or (choix = '9') or (choix = '10');
   ChoisirEmplacement := StrToInt(choix) - 1;
 end;
 
