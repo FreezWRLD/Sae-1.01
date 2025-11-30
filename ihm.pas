@@ -297,6 +297,30 @@ implementation
       cadrechoixmenu();
   end;
 
+  procedure afficherConstructionReussie();
+  begin
+    effacerTexteMenu();
+    couleurTexte(2);
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Construction réussie !',
+      '',
+      'Appuyez sur une touche pour continuer...'
+    ]);
+  end;
+
+  procedure afficherConstructionImpossible(raison: String);
+  begin
+    effacerTexteMenu();
+    couleurTexte(4);
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Construction impossible !',
+      '',
+      raison,
+      '',
+      'Appuyez sur une touche pour continuer...'
+    ]);
+  end;
+
   procedure afficherMenuChangerProduction(page:integer);
   begin
     couleurTexte(15);
@@ -575,6 +599,12 @@ implementation
       'ChoisirEmplacement': afficherChoisirEmplacement();
       'MenuConstruction': afficherMenuConstruction();
       'ConstruireBatiment': afficherConstruireBatiment();
+      'ConstructionReussie': afficherConstructionReussie();
+      'ConstructionImpossible_NonDecouvert': afficherConstructionImpossible('Emplacement non découvert');
+      'ConstructionImpossible_Occupe': afficherConstructionImpossible('Emplacement occupé');
+      'ConstructionImpossible_RessourcesInsuffisantes': afficherConstructionImpossible('Ressources insuffisantes');
+      'ConstructionImpossible_PasDeGisement': afficherConstructionImpossible('Pas de gisement présent');
+      'ConstructionImpossible_GisementPresent': afficherConstructionImpossible('Gisement présent sur cet emplacement');
       'MenuChangerProduction1': afficherMenuChangerProduction(1);
       'MenuChangerProduction2': afficherMenuChangerProduction(2);
       'MenuChangerDeZone': afficherMenuChangerDeZone();
