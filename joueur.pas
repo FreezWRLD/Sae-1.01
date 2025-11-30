@@ -5,7 +5,7 @@ unit joueur;
 
 interface
 uses
-  SysUtils, declarations, typinfo;  
+  SysUtils, declarations;  
 var
   i: Integer;
   JDate : _Date;
