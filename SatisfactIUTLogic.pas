@@ -203,8 +203,8 @@ uses
 
   function InitDate():_Date; //Initialise la date de début du jeu
   begin
-    InitDate.jour:=_Jour(Random(31));
-    InitDate.mois:=_Mois(Random(12));
+    InitDate.jour:=_Jour(Random(30)+1);
+    InitDate.mois:=_Mois(Random(11)+1);
     InitDate.annee:=_Annee(Random(25)+2000);
   end;
 
@@ -265,7 +265,7 @@ end;
 
 procedure ConstruireBatiment(batiment: _Batiment);
 var
-  choix: integer;
+  choix: string;
   zone: _Zone;
 begin
   zone := JZones[ZoneActuelle];
@@ -273,11 +273,9 @@ begin
   Afficher('ConstruireBatiment');
   readln(choix);
 
-  if (choix >= 2) and (choix <= 10) then
-  begin
-    if zone.emplacements[choix-1].estDecouvert then
+    if zone.emplacements[StrToInt(choix)-1].estDecouvert then
     begin
-      if zone.emplacements[choix-1].batiment.nom = VIDE then
+      if zone.emplacements[StrToInt(choix)-1].batiment.nom = VIDE then
       begin
         // Vérifier si on a les ressources nécessaires
         if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, batiment.recette) then
@@ -285,18 +283,18 @@ begin
           // Pour une mine, vérifier qu'il y a un gisement
           if (batiment.nom = MINE) then
           begin
-            if zone.emplacements[choix-1].gisement.existe then
+            if zone.emplacements[StrToInt(choix)-1].gisement.existe then
             begin
-              zone.emplacements[choix-1].batiment := batiment;
-              zone.emplacements[choix-1].batiment.ressourceProduite := zone.emplacements[choix-1].gisement.typeGisement;
-              zone.emplacements[choix-1].batiment.quantiteProduite := batiment.quantiteProduite;
+              zone.emplacements[StrToInt(choix)-1].batiment := batiment;
+              zone.emplacements[StrToInt(choix)-1].batiment.ressourceProduite := zone.emplacements[StrToInt(choix)-1].gisement.typeGisement;
+              zone.emplacements[StrToInt(choix)-1].batiment.quantiteProduite := batiment.quantiteProduite;
               DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
             end
           end
           // Pour les autres bâtiments, vérifier qu'il n'y a pas de gisement
-          else if not zone.emplacements[choix-1].gisement.existe then
+          else if not zone.emplacements[StrToInt(choix)-1].gisement.existe then
           begin
-            zone.emplacements[choix-1].batiment := batiment;
+            zone.emplacements[StrToInt(choix)-1].batiment := batiment;
             DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
           end
         end
@@ -304,13 +302,12 @@ begin
         begin
           if batiment.nom <> MINE then
           begin
-            zone.emplacements[choix-1].batiment := batiment;
+            zone.emplacements[StrToInt(choix)-1].batiment := batiment;
             DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
           end;
         end;
       end;
     end;
-  end;
   ecranJeu();
 end;
 
@@ -336,26 +333,24 @@ end;
   // 1 -> Menu construction
   procedure menuConstruction();
   var 
-    choix: integer;
+    choix: string;
   begin
     repeat
       Afficher('MenuConstruction');
       readln(choix);
       case choix of 
-        1: ConstruireBatiment(DEFAULT_MINE);
-        2: ConstruireBatiment(DEFAULT_CONSTRUCTEUR);
-        3: ConstruireBatiment(DEFAULT_CENTRALE);
-        4: ConstruireBatiment(DEFAULT_ASCENSEUR_ORBITAL);
-        0: menuDeJeu();
+        '1': ConstruireBatiment(DEFAULT_MINE);
+        '2': ConstruireBatiment(DEFAULT_CONSTRUCTEUR);
+        '3': ConstruireBatiment(DEFAULT_CENTRALE);
+        '4': ConstruireBatiment(DEFAULT_ASCENSEUR_ORBITAL);
+        '0': menuDeJeu();
       end;
-    until choix in [0..4];
-      //writeln(ZoneActuelle);
-      //readln;
+    until (choix = '0') OR (choix = '1') OR (choix = '2') OR (choix = '3') OR (choix = '4');
     end;
 
   procedure menuChangerProduction(page:integer);
   var 
-    choix: integer;
+    choix: string;
   begin
     repeat
     Afficher('MenuChangerProduction'+ IntToStr(page));
@@ -367,8 +362,8 @@ end;
           //3:changerProductionConstructeur(CableCuivre);
           //4:changerProductionConstructeur(PlaqueFer);
           //5:changerProductionConstructeur(TuyauFer);
-          6:menuChangerProduction(2);
-          0:menuDeJeu();
+          '6':menuChangerProduction(2);
+          '0':menuDeJeu();
         end;
       end else begin
         case choix of 
@@ -377,25 +372,25 @@ end;
           //3:changerProductionConstructeur(PlaqueRenforcee);
           //4:changerProductionConstructeur(PoutreIndustrielle);
           //5:changerProductionConstructeur(Fondation);
-          6:menuChangerProduction(1);
-          0:menuDeJeu();
+          '6':menuChangerProduction(1);
+          '0':menuDeJeu();
         end;
       end;
-    until choix in [0..6];
+    until (choix = '0') OR (choix = '6');
   end;
 
 
   procedure menuAmeliorerBatiement();
   var 
-    choix: integer;
+    choix: string;
   begin
     repeat
     //Afficher('MenuAmeliorerBatiement');
     readln(choix);
       case choix of 
-      0:menuDeJeu();
+      '0':menuDeJeu();
       end;
-    until choix in [0..1];
+    until choix = '0';
   end;
 
 
@@ -411,24 +406,21 @@ end;
   // 5 -> Logique du menu changer de zone
   procedure menuChangerDeZone();
   var 
-    i:_TypeZone;
-    choix: integer;
+    choix: string;
   begin
     repeat
     Afficher('MenuChangerDeZone');
     readln(choix);
       case choix of 
-      1:ZoneActuelle:=base;
-      2:ZoneActuelle:=rocheux;
-      3:ZoneActuelle:=foretNordique;
-      4:ZoneActuelle:=volcanique;
-      5:ZoneActuelle:=desertique;
-      0:menuDeJeu();
+      '1':ZoneActuelle:=base;
+      '2':ZoneActuelle:=rocheux;
+      '3':ZoneActuelle:=foretNordique;
+      '4':ZoneActuelle:=volcanique;
+      '5':ZoneActuelle:=desertique;
+      '0':menuDeJeu();
       end;
       ecranJeu();
-    until choix in [0 .. 5];
-    //writeln(ZoneActuelle);
-    //readln;
+    until (choix = '0') OR (choix = '1') OR (choix = '2') OR (choix = '3') OR (choix = '4') OR (choix = '5');
   end;
 
   procedure menuPasserJournee();
@@ -439,75 +431,75 @@ end;
 
   procedure menuWiki();
   var 
-    choix: integer;
+    choix: string;
   begin
   repeat
     Afficher('MenuWiki');
     readln(choix);
       case choix of 
-      1:Afficher('WikiBatiment');
-      2:Afficher('WikiProduction');
-      0:ecranJeu();
+      '1':Afficher('WikiBatiment');
+      '2':Afficher('WikiProduction');
+      '0':ecranJeu();
     end;
     menuWiki();
-  until choix in [0..2];
+  until (choix = '0') OR (choix = '1') OR (choix = '2');
   end;
 
   procedure menuDeJeu();
   var
-    choix: integer;
+    choix: string;
   begin
   repeat
     Afficher('MenuJeu');
     readln(choix);
     case choix of
       // 1/ Construire un bâtiment
-      1: menuConstruction(); 
+      '1': menuConstruction(); 
       
       // 2/ Changer la production
-      2: menuChangerProduction(1); 
+      '2': menuChangerProduction(1); 
       
       // 3/ Améliorer un bâtiment
-      3: menuAmeliorerBatiement();
+      '3': menuAmeliorerBatiement();
       
       // 4/ Explorer la zone
-      4: menuExplorer();
+      '4': menuExplorer();
 
       // 5/ Changer de zone
-      5: menuChangerDeZone();
+      '5': menuChangerDeZone();
 
       // 6/ Transférer des ressources
 
       // 7/ Passer la journée 
-      7: menuPasserJournee();
+      '7': menuPasserJournee();
 
       // 8/ Missions
 
       // 9/ Wiki
-      9: menuWiki();
+      '9': menuWiki();
 
       // 0/ Quitter la partie
-      0: menuDemarrage(); 
+      '0': menuDemarrage(); 
     end;
-  until choix in[0..9];
+  until (choix = '0') OR (choix = '1') OR (choix = '2') OR (choix = '3') OR (choix = '4') OR (choix = '5') OR (choix = '7') OR (choix = '9');
   end;
 
   procedure menuDemarrage();
   var 
-    choix: Integer;
+    choix: string;
   begin
     repeat
     ecranDemarrage();
     readln(choix);
       case choix of
-        1: 
+        '1': 
       begin 
         Afficher('Histoire');
         ecranJeu(); 
         end;
-        2:quitterIHM();
+        '2':quitterIHM();
       end;
-    until choix in[1..2];
+    until (choix = '1') or (choix = '2');
   end; 
 
   end.
