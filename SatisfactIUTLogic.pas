@@ -262,52 +262,193 @@ begin
   GetCoutEnergie := -total;
 end;
 
+// Sous-programmes pour initialiser la production du constructeur lors de sa construction
+procedure initialiserProductionConstructeur(ressource: _TypeRessources; emplacementIndex: integer);
+begin
+  if (emplacementIndex >= 0) and (emplacementIndex <= High(JZones[ZoneActuelle].emplacements)) then
+  begin
+    if JZones[ZoneActuelle].emplacements[emplacementIndex].batiment.nom = CONSTRUCTEUR then
+    begin
+      JZones[ZoneActuelle].emplacements[emplacementIndex].batiment.ressourceProduite := ressource;
+    end;
+  end;
+end;
+
+procedure initialiserProductionPage1(choix: string; emplacementIndex: integer);
+begin
+  case choix of
+    '1': initialiserProductionConstructeur(LingotCuivre, emplacementIndex);
+    '2': initialiserProductionConstructeur(LingotFer, emplacementIndex);
+    '3': initialiserProductionConstructeur(CableCuivre, emplacementIndex);
+    '4': initialiserProductionConstructeur(PlaqueFer, emplacementIndex);
+    '5': initialiserProductionConstructeur(TuyauFer, emplacementIndex);
+  end;
+end;
+
+procedure initialiserProductionPage2(choix: string; emplacementIndex: integer);
+begin
+  case choix of
+    '1': initialiserProductionConstructeur(Beton, emplacementIndex);
+    '2': initialiserProductionConstructeur(Acier, emplacementIndex);
+    '3': initialiserProductionConstructeur(PlaqueRenforcee, emplacementIndex);
+    '4': initialiserProductionConstructeur(PoutreIndustrielle, emplacementIndex);
+    '5': initialiserProductionConstructeur(Fondation, emplacementIndex);
+  end;
+end;
+
+// Sous-programmes de construction pour chaque type de bâtiment
+procedure construireMine(emplacementIndex: integer; batiment: _Batiment);
+var
+  zone: _Zone;
+  dummy: string;
+begin
+  zone := JZones[ZoneActuelle];
+  
+  if zone.emplacements[emplacementIndex].gisement.existe then
+  begin
+    zone.emplacements[emplacementIndex].batiment := batiment;
+    zone.emplacements[emplacementIndex].batiment.ressourceProduite := zone.emplacements[emplacementIndex].gisement.typeGisement;
+    zone.emplacements[emplacementIndex].batiment.quantiteProduite := batiment.quantiteProduite;
+    DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
+    Afficher('ConstructionReussie');
+    readln(dummy);
+  end
+  else
+  begin
+    Afficher('ConstructionImpossible_PasDeGisement');
+    readln(dummy);
+  end;
+end;
+
+procedure construireConstructeur(emplacementIndex: integer; batiment: _Batiment);
+var
+  zone: _Zone;
+  choixProduction: string;
+  dummy: string;
+begin
+  zone := JZones[ZoneActuelle];
+  
+  if not zone.emplacements[emplacementIndex].gisement.existe then
+  begin
+    zone.emplacements[emplacementIndex].batiment := batiment;
+    DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
+    Afficher('ConstructionReussie');
+    readln(dummy);
+    
+    // Demander la production initiale du constructeur
+    repeat
+      Afficher('MenuChangerProduction1');
+      readln(choixProduction);
+      if (choixProduction = '1') or (choixProduction = '2') or (choixProduction = '3') or (choixProduction = '4') or (choixProduction = '5') then
+      begin
+        initialiserProductionPage1(choixProduction, emplacementIndex);
+        break;
+      end
+      else if choixProduction = '6' then
+      begin
+        repeat
+          Afficher('MenuChangerProduction2');
+          readln(choixProduction);
+          if (choixProduction = '1') or (choixProduction = '2') or (choixProduction = '3') or (choixProduction = '4') or (choixProduction = '5') then
+          begin
+            initialiserProductionPage2(choixProduction, emplacementIndex);
+            break;
+          end
+          else if choixProduction = '6' then
+            continue
+          else if choixProduction = '0' then
+            break;
+        until false;
+        break;
+      end
+      else if choixProduction = '0' then
+        break;
+    until false;
+  end
+  else
+  begin
+    Afficher('ConstructionImpossible_GisementPresent');
+    readln(dummy);
+  end;
+end;
+
+procedure construireAutreBatiment(emplacementIndex: integer; batiment: _Batiment);
+var
+  zone: _Zone;
+  dummy: string;
+begin
+  zone := JZones[ZoneActuelle];
+  
+  if not zone.emplacements[emplacementIndex].gisement.existe then
+  begin
+    zone.emplacements[emplacementIndex].batiment := batiment;
+    DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
+    Afficher('ConstructionReussie');
+    readln(dummy);
+  end
+  else
+  begin
+    Afficher('ConstructionImpossible_GisementPresent');
+    readln(dummy);
+  end;
+end;
 
 procedure ConstruireBatiment(batiment: _Batiment);
 var
   choix: string;
   zone: _Zone;
+  emplacementIndex: integer;
+  dummy: string;
 begin
   zone := JZones[ZoneActuelle];
   AfficherEmplacementZone(zone);
   Afficher('ConstruireBatiment');
   readln(choix);
 
-    if zone.emplacements[StrToInt(choix)-1].estDecouvert then
+  try
+    emplacementIndex := StrToInt(choix) - 1;
+    
+    if (emplacementIndex >= 0) and (emplacementIndex <= High(zone.emplacements)) then
     begin
-      if zone.emplacements[StrToInt(choix)-1].batiment.nom = VIDE then
+      // Vérifier que l'emplacement est découvert
+      if not zone.emplacements[emplacementIndex].estDecouvert then
       begin
-        // Vérifier si on a les ressources nécessaires
-        if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, batiment.recette) then
-        begin
-          // Pour une mine, vérifier qu'il y a un gisement
-          if (batiment.nom = MINE) then
-          begin
-            if zone.emplacements[StrToInt(choix)-1].gisement.existe then
-            begin
-              zone.emplacements[StrToInt(choix)-1].batiment := batiment;
-              zone.emplacements[StrToInt(choix)-1].batiment.ressourceProduite := zone.emplacements[StrToInt(choix)-1].gisement.typeGisement;
-              zone.emplacements[StrToInt(choix)-1].batiment.quantiteProduite := batiment.quantiteProduite;
-              DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
-            end
-          end
-          // Pour les autres bâtiments, vérifier qu'il n'y a pas de gisement
-          else if not zone.emplacements[StrToInt(choix)-1].gisement.existe then
-          begin
-            zone.emplacements[StrToInt(choix)-1].batiment := batiment;
-            DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
-          end
-        end
-        else
-        begin
-          if batiment.nom <> MINE then
-          begin
-            zone.emplacements[StrToInt(choix)-1].batiment := batiment;
-            DeduireInventaire(batiment.recette, JZones[ZoneActuelle].inventaire);
-          end;
-        end;
+        Afficher('ConstructionImpossible_NonDecouvert');
+        readln(dummy);
+        ecranJeu();
+        Exit;
+      end;
+      
+      // Vérifier que l'emplacement est libre (VIDE)
+      if zone.emplacements[emplacementIndex].batiment.nom <> VIDE then
+      begin
+        Afficher('ConstructionImpossible_Occupe');
+        readln(dummy);
+        ecranJeu();
+        Exit;
+      end;
+      
+      // Vérifier les ressources nécessaires
+      if not CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, batiment.recette) then
+      begin
+        Afficher('ConstructionImpossible_RessourcesInsuffisantes');
+        readln(dummy);
+        ecranJeu();
+        Exit;
+      end;
+
+      // Appeler le sous-programme approprié selon le type de bâtiment
+      case batiment.nom of
+        MINE: construireMine(emplacementIndex, batiment);
+        CONSTRUCTEUR: construireConstructeur(emplacementIndex, batiment);
+        HUB, CENTRALE, ASCENSEUR_ORBITAL: construireAutreBatiment(emplacementIndex, batiment);
       end;
     end;
+  except
+    on EConvertError do
+      // Entrée invalide, on ignore
+  end;
+  
   ecranJeu();
 end;
 
