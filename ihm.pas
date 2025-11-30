@@ -242,6 +242,17 @@ implementation
     dessinerCadreXY(50,0,199,39,simple,white,black);
   end;
 
+
+  procedure afficherChoisirEmplacement ();
+  begin
+    couleurTexte(15);
+      effacerTexteMenu();
+      afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+        'Entrez le numéro de l''emplacement :'
+      ]);
+      cadrechoixmenu();
+  end;
+
   procedure afficherMenuDeJeu();
     begin
       couleurTexte(15);
@@ -561,6 +572,7 @@ implementation
   begin
     case element of
       'MenuDemarrage': afficherMenuDemarrage();
+      'ChoisirEmplacement': afficherChoisirEmplacement();
       'MenuConstruction': afficherMenuConstruction();
       'ConstruireBatiment': afficherConstruireBatiment();
       'MenuChangerProduction1': afficherMenuChangerProduction(1);
