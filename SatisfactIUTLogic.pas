@@ -479,6 +479,173 @@ end;
   until (choix = '0') OR (choix = '1') OR (choix = '2');
   end;
 
+  // Procédures pour transférer les ressources
+  procedure transfererRessource(ressource: _TypeRessources; quantite: integer; zoneDestination: _TypeZone);
+  begin
+    if JZones[ZoneActuelle].inventaire.quantites[ressource] >= quantite then
+    begin
+      JZones[ZoneActuelle].inventaire.quantites[ressource] := 
+        JZones[ZoneActuelle].inventaire.quantites[ressource] - quantite;
+      JZones[zoneDestination].inventaire.quantites[ressource] := 
+        JZones[zoneDestination].inventaire.quantites[ressource] + quantite;
+    end;
+  end;
+
+  procedure transfererPage1(choix: string; zoneDestination: _TypeZone; quantite: integer);
+  begin
+    case choix of
+      '1': transfererRessource(Cuivre, quantite, zoneDestination);
+      '2': transfererRessource(Fer, quantite, zoneDestination);
+      '3': transfererRessource(Calcaire, quantite, zoneDestination);
+      '4': transfererRessource(Charbon, quantite, zoneDestination);
+      '5': transfererRessource(LingotCuivre, quantite, zoneDestination);
+    end;
+  end;
+
+  procedure transfererPage2(choix: string; zoneDestination: _TypeZone; quantite: integer);
+  begin
+    case choix of
+      '1': transfererRessource(LingotFer, quantite, zoneDestination);
+      '2': transfererRessource(CableCuivre, quantite, zoneDestination);
+      '3': transfererRessource(PlaqueFer, quantite, zoneDestination);
+      '4': transfererRessource(TuyauFer, quantite, zoneDestination);
+      '5': transfererRessource(Beton, quantite, zoneDestination);
+    end;
+  end;
+
+  procedure transfererPage3(choix: string; zoneDestination: _TypeZone; quantite: integer);
+  begin
+    case choix of
+      '1': transfererRessource(Acier, quantite, zoneDestination);
+      '2': transfererRessource(PlaqueRenforcee, quantite, zoneDestination);
+      '3': transfererRessource(PoutreIndustrielle, quantite, zoneDestination);
+      '4': transfererRessource(Fondation, quantite, zoneDestination);
+    end;
+  end;
+
+  function obtenirRessourceTransfert(page: integer; choix: string): _TypeRessources;
+  begin
+    case page of
+      1: begin
+        case choix of
+          '1': Result := Cuivre;
+          '2': Result := Fer;
+          '3': Result := Calcaire;
+          '4': Result := Charbon;
+          '5': Result := LingotCuivre;
+          else Result := Aucune;
+        end;
+      end;
+      2: begin
+        case choix of
+          '1': Result := LingotFer;
+          '2': Result := CableCuivre;
+          '3': Result := PlaqueFer;
+          '4': Result := TuyauFer;
+          '5': Result := Beton;
+          else Result := Aucune;
+        end;
+      end;
+      3: begin
+        case choix of
+          '1': Result := Acier;
+          '2': Result := PlaqueRenforcee;
+          '3': Result := PoutreIndustrielle;
+          '4': Result := Fondation;
+          else Result := Aucune;
+        end;
+      end;
+      else Result := Aucune;
+    end;
+  end;
+
+  procedure menuTransfererRessource();
+  var
+    choixZone: string;
+    choixRessource: string;
+    choixQuantite: string;
+    zoneDestination: _TypeZone;
+    ressource: _TypeRessources;
+    quantite: integer;
+    quantiteMax: integer;
+    pageRessource: integer;
+  begin
+    // Étape 1 : Choisir la zone de destination
+    repeat
+      Afficher('MenuTransfertZone');
+      readln(choixZone);
+      case choixZone of
+        '1': zoneDestination := base;
+        '2': zoneDestination := rocheux;
+        '3': zoneDestination := foretNordique;
+        '4': zoneDestination := volcanique;
+        '5': zoneDestination := desertique;
+        '0': begin menuDeJeu(); Exit; end;
+      end;
+    until (choixZone = '1') or (choixZone = '2') or (choixZone = '3') or (choixZone = '4') or (choixZone = '5');
+
+    // Étape 2 : Choisir la ressource à transférer
+    pageRessource := 1;
+    repeat
+      Afficher('MenuTransfertRessource' + IntToStr(pageRessource));
+      readln(choixRessource);
+      
+      if pageRessource = 1 then begin
+        if (choixRessource = '1') or (choixRessource = '2') or (choixRessource = '3') or (choixRessource = '4') or (choixRessource = '5') then begin
+          ressource := obtenirRessourceTransfert(1, choixRessource);
+          break;
+        end;
+        if choixRessource = '6' then
+          pageRessource := 2
+        else if choixRessource = '0' then begin
+          menuDeJeu();
+          Exit;
+        end;
+      end
+      else if pageRessource = 2 then begin
+        if (choixRessource = '1') or (choixRessource = '2') or (choixRessource = '3') or (choixRessource = '4') or (choixRessource = '5') then begin
+          ressource := obtenirRessourceTransfert(2, choixRessource);
+          break;
+        end;
+        if choixRessource = '6' then
+          pageRessource := 3
+        else if choixRessource = '0' then begin
+          menuDeJeu();
+          Exit;
+        end;
+      end
+      else if pageRessource = 3 then begin
+        if (choixRessource = '1') or (choixRessource = '2') or (choixRessource = '3') or (choixRessource = '4') then begin
+          ressource := obtenirRessourceTransfert(3, choixRessource);
+          break;
+        end;
+        if choixRessource = '5' then
+          pageRessource := 1
+        else if choixRessource = '0' then begin
+          menuDeJeu();
+          Exit;
+        end;
+      end;
+    until false;
+
+    // Étape 3 : Demander la quantité à transférer
+    quantiteMax := JZones[ZoneActuelle].inventaire.quantites[ressource];
+    afficherMenuTransfertQuantite(quantiteMax);
+    readln(choixQuantite);
+    
+    if TryStrToInt(choixQuantite, quantite) and (quantite > 0) and (quantite <= quantiteMax) then
+    begin
+      if pageRessource = 1 then
+        transfererPage1(choixRessource, zoneDestination, quantite)
+      else if pageRessource = 2 then
+        transfererPage2(choixRessource, zoneDestination, quantite)
+      else if pageRessource = 3 then
+        transfererPage3(choixRessource, zoneDestination, quantite);
+    end;
+    
+    ecranJeu();
+  end;
+
   procedure menuDeJeu();
   var
     choix: string;
@@ -503,6 +670,7 @@ end;
       '5': menuChangerDeZone();
 
       // 6/ Transférer des ressources
+      '6': menuTransfererRessource();
 
       // 7/ Passer la journée 
       '7': menuPasserJournee();

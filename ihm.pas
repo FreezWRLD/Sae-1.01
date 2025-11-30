@@ -11,6 +11,7 @@ uses
   // Dans la section interface, après les autres déclarations de procédures
   procedure Afficher(element: String);
   procedure AfficherEmplacementZone(zone : _Zone);
+  procedure afficherMenuTransfertQuantite(quantiteMax: integer);
   procedure quitterIHM();
 implementation
 
@@ -328,6 +329,66 @@ implementation
     cadrechoixmenu();
   end;
 
+  procedure afficherMenuTransfertZone();
+  begin
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Vers quelle zone ?',
+      '  1/ Base',
+      '  2/ Rocheux',
+      '  3/ Forêt Nordique',
+      '  4/ Volcanique',
+      '  5/ Désertique',
+      '  0/ Retour au menu principal'
+    ]);
+    cadrechoixmenu();
+  end;
+
+  procedure afficherMenuTransfertRessource(page: integer);
+  begin
+    couleurTexte(15);
+    effacerTexteMenu();
+    if (page = 1) then 
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Quelle ressource transférer ?',
+      '  1/ Minerai de cuivre',
+      '  2/ Minerai de fer',
+      '  3/ Calcaire',
+      '  4/ Charbon',
+      '  5/ Lingots de cuivre',
+      '  6/ Autres'
+    ]);
+    if (page = 2) then 
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Quelle ressource transférer ?',
+      '  1/ Lingots de fer',
+      '  2/ Cables de cuivre',
+      '  3/ Plaques de fer',
+      '  4/ Tuyaux en fer',
+      '  5/ Sacs de béton',
+      '  6/ Autres'
+    ]);
+    if (page = 3) then 
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Quelle ressource transférer ?',
+      '  1/ Acier',
+      '  2/ Plaques renforcées',
+      '  3/ Poutres industrielles',
+      '  4/ Fondations',
+      '  5/ Autres'
+    ]);
+    cadrechoixmenu();
+  end;
+
+  procedure afficherMenuTransfertQuantite(quantiteMax: integer);
+  begin
+    effacerTexteMenu();
+    afficheLigneParLigne(X_MENU_PRINCIPALE, Y_MENU_PRINCIPALE, [
+      'Quelle quantité transférer ?',
+      '(max=' + IntToStr(quantiteMax) + ')'
+    ]);
+    cadrechoixmenu();
+  end;
 
   procedure afficherMenuWiki();
   begin
@@ -566,6 +627,10 @@ implementation
       'MenuChangerProduction1': afficherMenuChangerProduction(1);
       'MenuChangerProduction2': afficherMenuChangerProduction(2);
       'MenuChangerDeZone': afficherMenuChangerDeZone();
+      'MenuTransfertZone': afficherMenuTransfertZone();
+      'MenuTransfertRessource1': afficherMenuTransfertRessource(1);
+      'MenuTransfertRessource2': afficherMenuTransfertRessource(2);
+      'MenuTransfertRessource3': afficherMenuTransfertRessource(3);
       'WikiBatiment': afficherWikiBatiment();
       'WikiProduction': afficherWikiProduction();
       'MenuWiki' : afficherMenuWiki();
