@@ -140,7 +140,7 @@ type
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
     recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-    energieProduite: 500;
+    energieProduite: -100;
   );
 
   DEFAULT_MINE : _Batiment = (
@@ -148,10 +148,10 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 20;
-    recette: (0,0,0,0,0,0,10,0,0,0,0,0,0,0,0);  // Plaques de fer (x10)
+    recette: (0,0,0,0,0,0,0,10,0,0,0,0,0,0,0);
     energieProduite: -100;
-    recetteMK2: (0,0,0,0,0,0,20,0,20,0,0,0,0,0,0);  // Plaques de fer (x20), Sacs de Béton (x20)
-    recetteMK3: (0,0,0,0,0,0,20,0,0,20,0,0,0,0,0);  // Plaques de fer (x20), Acier (x20)
+    recetteMK2: (0,0,0,0,0,0,0,20,0,20,0,0,0,0,0);
+    recetteMK3: (0,0,0,0,0,0,0,20,0,0,20,0,0,0,0);
   );
 
   DEFAULT_CONSTRUCTEUR : _Batiment = (
@@ -159,10 +159,10 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.LingotCuivre;
     quantiteProduite: 50;
-    recette: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);  // Câbles (x10), Plaques (x10)
+    recette: (0,0,0,0,0,0,10,10,0,0,0,0,0,0,0);
     energieProduite: -200;
-    recetteMK2: (20,0,0,0,0,0,20,0,20,0,0,0,0,0,0);  // Câbles (x20), Plaques (x20), Sacs de Béton (x20)
-    recetteMK3: (20,0,0,0,0,0,20,0,0,20,0,0,0,0,0);  // Câbles (x20), Plaques (x20), Acier (x20)
+    recetteMK2: (0,0,0,0,0,0,0,20,0,20,0,0,0,0,0);
+    recetteMK3: (0,0,0,0,0,0,0,20,0,0,20,0,0,0,0);
     ressourceNecessaire: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
   );
 
@@ -171,7 +171,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
-    recette: (30,0,0,0,0,0,10,0,20,0,0,0,0,0,0);  // Câbles (x30), Plaques (x10), Béton (x20)
+    recette: (0,0,0,0,0,0,30,10,0,20,0,0,0,0,0);
     energieProduite: 1200;
   );
 
@@ -180,7 +180,7 @@ type
     niveau: 1;
     ressourceProduite: _TypeRessources.Aucune;
     quantiteProduite: 0;
-    recette: (200,0,0,0,0,0,200,0,200,0,0,0,0,0,0);  // Câbles (x200), Plaques (x200), Béton (x200)
+    recette: (0,0,0,0,0,0,200,200,0,200,0,0,0,0,0);
     energieProduite: -1000;
   );
 
