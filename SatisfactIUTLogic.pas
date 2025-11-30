@@ -282,7 +282,7 @@ uses
     for i in _TypeZone do
     begin     
       InitZones[i].typeZone := i;
-      SetLength(InitZones[i].emplacements, 12); //Chaque zone a 12 emplacements
+      SetLength(InitZones[i].emplacements, 10); //Chaque zone a 10 emplacements
       InitInventaires(InitZones[i]);
       
       // Initialisation de tous les emplacements comme non découverts et vides
