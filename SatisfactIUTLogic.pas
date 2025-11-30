@@ -311,22 +311,22 @@ begin
   ecranJeu();
 end;
 
-  procedure AmeliorerBatiment(emplacement : _Emplacement);
+  {procedure AmeliorerBatiment(emplacement : _Emplacement);
   var
-    choix: string;
+    choix: integer;
   begin
-    readln(choix);
-    if (StrToInt(choix)>=2) and (StrToInt(choix)<=10) and (emplacement.estDecouvert) and (emplacement.batiment.nom <> VIDE) then
+    if choix in [2..10] and emplacement.estDecouvert and emplacement.batiment.nom <> VIDE) then
       begin
         if CompareInventaireAvecRecette(JZones[ZoneActuelle].inventaire, emplacement.batiment.recette) then
         begin
           emplacement.batiment.niveau := emplacement.batiment.niveau + 1;
           emplacement.batiment.quantiteProduite := emplacement.batiment.quantiteProduite + 10;
         DeduireInventaire(emplacement.batiment.recette, JZones[ZoneActuelle].inventaire);
-        end;
-      end;
-  end;
+    end;
+    end;
+    end;
     
+  end;}
 
 
 
@@ -348,40 +348,6 @@ end;
     until (choix = '0') OR (choix = '1') OR (choix = '2') OR (choix = '3') OR (choix = '4');
     end;
 
-  // Sous-programmes pour changer la production du constructeur
-  procedure changerProductionConstructeur(ressource: _TypeRessources);
-  var
-    i: integer;
-  begin
-    for i := 0 to High(JZones[ZoneActuelle].emplacements) do
-    begin
-      if JZones[ZoneActuelle].emplacements[i].batiment.nom = CONSTRUCTEUR then
-        JZones[ZoneActuelle].emplacements[i].batiment.ressourceProduite := ressource;
-    end;
-  end;
-
-  procedure changerProductionPage1(choix: string);
-  begin
-    case choix of
-      '1': changerProductionConstructeur(LingotCuivre);
-      '2': changerProductionConstructeur(LingotFer);
-      '3': changerProductionConstructeur(CableCuivre);
-      '4': changerProductionConstructeur(PlaqueFer);
-      '5': changerProductionConstructeur(TuyauFer);
-    end;
-  end;
-
-  procedure changerProductionPage2(choix: string);
-  begin
-    case choix of
-      '1': changerProductionConstructeur(Beton);
-      '2': changerProductionConstructeur(Acier);
-      '3': changerProductionConstructeur(PlaqueRenforcee);
-      '4': changerProductionConstructeur(PoutreIndustrielle);
-      '5': changerProductionConstructeur(Fondation);
-    end;
-  end;
-
   procedure menuChangerProduction(page:integer);
   var 
     choix: string;
@@ -390,24 +356,24 @@ end;
     Afficher('MenuChangerProduction'+ IntToStr(page));
     readln(choix);
       if page = 1 then begin
-        if StrToInt(choix) in [1..5] then 
-        begin
-          changerProductionPage1(choix);
-          ecranJeu();
-        end;
         case choix of 
-          '6': menuChangerProduction(2);
-          '0': menuDeJeu();
+          //1:changerProductionConstructeur(LingotCuivre);
+          //2:changerProductionConstructeur(LingotFer);
+          //3:changerProductionConstructeur(CableCuivre);
+          //4:changerProductionConstructeur(PlaqueFer);
+          //5:changerProductionConstructeur(TuyauFer);
+          '6':menuChangerProduction(2);
+          '0':menuDeJeu();
         end;
       end else begin
-        if StrToInt(choix) in [1..5] then 
-        begin
-          changerProductionPage2(choix);
-          ecranJeu();
-        end;
         case choix of 
-          '6': menuChangerProduction(1);
-          '0': menuDeJeu();
+          //1:changerProductionConstructeur(Beton);
+          //2:changerProductionConstructeur(Acier);
+          //3:changerProductionConstructeur(PlaqueRenforcee);
+          //4:changerProductionConstructeur(PoutreIndustrielle);
+          //5:changerProductionConstructeur(Fondation);
+          '6':menuChangerProduction(1);
+          '0':menuDeJeu();
         end;
       end;
     until (choix = '0') OR (choix = '6');
